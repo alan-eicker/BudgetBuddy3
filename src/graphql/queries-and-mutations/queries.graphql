@@ -1,0 +1,17 @@
+query getExpenses {
+  expenses {
+    id
+    name
+    balance
+    isPaid
+  }
+}
+ 
+mutation addExpense(name: $name, balance: $balance, isPaid: $isPaid) {
+  addExpense(name: $name, balance: $balance, isPaid: $isPaid) {
+    id
+    name
+    balance
+    isPaid
+  }
+} 

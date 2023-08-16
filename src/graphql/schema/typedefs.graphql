@@ -1,0 +1,14 @@
+type Query {
+  expenses: [Expense]!
+}
+
+type Mutation {
+  addExpense(name: String!, balance: Float!, isPaid: Boolean!): Expense!
+}
+
+type Expense {
+  id: ID!
+  name: String!
+  balance: Float!
+  isPaid: Boolean!
+}
