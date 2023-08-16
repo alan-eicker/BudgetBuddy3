@@ -25,6 +25,18 @@ export type Expense = {
   name: Scalars['String']['output'];
 };
 
+export type Mutation = {
+  __typename?: 'Mutation';
+  addExpense: Expense;
+};
+
+
+export type MutationAddExpenseArgs = {
+  balance: Scalars['Float']['input'];
+  isPaid: Scalars['Boolean']['input'];
+  name: Scalars['String']['input'];
+};
+
 export type Query = {
   __typename?: 'Query';
   expenses: Array<Maybe<Expense>>;
@@ -35,10 +47,29 @@ export type GetExpensesQueryVariables = Exact<{ [key: string]: never; }>;
 
 export type GetExpensesQuery = { __typename?: 'Query', expenses: Array<{ __typename?: 'Expense', id: string, name: string, balance: number, isPaid: boolean } | null> };
 
+export type AddExpenseMutationVariables = Exact<{
+  name: Scalars['String']['input'];
+  balance: Scalars['Float']['input'];
+  isPaid: Scalars['Boolean']['input'];
+}>;
+
+
+export type AddExpenseMutation = { __typename?: 'Mutation', addExpense: { __typename?: 'Expense', id: string, name: string, balance: number, isPaid: boolean } };
+
 
 export const GetExpensesDocument = gql`
     query getExpenses {
   expenses {
+    id
+    name
+    balance
+    isPaid
+  }
+}
+    `;
+export const AddExpenseDocument = gql`
+    mutation addExpense($name: String!, $balance: Float!, $isPaid: Boolean!) {
+  addExpense(name: $name, balance: $balance, isPaid: $isPaid) {
     id
     name
     balance
@@ -56,6 +87,9 @@ export function getSdk(client: GraphQLClient, withWrapper: SdkFunctionWrapper = 
   return {
     getExpenses(variables?: GetExpensesQueryVariables, requestHeaders?: GraphQLClientRequestHeaders): Promise<GetExpensesQuery> {
       return withWrapper((wrappedRequestHeaders) => client.request<GetExpensesQuery>(GetExpensesDocument, variables, {...requestHeaders, ...wrappedRequestHeaders}), 'getExpenses', 'query');
+    },
+    addExpense(variables: AddExpenseMutationVariables, requestHeaders?: GraphQLClientRequestHeaders): Promise<AddExpenseMutation> {
+      return withWrapper((wrappedRequestHeaders) => client.request<AddExpenseMutation>(AddExpenseDocument, variables, {...requestHeaders, ...wrappedRequestHeaders}), 'addExpense', 'mutation');
     }
   };
 }
