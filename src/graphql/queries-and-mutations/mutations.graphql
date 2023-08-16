@@ -1,0 +1,8 @@
+mutation addExpense($name: String!, $balance: Float!, $isPaid: Boolean!) {
+  addExpense(name: $name, balance: $balance, isPaid: $isPaid) {
+    id
+    name
+    balance
+    isPaid
+  }
+}

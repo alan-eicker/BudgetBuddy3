@@ -1,15 +1,14 @@
-import { v4 as uuid } from 'uuid';
+import { Expense, ExpenseArgs } from '../../interfaces';
 
 const Mutation = {
-  addExpense: (
-    parent: unknown,
-    args: { name: string; balance: number; isPaid: boolean },
-  ) => ({
-    id: uuid(),
-    name: args.name,
-    balance: args.balance,
-    isPaid: args.isPaid,
-  }),
+  addExpense: (parent: unknown, args: ExpenseArgs): Expense => {
+    return {
+      id: Math.round(Math.random() * 1000000).toString(),
+      name: args.name,
+      balance: args.balance,
+      isPaid: args.isPaid,
+    };
+  },
 };
 
 export default Mutation;
