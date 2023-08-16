@@ -3,4 +3,8 @@
 .header {
   background-color: $brand-secondary;
   box-shadow: none;
+
+  time {
+    margin-right: rem(16);
+  }
 }

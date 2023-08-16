@@ -9,9 +9,10 @@ import styles from './header.module.scss';
 
 interface HeaderProps {
   title: string;
+  date?: string;
 }
 
-const Header = ({ title }: HeaderProps) => {
+const Header = ({ title, date = new Date().toDateString() }: HeaderProps) => {
   return (
     <Box sx={{ flexGrow: 1 }}>
       <AppBar className={styles.header} position="static">
@@ -28,6 +29,7 @@ const Header = ({ title }: HeaderProps) => {
           <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
             {title}
           </Typography>
+          <time dateTime={date}>{date}</time>
           <Button color="inherit">Login</Button>
         </Toolbar>
       </AppBar>
