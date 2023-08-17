@@ -8,8 +8,8 @@
   text-align: center;
 
   form {
-    width: rem(320);
     margin: rem(25 0);
+    width: rem(320);
 
     & > * {
       width: 100%;
@@ -22,7 +22,16 @@
 }
 
 .LoginFormHeading {
-  font-size: rem(30);
+  align-items: center;
+  display: flex;
+  font-size: rem(28);
+  font-weight: 600;
+  justify-content: center;
+
+  svg {
+    margin: rem(0 4);
+    font-size: rem(50);
+  }
 }
 
 .LoginFormButton {

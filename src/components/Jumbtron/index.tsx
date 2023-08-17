@@ -1,7 +1,7 @@
 import styles from './Jumbotron.module.scss';
 
 interface JumbotronProps {
-  children: JSX.Element;
+  children: JSX.Element | JSX.Element[];
 }
 
 const Jumbotron = ({ children }: JumbotronProps): JSX.Element => {
