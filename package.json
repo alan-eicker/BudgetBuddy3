@@ -22,6 +22,7 @@
     "@types/uuid": "^9.0.2",
     "eslint": "8.47.0",
     "eslint-config-next": "13.4.16",
+    "formik": "^2.4.3",
     "fs": "^0.0.1-security",
     "graphql": "^16.8.0",
     "graphql-request": "^6.1.0",
@@ -33,7 +34,8 @@
     "react-query": "^3.39.3",
     "sass": "^1.29.0",
     "typescript": "5.1.6",
-    "uuid": "^9.0.0"
+    "uuid": "^9.0.0",
+    "yup": "^1.2.0"
   },
   "devDependencies": {
     "@graphql-codegen/cli": "^5.0.0",

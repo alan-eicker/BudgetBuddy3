@@ -1,11 +1,11 @@
-import styles from './jumbotron.module.scss';
+import styles from './Jumbotron.module.scss';
 
 interface JumbotronProps {
   children: JSX.Element;
 }
 
 const Jumbotron = ({ children }: JumbotronProps): JSX.Element => {
-  return <div className={styles.container}>{children}</div>;
+  return <div className={styles.jumboTronContainer}>{children}</div>;
 };
 
 export default Jumbotron;

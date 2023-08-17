@@ -1,11 +1,11 @@
 @import '../../styles/abstracts';
 
-.container {
+.layoutContainer {
   height: 100vh;
   display: flex;
   flex-direction: column;
 }
 
-.body {
+.layoutMain {
   flex: 1;
 }

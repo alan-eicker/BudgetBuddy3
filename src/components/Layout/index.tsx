@@ -1,5 +1,5 @@
 import { useRouter } from 'next/router';
-import styles from './layout.module.scss';
+import styles from './Layout.module.scss';
 
 interface LayoutProps {
   header: JSX.Element;
@@ -10,9 +10,9 @@ const Layout = ({ header, children }: LayoutProps): JSX.Element => {
   const { pathname } = useRouter();
 
   return (
-    <div className={styles.container}>
+    <div className={styles.layoutContainer}>
       {pathname !== '/' && header}
-      <div className={styles.body}>{children}</div>
+      <main className={styles.layoutMain}>{children}</main>
     </div>
   );
 };

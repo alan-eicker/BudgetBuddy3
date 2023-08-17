@@ -16,3 +16,14 @@ body {
   font-family: Poppins, Arial, Helvetica, sans-serif;
   font-size: rem(16);
 }
+
+input[type='text'],
+input[type='password'],
+input[type='number'],
+textarea {
+  background-color: darken($brand, 2%);
+}
+
+p {
+  margin-top: rem(20);
+}
