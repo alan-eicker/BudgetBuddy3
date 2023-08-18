@@ -7,8 +7,8 @@ import { ThemeProvider, createTheme } from '@mui/material/styles';
 import CssBaseline from '@mui/material/CssBaseline';
 import type { AppProps } from 'next/app';
 import { Hydrate, QueryClientProvider } from 'react-query';
-import Header from '@/components/Header';
-import Layout from '@/components/Layout';
+import Header from '@/components/presentational/Header';
+import Layout from '@/components/presentational/Layout';
 import { queryClient } from '../api';
 
 const darkTheme = createTheme({
