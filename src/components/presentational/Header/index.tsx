@@ -7,7 +7,7 @@ import IconButton from '@mui/material/IconButton';
 import MenuIcon from '@mui/icons-material/Menu';
 import styles from './Header.module.scss';
 
-interface HeaderProps {
+export interface HeaderProps {
   title: string;
   date?: string;
 }

@@ -1,6 +1,6 @@
 import styles from './Jumbotron.module.scss';
 
-interface JumbotronProps {
+export interface JumbotronProps {
   children: JSX.Element | JSX.Element[];
 }
 

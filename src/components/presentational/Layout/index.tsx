@@ -1,7 +1,7 @@
 import { useRouter } from 'next/router';
 import styles from './Layout.module.scss';
 
-interface LayoutProps {
+export interface LayoutProps {
   header: JSX.Element;
   children: JSX.Element;
 }
