@@ -1,0 +1,11 @@
+@import '../../../styles/abstracts';
+
+.contentSection {
+  display: flex;
+  justify-content: center;
+  padding: rem(32 0);
+}
+
+.contentSectionBody {
+  width: 90%;
+}

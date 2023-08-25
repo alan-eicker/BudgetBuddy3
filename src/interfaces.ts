@@ -2,6 +2,7 @@ export interface Expense {
   id: string;
   name: string;
   balance: number;
+  dueDate: string;
   isPaid: boolean;
 }
 

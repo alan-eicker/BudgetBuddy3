@@ -2,11 +2,16 @@
 
 .headerContainer {
   & > * {
-    background-color: $brand-secondary;
+    background-color: darken($brand, 5%);
+    background-image: none;
     box-shadow: none;
   }
 
   time {
     margin-right: rem(16);
+  }
+
+  button {
+    min-width: rem(50);
   }
 }

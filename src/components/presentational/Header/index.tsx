@@ -5,6 +5,8 @@ import Typography from '@mui/material/Typography';
 import Button from '@mui/material/Button';
 import IconButton from '@mui/material/IconButton';
 import MenuIcon from '@mui/icons-material/Menu';
+import LogoutIcon from '@mui/icons-material/Logout';
+import AccountCircleOutlinedIcon from '@mui/icons-material/AccountCircleOutlined';
 import styles from './Header.module.scss';
 
 export interface HeaderProps {
@@ -33,7 +35,12 @@ const Header = ({
             <Link href="/">{title}</Link>
           </Typography>
           <time dateTime={date}>{date}</time>
-          <Button color="inherit">Logout</Button>
+          <Button color="inherit" title="User Profile">
+            <AccountCircleOutlinedIcon />
+          </Button>
+          <Button color="inherit" title="Log Out">
+            <LogoutIcon />
+          </Button>
         </Toolbar>
       </AppBar>
     </div>
