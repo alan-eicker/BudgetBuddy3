@@ -6,6 +6,7 @@ import {
   Legend,
   ResponsiveContainer,
 } from 'recharts';
+import { COLOR_PALETTE } from './colors';
 
 export interface SpendingSnapshotProps {
   title: string;
@@ -29,12 +30,7 @@ const SpendingSnapshot = ({
 
   const createLines = () => {
     const [chartItem] = data;
-
     delete chartItem.name;
-
-    const randomColors = () => {
-      return '#' + Math.floor(Math.random() * 16777215).toString(16);
-    };
 
     return Object.keys(chartItem).map((key, i) => (
       <Line
@@ -42,7 +38,11 @@ const SpendingSnapshot = ({
         isAnimationActive={false}
         type="monotone"
         dataKey={key}
-        stroke={colors ? colors[i] : randomColors()}
+        stroke={
+          colors
+            ? colors[i]
+            : COLOR_PALETTE[Math.floor(Math.random() * COLOR_PALETTE.length)]
+        }
       />
     ));
   };
