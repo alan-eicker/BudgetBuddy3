@@ -49,12 +49,15 @@ const SpendingSnapshot = ({
     const [chartItem] = data;
     delete chartItem.name;
 
-    return Object.keys(chartItem).map((key, i) => (
+    const chartItemKeys = Object.keys(chartItem);
+
+    return chartItemKeys.map((key, i) => (
       <Line
         key={key}
         isAnimationActive={false}
         type="monotone"
         dataKey={key}
+        strokeWidth={i === chartItemKeys.length - 1 ? 3 : 1}
         stroke={
           linecolors
             ? linecolors[i]

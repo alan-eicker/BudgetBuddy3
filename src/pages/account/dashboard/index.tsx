@@ -10,6 +10,7 @@ import ContentSection from '@/components/presentational/ContentSection';
 import { queryClient, getExpenses } from '../../../api';
 
 interface ExpenseGroupPreview {
+  id: string;
   name: string;
   expenses: Expense[];
 }
@@ -108,6 +109,7 @@ const getTotalOverdueBalances = (expenses: Expense[]): number => {
 
 const expenseGroups: ExpenseGroupPreview[] = [
   {
+    id: '1',
     name: '08/01/2023 - 08/15/2023',
     expenses: [
       {
@@ -134,6 +136,7 @@ const expenseGroups: ExpenseGroupPreview[] = [
     ],
   },
   {
+    id: '2',
     name: '08/15/2023 - 08/31/2023',
     expenses: [
       {
@@ -160,6 +163,7 @@ const expenseGroups: ExpenseGroupPreview[] = [
     ],
   },
   {
+    id: '3',
     name: '09/01/2023 - 09/15/2023',
     expenses: [
       {
@@ -212,7 +216,7 @@ const Dashboard = () => {
           title="12 Month Spending Snapshot"
           titleElement="h2"
           height={250}
-          linecolors={['#03B2AF', '#ff5794']}
+          linecolors={['#03B2AF', '#96de49']}
           axisColor="#fff"
           gridColor="rgba(255,255,255,0.15)"
           data={chartData}
@@ -220,11 +224,11 @@ const Dashboard = () => {
       </Jumbotron>
       <ContentSection>
         <Grid container spacing={2}>
-          {expenseGroups.map(({ name, expenses }) => {
+          {expenseGroups.map(({ id, name, expenses }) => {
             const numOverdueBalances = getTotalOverdueBalances(expenses);
             return (
-              <Grid key={name} item xs={4}>
-                <Link href="/">
+              <Grid key={id} item xs={4}>
+                <Link href={`/account/dashboard/${id}`}>
                   <Card head={name}>
                     <div
                       style={{
