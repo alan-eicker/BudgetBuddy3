@@ -52,7 +52,6 @@ const LineChart = ({
     return Object.keys(chartItem).map((key, i) => (
       <Line
         key={key}
-        isAnimationActive={false}
         type="monotone"
         dataKey={key}
         strokeWidth={2}

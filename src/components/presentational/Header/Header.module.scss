@@ -27,3 +27,12 @@
     }
   }
 }
+
+.headerLogoContainer {
+  align-items: center;
+  display: flex;
+
+  & > * + * {
+    margin-left: rem(8);
+  }
+}

@@ -2,7 +2,7 @@ import Link from 'next/link';
 import TextField from '@mui/material/TextField';
 import styles from './LoginForm.module.scss';
 import Button from '@mui/material/Button';
-import SavingsOutlinedIcon from '@mui/icons-material/SavingsOutlined';
+import BrandLogo from '@/components/presentational/BrandLogo';
 import { useFormik } from 'formik';
 import * as yup from 'yup';
 
@@ -26,11 +26,10 @@ const LoginForm = (): JSX.Element => {
   return (
     <div className={styles.LoginFormContainer}>
       <form noValidate onSubmit={handleSubmit}>
-        <h1 className={styles.LoginFormHeading}>
-          Budget
-          <SavingsOutlinedIcon color="success" />
-          Buddy
-        </h1>
+        <div>
+          <BrandLogo size={70} />
+          <h1 className={styles.LoginFormHeading}>BudgetBuddy</h1>
+        </div>
         <TextField
           required
           label="Username"
@@ -52,7 +51,7 @@ const LoginForm = (): JSX.Element => {
           helperText={errors.password}
         />
         <Button color="primary" variant="contained" type="submit" size="large">
-          Submit
+          Log In
         </Button>
         <p>
           <Button

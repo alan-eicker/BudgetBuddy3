@@ -3,9 +3,8 @@ import AppBar from '@mui/material/AppBar';
 import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
 import Button from '@mui/material/Button';
-import IconButton from '@mui/material/IconButton';
-import MenuIcon from '@mui/icons-material/Menu';
 import LogoutIcon from '@mui/icons-material/Logout';
+import BrandLogo from '../BrandLogo';
 import AccountCircleOutlinedIcon from '@mui/icons-material/AccountCircleOutlined';
 import styles from './Header.module.scss';
 
@@ -22,7 +21,13 @@ const Header = ({
     <div className={styles.headerContainer}>
       <AppBar position="static">
         <Toolbar>
-          <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
+          <Typography
+            className={styles.headerLogoContainer}
+            variant="h6"
+            component="div"
+            sx={{ flexGrow: 1 }}
+          >
+            <BrandLogo size={30} />
             <Link href="/">{title}</Link>
           </Typography>
           <time dateTime={date}>{date}</time>

@@ -131,7 +131,9 @@ const Dashboard = () => {
       </Jumbotron>
       <ContentSection>
         <Box sx={{ pb: 2 }}>
-          <Button>+ Add Expense Group</Button>
+          <Button href="/account/dashboard/add-expense-group">
+            + Add Expense Group
+          </Button>
         </Box>
         <Grid container spacing={2}>
           {data?.expenseGroups.map(({ id, name, expenses }) => {
