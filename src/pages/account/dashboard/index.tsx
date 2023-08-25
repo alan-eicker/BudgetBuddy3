@@ -90,8 +90,11 @@ const Dashboard = () => {
       <Jumbotron>
         <SpendingSnapshot
           title="12 Month Spending Snapshot"
+          titleElement="h2"
           height={250}
-          colors={['#03B2AF', '#ff5794']}
+          linecolors={['#03B2AF', '#ff5794']}
+          axisColor="#fff"
+          gridColor="rgba(255,255,255,0.15)"
           data={chartData}
         />
       </Jumbotron>

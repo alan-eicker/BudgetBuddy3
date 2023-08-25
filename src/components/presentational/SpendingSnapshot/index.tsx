@@ -1,17 +1,24 @@
 import {
+  CartesianGrid,
   LineChart,
   Line,
   XAxis,
   YAxis,
   Legend,
+  Tooltip,
   ResponsiveContainer,
 } from 'recharts';
 import { COLOR_PALETTE } from './colors';
+import styles from './SpendingSnapshot.module.scss';
 
 export interface SpendingSnapshotProps {
   title: string;
+  titleElement?: 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6' | 'div';
   height: number;
-  colors?: string[];
+  linecolors?: string[];
+  axisColor?: string;
+  gridColor?: string;
+  legendHeight?: number;
   data: {
     name?: string;
     [key: string]: any;
@@ -20,8 +27,12 @@ export interface SpendingSnapshotProps {
 
 const SpendingSnapshot = ({
   title,
+  titleElement: TitleElement = 'div',
   height,
-  colors,
+  linecolors,
+  axisColor = '#000',
+  gridColor = '#000',
+  legendHeight = 36,
   data,
 }: SpendingSnapshotProps) => {
   if (!data.length) {
@@ -39,8 +50,8 @@ const SpendingSnapshot = ({
         type="monotone"
         dataKey={key}
         stroke={
-          colors
-            ? colors[i]
+          linecolors
+            ? linecolors[i]
             : COLOR_PALETTE[Math.floor(Math.random() * COLOR_PALETTE.length)]
         }
       />
@@ -48,14 +59,18 @@ const SpendingSnapshot = ({
   };
 
   return (
-    <div style={{ width: '100%' }}>
-      <h2 style={{ textAlign: 'center', marginBottom: 20 }}>{title}</h2>
-      <div style={{ width: '90%', margin: '0 auto' }}>
+    <div className={styles.spendingSnapshotContainer}>
+      <TitleElement className={styles.spendingSnapshotTitle}>
+        {title}
+      </TitleElement>
+      <div className={styles.spendingSnapshotContent}>
         <ResponsiveContainer width="100%" height={height}>
           <LineChart data={data}>
-            <XAxis stroke="#fff" dataKey="name" />
-            <YAxis stroke="#fff" />
-            <Legend verticalAlign="top" height={36} />
+            <CartesianGrid stroke={gridColor} strokeDasharray="3 3" />
+            <XAxis stroke={axisColor} dataKey="name" />
+            <YAxis stroke={axisColor} />
+            <Tooltip />
+            <Legend verticalAlign="top" height={legendHeight} />
             {createLines()}
           </LineChart>
         </ResponsiveContainer>
