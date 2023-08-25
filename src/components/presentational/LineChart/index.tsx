@@ -49,15 +49,13 @@ const SpendingSnapshot = ({
     const [chartItem] = data;
     delete chartItem.name;
 
-    const chartItemKeys = Object.keys(chartItem);
-
-    return chartItemKeys.map((key, i) => (
+    return Object.keys(chartItem).map((key, i) => (
       <Line
         key={key}
         isAnimationActive={false}
         type="monotone"
         dataKey={key}
-        strokeWidth={i === chartItemKeys.length - 1 ? 3 : 1}
+        strokeWidth={2}
         stroke={
           linecolors
             ? linecolors[i]
@@ -73,7 +71,7 @@ const SpendingSnapshot = ({
   }: TooltipProps<ValueType, NameType>) => {
     if (active && payload && payload.length) {
       return (
-        <div className={styles.spendingSnapshotTooltip}>
+        <div className={styles.lineChartTooltip}>
           {payload.map(
             ({ name, value, color }: Payload<ValueType, NameType>) => (
               <div key={name}>
@@ -89,11 +87,9 @@ const SpendingSnapshot = ({
   };
 
   return (
-    <div className={styles.spendingSnapshotContainer}>
-      <TitleElement className={styles.spendingSnapshotTitle}>
-        {title}
-      </TitleElement>
-      <div className={styles.spendingSnapshotContent}>
+    <div className={styles.lineChartContainer}>
+      <TitleElement className={styles.lineChartTitle}>{title}</TitleElement>
+      <div className={styles.lineChartContent}>
         <ResponsiveContainer width="100%" height={height}>
           <LineChart data={data}>
             <CartesianGrid stroke={gridColor} strokeDasharray="3 3" />

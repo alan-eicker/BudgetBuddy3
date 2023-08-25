@@ -4,7 +4,7 @@ import { dehydrate, useQuery } from 'react-query';
 import ErrorOutlineIcon from '@mui/icons-material/ErrorOutline';
 import Grid from '@mui/material/Grid';
 import Jumbotron from '@/components/presentational/Jumbtron';
-import SpendingSnapshot from '@/components/presentational/SpendingSnapshot';
+import LineChart from '@/components/presentational/LineChart';
 import Card from '@/components/presentational/Card';
 import ContentSection from '@/components/presentational/ContentSection';
 import { queryClient, getExpenses } from '../../../api';
@@ -212,7 +212,7 @@ const Dashboard = () => {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
       </Head>
       <Jumbotron>
-        <SpendingSnapshot
+        <LineChart
           title="12 Month Spending Snapshot"
           titleElement="h2"
           height={250}

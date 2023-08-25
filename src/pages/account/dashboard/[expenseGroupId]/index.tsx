@@ -1,8 +1,10 @@
+import Link from 'next/link';
+
 const ExpenseGroupDetail = (): JSX.Element => {
   return (
-    <>
-      <p>Expense Group Detail</p>
-    </>
+    <div style={{ padding: 30 }}>
+      <Link href="/account/dashboard">&laquo; Back to dashboard</Link>
+    </div>
   );
 };
 

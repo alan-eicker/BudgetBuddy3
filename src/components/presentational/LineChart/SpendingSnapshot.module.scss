@@ -1,20 +1,20 @@
 @import '../../../styles/abstracts';
 
-.spendingSnapshotContainer {
+.lineChartContainer {
   width: 100%;
 }
 
-.spendingSnapshotTitle {
+.lineChartTitle {
   text-align: center;
   margin-bottom: rem(20);
 }
 
-.spendingSnapshotContent {
+.lineChartContent {
   width: 90%;
   margin: 0 auto;
 }
 
-.spendingSnapshotTooltip {
+.lineChartTooltip {
   background: darken($brand, 6%);
   padding: rem(12);
   border: 1px solid rgba(255, 255, 255, 0.4);
