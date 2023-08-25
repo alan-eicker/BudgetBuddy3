@@ -7,11 +7,17 @@ import {
   Legend,
   Tooltip,
   ResponsiveContainer,
+  TooltipProps,
 } from 'recharts';
+import {
+  ValueType,
+  NameType,
+  Payload,
+} from 'recharts/types/component/DefaultTooltipContent';
 import { COLOR_PALETTE } from './colors';
 import styles from './SpendingSnapshot.module.scss';
 
-export interface SpendingSnapshotProps {
+interface SpendingSnapshotProps {
   title: string;
   titleElement?: 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6' | 'div';
   height: number;
@@ -32,7 +38,7 @@ const SpendingSnapshot = ({
   linecolors,
   axisColor = '#000',
   gridColor = '#000',
-  legendHeight = 36,
+  legendHeight = 40,
   data,
 }: SpendingSnapshotProps) => {
   if (!data.length) {
@@ -58,6 +64,27 @@ const SpendingSnapshot = ({
     ));
   };
 
+  const ChartTooltip = ({
+    active,
+    payload,
+  }: TooltipProps<ValueType, NameType>) => {
+    if (active && payload && payload.length) {
+      return (
+        <div className={styles.spendingSnapshotTooltip}>
+          {payload.map(
+            ({ name, value, color }: Payload<ValueType, NameType>) => (
+              <div key={name}>
+                <span style={{ color }}>{name}</span>: ${value}
+              </div>
+            ),
+          )}
+        </div>
+      );
+    }
+
+    return null;
+  };
+
   return (
     <div className={styles.spendingSnapshotContainer}>
       <TitleElement className={styles.spendingSnapshotTitle}>
@@ -69,7 +96,7 @@ const SpendingSnapshot = ({
             <CartesianGrid stroke={gridColor} strokeDasharray="3 3" />
             <XAxis stroke={axisColor} dataKey="name" />
             <YAxis stroke={axisColor} />
-            <Tooltip />
+            <Tooltip content={<ChartTooltip />} />
             <Legend verticalAlign="top" height={legendHeight} />
             {createLines()}
           </LineChart>
