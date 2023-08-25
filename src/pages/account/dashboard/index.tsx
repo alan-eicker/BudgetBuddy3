@@ -227,7 +227,7 @@ const Dashboard = () => {
           {expenseGroups.map(({ id, name, expenses }) => {
             const numOverdueBalances = getTotalOverdueBalances(expenses);
             return (
-              <Grid key={id} item xs={4}>
+              <Grid key={id} item xs={12} sm={12} md={4}>
                 <Link href={`/account/dashboard/${id}`}>
                   <Card head={name}>
                     <div

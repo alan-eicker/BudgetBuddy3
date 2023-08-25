@@ -25,41 +25,35 @@ const LoginForm = (): JSX.Element => {
 
   return (
     <div className={styles.LoginFormContainer}>
-      <div>
+      <form noValidate onSubmit={handleSubmit}>
         <h1 className={styles.LoginFormHeading}>
           Budget
           <SavingsOutlinedIcon color="success" />
           Buddy
         </h1>
-        <form noValidate onSubmit={handleSubmit}>
-          <TextField
-            required
-            label="Username"
-            name="username"
-            onChange={handleChange}
-            value={values.username}
-            error={!!errors.username}
-            helperText={errors.username}
-          />
-          <TextField
-            required
-            type="password"
-            label="Password"
-            name="password"
-            onChange={handleChange}
-            value={values.password}
-            error={!!errors.password}
-            helperText={errors.password}
-          />
-          <Button
-            color="primary"
-            variant="contained"
-            type="submit"
-            size="large"
-          >
-            Submit
-          </Button>
-        </form>
+        <TextField
+          required
+          label="Username"
+          name="username"
+          onChange={handleChange}
+          value={values.username}
+          error={!!errors.username}
+          helperText={errors.username}
+          autoComplete="no"
+        />
+        <TextField
+          required
+          type="password"
+          label="Password"
+          name="password"
+          onChange={handleChange}
+          value={values.password}
+          error={!!errors.password}
+          helperText={errors.password}
+        />
+        <Button color="primary" variant="contained" type="submit" size="large">
+          Submit
+        </Button>
         <p>
           <Button
             size="small"
@@ -80,7 +74,7 @@ const LoginForm = (): JSX.Element => {
             Create an Account
           </Button>
         </p>
-      </div>
+      </form>
     </div>
   );
 };

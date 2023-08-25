@@ -8,7 +8,9 @@
   text-align: center;
 
   form {
+    background-color: darken($brand, 2%);
     margin: rem(25 0);
+    padding: rem(36);
     width: rem(320);
 
     & > * {

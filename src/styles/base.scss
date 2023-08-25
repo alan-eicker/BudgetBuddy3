@@ -21,7 +21,7 @@ input[type='text'],
 input[type='password'],
 input[type='number'],
 textarea {
-  background-color: darken($brand, 2%);
+  background-color: $brand;
 }
 
 p {
