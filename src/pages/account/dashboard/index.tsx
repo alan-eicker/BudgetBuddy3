@@ -3,25 +3,14 @@ import Link from 'next/link';
 import { dehydrate, useQuery } from 'react-query';
 import ErrorOutlineIcon from '@mui/icons-material/ErrorOutline';
 import Grid from '@mui/material/Grid';
+import Box from '@mui/material/Box';
+import Button from '@mui/material/Button';
 import Jumbotron from '@/components/presentational/Jumbtron';
 import LineChart from '@/components/presentational/LineChart';
 import Card from '@/components/presentational/Card';
 import ContentSection from '@/components/presentational/ContentSection';
-import { queryClient, getExpenses } from '../../../api';
-
-interface ExpenseGroupPreview {
-  id: string;
-  name: string;
-  expenses: Expense[];
-}
-
-export interface Expense {
-  id: string;
-  name: string;
-  balance: number;
-  dueDate: string;
-  isPaid: boolean;
-}
+import { queryClient, getAllExpenseGroups } from '../../../api';
+import { Expense } from '../../../interfaces';
 
 const chartData = [
   {
@@ -107,92 +96,10 @@ const getTotalOverdueBalances = (expenses: Expense[]): number => {
   return overdueExpenses;
 };
 
-const expenseGroups: ExpenseGroupPreview[] = [
-  {
-    id: '1',
-    name: '08/01/2023 - 08/15/2023',
-    expenses: [
-      {
-        id: '1',
-        name: 'Mortgage',
-        balance: 2500.44,
-        dueDate: '08/05/2023',
-        isPaid: true,
-      },
-      {
-        id: '2',
-        name: 'ComEd',
-        balance: 240.56,
-        dueDate: '08/10/2023',
-        isPaid: false,
-      },
-      {
-        id: '3',
-        name: 'T-Mobile',
-        balance: 131.32,
-        dueDate: '08/14/2023',
-        isPaid: false,
-      },
-    ],
-  },
-  {
-    id: '2',
-    name: '08/15/2023 - 08/31/2023',
-    expenses: [
-      {
-        id: '1',
-        name: 'Mortgage',
-        balance: 2500.44,
-        dueDate: '08/16/2023',
-        isPaid: true,
-      },
-      {
-        id: '2',
-        name: 'ComEd',
-        balance: 320.99,
-        dueDate: '08/21/2023',
-        isPaid: true,
-      },
-      {
-        id: '3',
-        name: 'T-Mobile',
-        balance: 131.32,
-        dueDate: '08/31/2023',
-        isPaid: false,
-      },
-    ],
-  },
-  {
-    id: '3',
-    name: '09/01/2023 - 09/15/2023',
-    expenses: [
-      {
-        id: '1',
-        name: 'Mortgage',
-        balance: 2500.44,
-        dueDate: '09/01/2023',
-        isPaid: true,
-      },
-      {
-        id: '2',
-        name: 'ComEd',
-        balance: 225.12,
-        dueDate: '09/12/2023',
-        isPaid: true,
-      },
-      {
-        id: '3',
-        name: 'T-Mobile',
-        balance: 131.32,
-        dueDate: '09/14/2023',
-        isPaid: false,
-      },
-    ],
-  },
-];
-
 export async function getServerSideProps() {
-  await queryClient.prefetchQuery(['expenses'], () => getExpenses());
+  await queryClient.prefetchQuery(['expenseGroups'], () =>
+    getAllExpenseGroups(),
+  );
 
   return {
     props: {
@@ -202,7 +109,7 @@ export async function getServerSideProps() {
 }
 
 const Dashboard = () => {
-  const { data } = useQuery(['expenses'], () => getExpenses());
+  const { data } = useQuery(['expenseGroups'], () => getAllExpenseGroups());
 
   return (
     <>
@@ -223,8 +130,11 @@ const Dashboard = () => {
         />
       </Jumbotron>
       <ContentSection>
+        <Box sx={{ pb: 2 }}>
+          <Button>+ Add Expense Group</Button>
+        </Box>
         <Grid container spacing={2}>
-          {expenseGroups.map(({ id, name, expenses }) => {
+          {data?.expenseGroups.map(({ id, name, expenses }) => {
             const numOverdueBalances = getTotalOverdueBalances(expenses);
             return (
               <Grid key={id} item xs={12} sm={12} md={4}>

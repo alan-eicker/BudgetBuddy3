@@ -1,8 +1,13 @@
-query getExpenses {
-  expenses {
+query getAllExpenseGroups {
+  expenseGroups: getAllExpenseGroups {
     id
     name
-    balance
-    isPaid
+    expenses {
+      id
+      name
+      balance
+      dueDate
+      isPaid
+    }
   }
 }

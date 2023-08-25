@@ -8,4 +8,8 @@
 
 .layoutMain {
   flex: 1;
+
+  &.hasHeader {
+    margin-top: rem(60);
+  }
 }

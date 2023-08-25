@@ -1,5 +1,6 @@
 import { useRouter } from 'next/router';
 import styles from './Layout.module.scss';
+import classnames from 'classnames';
 
 export interface LayoutProps {
   header: JSX.Element;
@@ -8,11 +9,18 @@ export interface LayoutProps {
 
 const Layout = ({ header, children }: LayoutProps): JSX.Element => {
   const { pathname } = useRouter();
+  const hasHeader = pathname !== '/';
 
   return (
     <div className={styles.layoutContainer}>
-      {pathname !== '/' && header}
-      <main className={styles.layoutMain}>{children}</main>
+      {hasHeader && header}
+      <main
+        className={classnames(styles.layoutMain, {
+          [styles.hasHeader]: hasHeader,
+        })}
+      >
+        {children}
+      </main>
     </div>
   );
 };

@@ -1,6 +1,6 @@
 import {
   CartesianGrid,
-  LineChart,
+  LineChart as RechartsLineChart,
   Line,
   XAxis,
   YAxis,
@@ -15,9 +15,9 @@ import {
   Payload,
 } from 'recharts/types/component/DefaultTooltipContent';
 import { COLOR_PALETTE } from './colors';
-import styles from './SpendingSnapshot.module.scss';
+import styles from './LineChart.module.scss';
 
-interface SpendingSnapshotProps {
+interface LineChartProps {
   title: string;
   titleElement?: 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6' | 'div';
   height: number;
@@ -31,7 +31,7 @@ interface SpendingSnapshotProps {
   }[];
 }
 
-const SpendingSnapshot = ({
+const LineChart = ({
   title,
   titleElement: TitleElement = 'div',
   height,
@@ -40,7 +40,7 @@ const SpendingSnapshot = ({
   gridColor = '#000',
   legendHeight = 40,
   data,
-}: SpendingSnapshotProps) => {
+}: LineChartProps) => {
   if (!data.length) {
     return null;
   }
@@ -91,18 +91,18 @@ const SpendingSnapshot = ({
       <TitleElement className={styles.lineChartTitle}>{title}</TitleElement>
       <div className={styles.lineChartContent}>
         <ResponsiveContainer width="100%" height={height}>
-          <LineChart data={data}>
+          <RechartsLineChart data={data}>
             <CartesianGrid stroke={gridColor} strokeDasharray="3 3" />
             <XAxis stroke={axisColor} dataKey="name" />
             <YAxis stroke={axisColor} />
             <Tooltip content={<ChartTooltip />} />
             <Legend verticalAlign="top" height={legendHeight} />
             {createLines()}
-          </LineChart>
+          </RechartsLineChart>
         </ResponsiveContainer>
       </div>
     </div>
   );
 };
 
-export default SpendingSnapshot;
+export default LineChart;

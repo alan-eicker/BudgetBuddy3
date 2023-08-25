@@ -6,6 +6,7 @@ const Mutation = {
       id: Math.round(Math.random() * 1000000).toString(),
       name: args.name,
       balance: args.balance,
+      dueDate: args.dueDate,
       isPaid: args.isPaid,
     };
   },

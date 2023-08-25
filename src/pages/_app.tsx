@@ -14,12 +14,6 @@ import { queryClient } from '../api';
 const darkTheme = createTheme({
   palette: {
     mode: 'dark',
-    primary: {
-      light: '#fa7aa9',
-      main: '#ff5794',
-      dark: '#dc3b76',
-      contrastText: '#000',
-    },
   },
 });
 

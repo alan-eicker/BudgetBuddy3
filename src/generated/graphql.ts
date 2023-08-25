@@ -20,8 +20,16 @@ export type Scalars = {
 export type Expense = {
   __typename?: 'Expense';
   balance: Scalars['Float']['output'];
+  dueDate: Scalars['String']['output'];
   id: Scalars['ID']['output'];
   isPaid: Scalars['Boolean']['output'];
+  name: Scalars['String']['output'];
+};
+
+export type ExpenseGroup = {
+  __typename?: 'ExpenseGroup';
+  expenses: Array<Maybe<Expense>>;
+  id: Scalars['ID']['output'];
   name: Scalars['String']['output'];
 };
 
@@ -39,7 +47,7 @@ export type MutationAddExpenseArgs = {
 
 export type Query = {
   __typename?: 'Query';
-  expenses: Array<Maybe<Expense>>;
+  getAllExpenseGroups: Array<Maybe<ExpenseGroup>>;
 };
 
 export type AddExpenseMutationVariables = Exact<{
@@ -51,10 +59,10 @@ export type AddExpenseMutationVariables = Exact<{
 
 export type AddExpenseMutation = { __typename?: 'Mutation', addExpense: { __typename?: 'Expense', id: string, name: string, balance: number, isPaid: boolean } };
 
-export type GetExpensesQueryVariables = Exact<{ [key: string]: never; }>;
+export type GetAllExpenseGroupsQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type GetExpensesQuery = { __typename?: 'Query', expenses: Array<{ __typename?: 'Expense', id: string, name: string, balance: number, isPaid: boolean } | null> };
+export type GetAllExpenseGroupsQuery = { __typename?: 'Query', expenseGroups: Array<{ __typename?: 'ExpenseGroup', id: string, name: string, expenses: Array<{ __typename?: 'Expense', id: string, name: string, balance: number, dueDate: string, isPaid: boolean } | null> } | null> };
 
 
 export const AddExpenseDocument = gql`
@@ -67,13 +75,18 @@ export const AddExpenseDocument = gql`
   }
 }
     `;
-export const GetExpensesDocument = gql`
-    query getExpenses {
-  expenses {
+export const GetAllExpenseGroupsDocument = gql`
+    query getAllExpenseGroups {
+  expenseGroups: getAllExpenseGroups {
     id
     name
-    balance
-    isPaid
+    expenses {
+      id
+      name
+      balance
+      dueDate
+      isPaid
+    }
   }
 }
     `;
@@ -88,8 +101,8 @@ export function getSdk(client: GraphQLClient, withWrapper: SdkFunctionWrapper = 
     addExpense(variables: AddExpenseMutationVariables, requestHeaders?: GraphQLClientRequestHeaders): Promise<AddExpenseMutation> {
       return withWrapper((wrappedRequestHeaders) => client.request<AddExpenseMutation>(AddExpenseDocument, variables, {...requestHeaders, ...wrappedRequestHeaders}), 'addExpense', 'mutation');
     },
-    getExpenses(variables?: GetExpensesQueryVariables, requestHeaders?: GraphQLClientRequestHeaders): Promise<GetExpensesQuery> {
-      return withWrapper((wrappedRequestHeaders) => client.request<GetExpensesQuery>(GetExpensesDocument, variables, {...requestHeaders, ...wrappedRequestHeaders}), 'getExpenses', 'query');
+    getAllExpenseGroups(variables?: GetAllExpenseGroupsQueryVariables, requestHeaders?: GraphQLClientRequestHeaders): Promise<GetAllExpenseGroupsQuery> {
+      return withWrapper((wrappedRequestHeaders) => client.request<GetAllExpenseGroupsQuery>(GetAllExpenseGroupsDocument, variables, {...requestHeaders, ...wrappedRequestHeaders}), 'getAllExpenseGroups', 'query');
     }
   };
 }

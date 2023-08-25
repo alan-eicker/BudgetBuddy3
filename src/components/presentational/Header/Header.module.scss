@@ -1,10 +1,15 @@
 @import '../../../styles/abstracts';
 
 .headerContainer {
-  & > * {
+  height: rem(100);
+  position: fixed;
+  width: 100%;
+
+  & > header {
     background-color: darken($brand, 5%);
     background-image: none;
     box-shadow: none;
+    height: rem(60);
   }
 
   time {

@@ -1,14 +1,21 @@
 type Query {
-  expenses: [Expense]!
+  getAllExpenseGroups: [ExpenseGroup]!
 }
 
 type Mutation {
   addExpense(name: String!, balance: Float!, isPaid: Boolean!): Expense!
 }
 
+type ExpenseGroup {
+  id: ID!
+  name: String!
+  expenses: [Expense]!
+}
+
 type Expense {
   id: ID!
   name: String!
   balance: Float!
+  dueDate: String!
   isPaid: Boolean!
 }
