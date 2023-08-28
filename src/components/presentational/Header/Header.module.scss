@@ -12,19 +12,8 @@
     height: rem(60);
   }
 
-  time {
-    font-size: rem(12);
-    margin-right: rem(16);
-  }
-
   button {
     min-width: rem(45);
-  }
-
-  @media (min-width: $breakpoint-medium) {
-    time {
-      font-size: rem(16);
-    }
   }
 }
 
@@ -34,5 +23,17 @@
 
   & > * + * {
     margin-left: rem(8);
+  }
+}
+
+.headerNavContainer {
+  font-size: rem(12);
+
+  & > * + * {
+    margin-left: rem(8);
+  }
+
+  @media (min-width: $breakpoint-medium) {
+    font-size: inherit;
   }
 }

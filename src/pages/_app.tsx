@@ -5,6 +5,8 @@ import '@fontsource/roboto/500.css';
 import '@fontsource/roboto/700.css';
 import { ThemeProvider, createTheme } from '@mui/material/styles';
 import CssBaseline from '@mui/material/CssBaseline';
+import Button from '@mui/material/Button';
+import AccountCircleOutlinedIcon from '@mui/icons-material/AccountCircleOutlined';
 import type { AppProps } from 'next/app';
 import { Hydrate, QueryClientProvider } from 'react-query';
 import Header from '@/components/presentational/Header';
@@ -17,8 +19,17 @@ const darkTheme = createTheme({
   },
 });
 
+const date = new Date().toDateString();
+
 export default function App({ Component, pageProps }: AppProps) {
-  const header = <Header title="BudgetBuddy" />;
+  const header = (
+    <Header title="BudgetBuddy">
+      <time dateTime={date}>{date}</time>
+      <Button key="profile" color="inherit" title="User Profile">
+        <AccountCircleOutlinedIcon />
+      </Button>
+    </Header>
+  );
 
   return (
     <QueryClientProvider client={queryClient}>

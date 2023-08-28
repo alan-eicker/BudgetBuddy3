@@ -1,22 +1,17 @@
+import { ReactNode } from 'react';
 import Link from 'next/link';
 import AppBar from '@mui/material/AppBar';
 import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
-import Button from '@mui/material/Button';
-import LogoutIcon from '@mui/icons-material/Logout';
 import BrandLogo from '../BrandLogo';
-import AccountCircleOutlinedIcon from '@mui/icons-material/AccountCircleOutlined';
 import styles from './Header.module.scss';
 
 export interface HeaderProps {
   title: string;
-  date?: string;
+  children?: ReactNode;
 }
 
-const Header = ({
-  title,
-  date = new Date().toDateString(),
-}: HeaderProps): JSX.Element => {
+const Header = ({ children, title }: HeaderProps): JSX.Element => {
   return (
     <div className={styles.headerContainer}>
       <AppBar position="static">
@@ -30,13 +25,7 @@ const Header = ({
             <BrandLogo size={30} />
             <Link href="/">{title}</Link>
           </Typography>
-          <time dateTime={date}>{date}</time>
-          <Button color="inherit" title="User Profile">
-            <AccountCircleOutlinedIcon />
-          </Button>
-          <Button color="inherit" title="Log Out">
-            <LogoutIcon />
-          </Button>
+          <div className={styles.headerNavContainer}>{children}</div>
         </Toolbar>
       </AppBar>
     </div>
