@@ -41,6 +41,7 @@ export type Mutation = {
 
 export type MutationAddExpenseArgs = {
   balance: Scalars['Float']['input'];
+  dueDate?: InputMaybe<Scalars['String']['input']>;
   isPaid: Scalars['Boolean']['input'];
   name: Scalars['String']['input'];
 };
@@ -53,11 +54,12 @@ export type Query = {
 export type AddExpenseMutationVariables = Exact<{
   name: Scalars['String']['input'];
   balance: Scalars['Float']['input'];
+  dueDate: Scalars['String']['input'];
   isPaid: Scalars['Boolean']['input'];
 }>;
 
 
-export type AddExpenseMutation = { __typename?: 'Mutation', addExpense: { __typename?: 'Expense', id: string, name: string, balance: number, isPaid: boolean } };
+export type AddExpenseMutation = { __typename?: 'Mutation', addExpense: { __typename?: 'Expense', id: string, name: string, balance: number, dueDate: string, isPaid: boolean } };
 
 export type GetAllExpenseGroupsQueryVariables = Exact<{ [key: string]: never; }>;
 
@@ -66,11 +68,12 @@ export type GetAllExpenseGroupsQuery = { __typename?: 'Query', expenseGroups: Ar
 
 
 export const AddExpenseDocument = gql`
-    mutation addExpense($name: String!, $balance: Float!, $isPaid: Boolean!) {
-  addExpense(name: $name, balance: $balance, isPaid: $isPaid) {
+    mutation addExpense($name: String!, $balance: Float!, $dueDate: String!, $isPaid: Boolean!) {
+  addExpense(name: $name, balance: $balance, dueDate: $dueDate, isPaid: $isPaid) {
     id
     name
     balance
+    dueDate
     isPaid
   }
 }

@@ -1,5 +1,6 @@
 import Head from 'next/head';
 import LoginForm from '@/features/LoginForm';
+import ContentSection from '@/components/presentational/ContentSection';
 
 const Home = (): JSX.Element => {
   return (
@@ -9,7 +10,9 @@ const Home = (): JSX.Element => {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <meta name="description" content="BudgetBuddy Home page" />
       </Head>
-      <LoginForm />
+      <ContentSection maxWidth={500}>
+        <LoginForm />
+      </ContentSection>
     </>
   );
 };

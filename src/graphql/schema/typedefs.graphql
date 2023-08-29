@@ -3,7 +3,12 @@ type Query {
 }
 
 type Mutation {
-  addExpense(name: String!, balance: Float!, isPaid: Boolean!): Expense!
+  addExpense(
+    name: String!
+    balance: Float!
+    dueDate: String!
+    isPaid: Boolean!
+  ): Expense!
 }
 
 type ExpenseGroup {

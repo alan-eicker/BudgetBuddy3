@@ -1,7 +1,7 @@
-import { Expense, ExpenseArgs } from '../../interfaces';
+import { Expense, AddExpenseMutationVariables } from '../../generated/graphql';
 
 const Mutation = {
-  addExpense: (parent: unknown, args: ExpenseArgs): Expense => {
+  addExpense: (parent: unknown, args: AddExpenseMutationVariables): Expense => {
     return {
       id: Math.round(Math.random() * 1000000).toString(),
       name: args.name,

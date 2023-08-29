@@ -10,7 +10,7 @@ import LineChart from '@/components/presentational/LineChart';
 import Card from '@/components/presentational/Card';
 import ContentSection from '@/components/presentational/ContentSection';
 import { queryClient, getAllExpenseGroups } from '../../../api';
-import { Expense } from '../../../interfaces';
+import { Expense } from '../../../generated/graphql';
 
 const chartData = [
   {

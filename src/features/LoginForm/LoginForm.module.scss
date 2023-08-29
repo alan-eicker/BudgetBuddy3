@@ -1,32 +1,11 @@
 @import '../../styles/abstracts';
 
-.LoginFormContainer {
-  align-items: center;
-  display: flex;
-  height: 100vh;
-  justify-content: center;
+.loginFormContainer {
   text-align: center;
-
-  form {
-    background-color: darken($brand, 2%);
-    margin: rem(25 0);
-    padding: rem(36);
-    width: rem(320);
-
-    & > * {
-      width: 100%;
-    }
-
-    & > * + * {
-      margin-top: rem(16);
-    }
-  }
 }
 
-.LoginFormHeading {
+.loginFormHeading {
   align-items: center;
-  display: flex;
-  font-size: rem(20);
+  font-size: rem(24);
   font-weight: 600;
-  justify-content: center;
 }

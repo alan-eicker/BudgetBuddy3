@@ -20,10 +20,11 @@ const Header = ({ children, title }: HeaderProps): JSX.Element => {
             className={styles.headerLogoContainer}
             variant="h6"
             component="div"
-            sx={{ flexGrow: 1 }}
           >
-            <BrandLogo size={30} />
-            <Link href="/">{title}</Link>
+            <Link href="/" className={styles.headerLogo}>
+              <BrandLogo size={30} />
+              <span>{title}</span>
+            </Link>
           </Typography>
           <div className={styles.headerNavContainer}>{children}</div>
         </Toolbar>

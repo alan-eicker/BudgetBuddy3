@@ -1,8 +1,19 @@
-mutation addExpense($name: String!, $balance: Float!, $isPaid: Boolean!) {
-  addExpense(name: $name, balance: $balance, isPaid: $isPaid) {
+mutation addExpense(
+  $name: String!
+  $balance: Float!
+  $dueDate: String!
+  $isPaid: Boolean!
+) {
+  addExpense(
+    name: $name
+    balance: $balance
+    dueDate: $dueDate
+    isPaid: $isPaid
+  ) {
     id
     name
     balance
+    dueDate
     isPaid
   }
 }

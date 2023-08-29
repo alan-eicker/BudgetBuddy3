@@ -9,7 +9,7 @@ export interface LayoutProps {
 
 const Layout = ({ header, children }: LayoutProps): JSX.Element => {
   const { pathname } = useRouter();
-  const hasHeader = pathname !== '/';
+  const hasHeader = pathname !== '/' && pathname !== '/account/register';
 
   return (
     <div className={styles.layoutContainer}>

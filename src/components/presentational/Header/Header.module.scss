@@ -11,18 +11,25 @@
     box-shadow: none;
     height: rem(60);
   }
-
-  button {
-    min-width: rem(45);
-  }
 }
 
 .headerLogoContainer {
   align-items: center;
   display: flex;
+  flex: 1;
+}
+
+.headerLogo {
+  align-items: center;
+  display: flex;
+  padding: rem(2 4);
 
   & > * + * {
     margin-left: rem(8);
+  }
+
+  &:focus {
+    background-color: lighten($brand, 6%);
   }
 }
 
@@ -31,6 +38,10 @@
 
   & > * + * {
     margin-left: rem(8);
+  }
+
+  button {
+    min-width: rem(45);
   }
 
   @media (min-width: $breakpoint-medium) {
