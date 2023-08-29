@@ -2,13 +2,13 @@ import Head from 'next/head';
 import LoginForm from '@/features/LoginForm';
 import ContentSection from '@/components/presentational/ContentSection';
 
-const Home = (): JSX.Element => {
+const HomePage = (): JSX.Element => {
   return (
     <>
       <Head>
         <title>BudgetBuddy</title>
         <meta name="viewport" content="width=device-width, initial-scale=1" />
-        <meta name="description" content="BudgetBuddy Home page" />
+        <meta name="description" content="BudgetBuddy login page" />
       </Head>
       <ContentSection maxWidth={500}>
         <LoginForm />
@@ -17,4 +17,4 @@ const Home = (): JSX.Element => {
   );
 };
 
-export default Home;
+export default HomePage;
