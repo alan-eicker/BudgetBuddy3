@@ -2,13 +2,16 @@ import Link from 'next/link';
 import { useRouter } from 'next/router';
 import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
+import LoadingButton from '@mui/lab/LoadingButton';
 import styles from './LoginForm.module.scss';
 import BrandLogo from '@/components/presentational/BrandLogo';
 import { useFormik } from 'formik';
 import * as yup from 'yup';
+import { useState } from 'react';
 
 const LoginForm = (): JSX.Element => {
   const router = useRouter();
+  const [isloading, setIsLoading] = useState(false);
 
   const initialValues = {
     username: '',
@@ -25,11 +28,13 @@ const LoginForm = (): JSX.Element => {
     validationSchema,
     validateOnBlur: false,
     onSubmit: () => {
-      // process login request and redirect user...
-      router.push('/account/dashboard');
+      setIsLoading(true);
+      // Send request to authenticate user and redirect...
+      setTimeout(() => {
+        router.push('/account/dashboard');
+      }, 1500);
     },
   });
-
   return (
     <form
       className={styles.loginFormContainer}
@@ -64,9 +69,15 @@ const LoginForm = (): JSX.Element => {
           helperText: errors.password,
         })}
       />
-      <Button color="primary" variant="contained" type="submit" size="large">
+      <LoadingButton
+        color="primary"
+        variant="contained"
+        type="submit"
+        size="large"
+        loading={isloading}
+      >
         Log In
-      </Button>
+      </LoadingButton>
       <p>
         <Button
           size="small"
