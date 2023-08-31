@@ -26,7 +26,7 @@ const Layout = ({
         <CircularProgress color="inherit" />
       </Backdrop>
       <div className={styles.layoutContainer}>
-        {showHeader && header}
+        {showHeader && header && header}
         <main
           className={classnames(styles.layoutMain, {
             [styles.hasHeader]: showHeader,
