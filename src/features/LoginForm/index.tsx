@@ -2,15 +2,18 @@ import Link from 'next/link';
 import { useRouter } from 'next/router';
 import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
+import { Alert } from '@mui/material';
 import LoadingButton from '@mui/lab/LoadingButton';
 import styles from './LoginForm.module.scss';
 import BrandLogo from '@/components/presentational/BrandLogo';
+import useAuth from '../../hooks/auth';
 import { useFormik } from 'formik';
 import * as yup from 'yup';
 import { useState } from 'react';
 
 const LoginForm = (): JSX.Element => {
   const router = useRouter();
+  const { authError, login } = useAuth();
   const [isloading, setIsLoading] = useState(false);
 
   const initialValues = {
@@ -29,10 +32,7 @@ const LoginForm = (): JSX.Element => {
     validateOnBlur: false,
     onSubmit: () => {
       setIsLoading(true);
-      // Send request to authenticate user and redirect...
-      setTimeout(() => {
-        router.push('/account/dashboard');
-      }, 1500);
+      login();
     },
   });
   return (
@@ -45,6 +45,11 @@ const LoginForm = (): JSX.Element => {
         <BrandLogo size={70} />
         <h1 className={styles.loginFormHeading}>BudgetBuddy</h1>
       </div>
+      {authError && (
+        <Alert variant="outlined" severity="error">
+          Invalid user credentials
+        </Alert>
+      )}
       <TextField
         required
         label="Username"

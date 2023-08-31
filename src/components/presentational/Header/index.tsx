@@ -11,26 +11,24 @@ export interface HeaderProps {
   children?: ReactNode;
 }
 
-const Header = ({ children, title }: HeaderProps): JSX.Element => {
-  return (
-    <div className={styles.headerContainer}>
-      <AppBar position="static">
-        <Toolbar>
-          <Typography
-            className={styles.headerLogoContainer}
-            variant="h6"
-            component="div"
-          >
-            <Link href="/" className={styles.headerLogo}>
-              <BrandLogo size={30} />
-              <span>{title}</span>
-            </Link>
-          </Typography>
-          <div className={styles.headerNavContainer}>{children}</div>
-        </Toolbar>
-      </AppBar>
-    </div>
-  );
-};
+const Header = ({ children, title }: HeaderProps): JSX.Element => (
+  <div className={styles.headerContainer}>
+    <AppBar position="static">
+      <Toolbar>
+        <Typography
+          className={styles.headerLogoContainer}
+          variant="h6"
+          component="div"
+        >
+          <Link href="/" className={styles.headerLogo}>
+            <BrandLogo size={30} />
+            <span>{title}</span>
+          </Link>
+        </Typography>
+        <div className={styles.headerNavContainer}>{children}</div>
+      </Toolbar>
+    </AppBar>
+  </div>
+);
 
 export default Header;

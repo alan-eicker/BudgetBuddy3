@@ -1,27 +1,41 @@
-import { useRouter } from 'next/router';
+import Backdrop from '@mui/material/Backdrop';
+import CircularProgress from '@mui/material/CircularProgress';
+import { useOverlayContext } from '../../../providers/OverlayProvider';
 import styles from './Layout.module.scss';
 import classnames from 'classnames';
 
 export interface LayoutProps {
   header: JSX.Element;
   children: JSX.Element;
+  showHeader?: boolean;
 }
 
-const Layout = ({ header, children }: LayoutProps): JSX.Element => {
-  const { pathname } = useRouter();
-  const hasHeader = pathname !== '/' && pathname !== '/account/register';
+const Layout = ({
+  header,
+  children,
+  showHeader = false,
+}: LayoutProps): JSX.Element => {
+  const { showOverlay } = useOverlayContext();
 
   return (
-    <div className={styles.layoutContainer}>
-      {hasHeader && header}
-      <main
-        className={classnames(styles.layoutMain, {
-          [styles.hasHeader]: hasHeader,
-        })}
+    <>
+      <Backdrop
+        sx={{ color: '#fff', zIndex: (theme) => theme.zIndex.drawer + 1 }}
+        open={showOverlay}
       >
-        {children}
-      </main>
-    </div>
+        <CircularProgress color="inherit" />
+      </Backdrop>
+      <div className={styles.layoutContainer}>
+        {showHeader && header}
+        <main
+          className={classnames(styles.layoutMain, {
+            [styles.hasHeader]: showHeader,
+          })}
+        >
+          {children}
+        </main>
+      </div>
+    </>
   );
 };
 
