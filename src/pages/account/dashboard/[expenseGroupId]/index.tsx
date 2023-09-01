@@ -1,11 +1,20 @@
-import Link from 'next/link';
+import Head from 'next/head';
+import ExpenseGroupDetail from '@/features/ExpenseGroupDetail';
 
-const ExpenseGroupDetail = (): JSX.Element => {
+const ExpenseGroupDetailPage = (): JSX.Element => {
   return (
-    <div style={{ padding: 30 }}>
-      <Link href="/account/dashboard">&laquo; Back to dashboard</Link>
-    </div>
+    <>
+      <Head>
+        <title>BudgetBuddy | Expense Group Details</title>
+        <meta
+          name="description"
+          content="BudgetBuddy expense group detail page"
+        />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+      </Head>
+      <ExpenseGroupDetail />
+    </>
   );
 };
 
-export default ExpenseGroupDetail;
+export default ExpenseGroupDetailPage;

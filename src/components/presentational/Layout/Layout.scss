@@ -1,0 +1,13 @@
+.layout {
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+
+  &__main {
+    flex: 1;
+
+    &.has-header {
+      margin-top: rem(60);
+    }
+  }
+}

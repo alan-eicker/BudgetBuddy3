@@ -4,7 +4,6 @@ import AppBar from '@mui/material/AppBar';
 import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
 import BrandLogo from '../BrandLogo';
-import styles from './Header.module.scss';
 
 export interface HeaderProps {
   title: string;
@@ -12,20 +11,16 @@ export interface HeaderProps {
 }
 
 const Header = ({ children, title }: HeaderProps): JSX.Element => (
-  <div className={styles.headerContainer}>
+  <div className="header">
     <AppBar position="static">
       <Toolbar>
-        <Typography
-          className={styles.headerLogoContainer}
-          variant="h6"
-          component="div"
-        >
-          <Link href="/" className={styles.headerLogo}>
+        <Typography className="header__logo" variant="h6" component="div">
+          <Link href="/" className="header__logo__link">
             <BrandLogo size={30} />
             <span>{title}</span>
           </Link>
         </Typography>
-        <div className={styles.headerNavContainer}>{children}</div>
+        <div className="header__nav">{children}</div>
       </Toolbar>
     </AppBar>
   </div>

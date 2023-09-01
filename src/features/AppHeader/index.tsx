@@ -11,7 +11,9 @@ const AppHeader = () => {
 
   return (
     <Header title="BudgetBuddy">
-      <time dateTime={date}>{date}</time>
+      <time style={{ fontSize: 14 }} dateTime={date}>
+        {date}
+      </time>
       <DropdownMenu
         triggerButtonText={<AccountCircleOutlinedIcon />}
         menuItems={[

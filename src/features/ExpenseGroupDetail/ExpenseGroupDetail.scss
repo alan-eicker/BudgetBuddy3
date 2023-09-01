@@ -1,0 +1,43 @@
+.expense-detail {
+  display: flex;
+  flex-direction: column;
+  height: calc(100vh - 60px);
+  overflow-y: hidden;
+
+  &__head {
+    background-color: darken($brand, 2%);
+  }
+
+  &__head__left-content {
+    text-align: center;
+
+    h1 {
+      margin-top: rem(8);
+    }
+  }
+
+  &__head__right-content {
+    display: flex;
+    justify-content: center;
+
+    & > * + * {
+      margin-left: rem(16);
+    }
+  }
+
+  &__body {
+    background-color: $brand;
+    height: 100%;
+    overflow: auto;
+  }
+
+  @media (min-width: $breakpoint-medium) {
+    &__head__left-content {
+      text-align: left;
+    }
+
+    &__head__right-content {
+      justify-content: flex-end;
+    }
+  }
+}

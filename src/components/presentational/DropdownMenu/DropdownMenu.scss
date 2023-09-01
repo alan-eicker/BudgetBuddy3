@@ -1,0 +1,9 @@
+.dropdown-menu-list {
+  background-color: $brand;
+  min-width: rem(150);
+
+  &__link {
+    display: flex;
+    align-items: center;
+  }
+}

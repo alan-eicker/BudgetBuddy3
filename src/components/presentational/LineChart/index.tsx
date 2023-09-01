@@ -15,7 +15,6 @@ import {
   Payload,
 } from 'recharts/types/component/DefaultTooltipContent';
 import { COLOR_PALETTE } from './colors';
-import styles from './LineChart.module.scss';
 
 interface LineChartProps {
   title: string;
@@ -70,7 +69,7 @@ const LineChart = ({
   }: TooltipProps<ValueType, NameType>) => {
     if (active && payload && payload.length) {
       return (
-        <div className={styles.lineChartTooltip}>
+        <div className="line-chart__tooltip">
           {payload.map(
             ({ name, value, color }: Payload<ValueType, NameType>) => (
               <div key={name}>
@@ -86,9 +85,9 @@ const LineChart = ({
   };
 
   return (
-    <div className={styles.lineChartContainer}>
-      <TitleElement className={styles.lineChartTitle}>{title}</TitleElement>
-      <div className={styles.lineChartContent}>
+    <div className="line-chart">
+      <TitleElement className="line-chart__title">{title}</TitleElement>
+      <div className="line-chart__content">
         <ResponsiveContainer width="100%" height={height}>
           <RechartsLineChart data={data}>
             <CartesianGrid stroke={gridColor} strokeDasharray="3 3" />

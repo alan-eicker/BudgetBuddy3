@@ -1,5 +1,4 @@
 import React from 'react';
-import styles from './Card.module.scss';
 
 interface CardProps {
   head: string | JSX.Element;
@@ -7,9 +6,9 @@ interface CardProps {
 }
 
 const Card = ({ head, children }: CardProps) => (
-  <div className={styles.card}>
-    <div className={styles.cardHead}>{head}</div>
-    <div className={styles.cardBody}>{children}</div>
+  <div className="card">
+    <div className="card__head">{head}</div>
+    <div className="card__body">{children}</div>
   </div>
 );
 
