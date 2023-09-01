@@ -1,4 +1,5 @@
 import { ReactNode } from 'react';
+import styles from './ContentSection.module.scss';
 
 const ContentSection = ({
   children,
@@ -7,8 +8,8 @@ const ContentSection = ({
   children: ReactNode;
   maxWidth?: number | undefined;
 }): JSX.Element => (
-  <div className="content-section">
-    <div className="content-section__body" style={{ maxWidth }}>
+  <div className={styles.container}>
+    <div className={styles.body} style={{ maxWidth }}>
       {children}
     </div>
   </div>

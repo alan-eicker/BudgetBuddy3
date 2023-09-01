@@ -1,4 +1,6 @@
-.card {
+@import '../../../styles/abstracts';
+
+.container {
   background-color: darken($brand, 2%);
   height: 100%;
   transition: all 0.15s ease;
@@ -7,14 +9,14 @@
     box-shadow: 0 0 0 rem(2) lighten($brand, 14%);
     transform: scale(1.04);
   }
+}
 
-  &__head {
-    background-color: darken($brand, 4%);
-    font-size: rem(20);
-    padding: rem(16);
-  }
+.head {
+  background-color: darken($brand, 4%);
+  font-size: rem(20);
+  padding: rem(16);
+}
 
-  &__body {
-    padding: rem(16);
-  }
+.body {
+  padding: rem(16);
 }

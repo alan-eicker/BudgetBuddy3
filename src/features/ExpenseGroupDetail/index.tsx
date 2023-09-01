@@ -2,20 +2,15 @@ import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import Grid from '@mui/material/Grid';
 import ContentSection from '@/components/presentational/ContentSection';
+import styles from './ExpenseGroupDetail.module.scss';
 
 const ExpenseGroupDetail = (): JSX.Element => {
   return (
-    <div className="expense-detail">
-      <div className="expense-detail__head">
+    <div className={styles.container}>
+      <div className={styles.head}>
         <ContentSection>
           <Grid container spacing={2}>
-            <Grid
-              item
-              xs={12}
-              sm={6}
-              md={6}
-              className="expense-detail__head__left-content"
-            >
+            <Grid item xs={12} sm={6} md={6} className={styles.headLeft}>
               <Button href="/account/dashboard">
                 &laquo; Back to dashboard
               </Button>
@@ -32,7 +27,7 @@ const ExpenseGroupDetail = (): JSX.Element => {
               xs={12}
               sm={6}
               md={6}
-              className="expense-detail__head__right-content"
+              className={styles.headRight}
             >
               <Button variant="contained" size="small">
                 Edit
@@ -47,7 +42,7 @@ const ExpenseGroupDetail = (): JSX.Element => {
           </Grid>
         </ContentSection>
       </div>
-      <div className="expense-detail__body">
+      <div className={styles.body}>
         <ContentSection>
           <div style={{ height: 900 }}>content</div>
         </ContentSection>

@@ -5,6 +5,7 @@ import MenuList from '@mui/material/MenuList';
 import MenuItem from '@mui/material/MenuItem';
 import ListItemIcon from '@mui/material/ListItemIcon';
 import Button from '@mui/material/Button';
+import styles from './DropdownMenu.module.scss';
 
 interface MenuItem {
   url?: string | undefined;
@@ -56,14 +57,10 @@ const DropdownMenu = ({
           horizontal: 'left',
         }}
       >
-        <MenuList className="dropdown-menu-list" dense>
+        <MenuList className={styles.menu} dense>
           {menuItems.map(({ text, url = '', onClick, icon }) => (
             <MenuItem key={text}>
-              <Link
-                className="dropdown-menu-list__link"
-                href={url}
-                onClick={onClick}
-              >
+              <Link className={styles.link} href={url} onClick={onClick}>
                 {icon && <ListItemIcon>{icon}</ListItemIcon>}
                 {text}
               </Link>

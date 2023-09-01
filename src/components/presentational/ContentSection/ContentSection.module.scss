@@ -1,10 +1,12 @@
-.content-section {
+@import '../../../styles/abstracts';
+
+.container {
   display: flex;
   justify-content: center;
   padding: rem(32 0);
   position: relative;
+}
 
-  &__body {
-    width: 90%;
-  }
+.body {
+  width: 90%;
 }

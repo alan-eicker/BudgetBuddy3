@@ -1,4 +1,6 @@
-.jumbotron {
+@import '../../../styles/abstracts';
+
+.container {
   background-color: darken($brand, 2%);
   display: flex;
   justify-content: center;
