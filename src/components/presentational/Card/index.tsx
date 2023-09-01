@@ -4,10 +4,11 @@ import styles from './Card.module.scss';
 interface CardProps {
   head: string | JSX.Element;
   children: React.ReactNode;
+  height?: number | string | undefined;
 }
 
-const Card = ({ head, children }: CardProps) => (
-  <div className={styles.container}>
+const Card = ({ head, children, height }: CardProps) => (
+  <div className={styles.container} style={{ height }}>
     <div className={styles.head}>{head}</div>
     <div className={styles.body}>{children}</div>
   </div>

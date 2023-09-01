@@ -17,12 +17,14 @@ interface MenuItem {
 interface DropdownMenuProps {
   triggerButtonText: string | ReactNode;
   triggerButtonTextColor?: string;
+  ariaLabel?: string;
   menuItems: MenuItem[];
 }
 
 const DropdownMenu = ({
   triggerButtonText,
   triggerButtonTextColor = 'inherit',
+  ariaLabel,
   menuItems,
 }: DropdownMenuProps) => {
   const [anchorEl, setAnchorEl] = useState<HTMLButtonElement | null>(null);
@@ -44,6 +46,7 @@ const DropdownMenu = ({
         sx={{ color: triggerButtonTextColor }}
         aria-describedby={id}
         onClick={handleClick}
+        aria-label={ariaLabel}
       >
         {triggerButtonText}
       </Button>

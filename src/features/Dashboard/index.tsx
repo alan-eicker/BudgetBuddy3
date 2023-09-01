@@ -135,7 +135,7 @@ const Dashboard = () => {
             return (
               <Grid key={id} item xs={12} sm={12} md={4}>
                 <Link href={`/account/dashboard/${id}`}>
-                  <Card head={name}>
+                  <Card head={name} height="100%">
                     <div
                       style={{
                         display: 'flex',

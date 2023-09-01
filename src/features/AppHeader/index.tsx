@@ -16,6 +16,7 @@ const AppHeader = () => {
       </time>
       <DropdownMenu
         triggerButtonText={<AccountCircleOutlinedIcon />}
+        ariaLabel="my account button"
         menuItems={[
           { url: '/account/profile', text: 'My Profile', icon: <PersonIcon /> },
           {

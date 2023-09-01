@@ -1,7 +1,9 @@
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import Grid from '@mui/material/Grid';
+import Switch from '@mui/material/Switch';
 import ContentSection from '@/components/presentational/ContentSection';
+import Card from '@/components/presentational/Card';
 import styles from './ExpenseGroupDetail.module.scss';
 
 const ExpenseGroupDetail = (): JSX.Element => {
@@ -11,7 +13,7 @@ const ExpenseGroupDetail = (): JSX.Element => {
         <ContentSection>
           <Grid container spacing={2}>
             <Grid item xs={12} sm={6} md={6} className={styles.headLeft}>
-              <Button href="/account/dashboard">
+              <Button href="/account/dashboard" size="small">
                 &laquo; Back to dashboard
               </Button>
               <Typography component="h1" variant="h4">
@@ -30,7 +32,7 @@ const ExpenseGroupDetail = (): JSX.Element => {
               className={styles.headRight}
             >
               <Button variant="contained" size="small">
-                Edit
+                Edit Group
               </Button>
               <Button variant="contained" size="small">
                 Duplicate
@@ -44,7 +46,84 @@ const ExpenseGroupDetail = (): JSX.Element => {
       </div>
       <div className={styles.body}>
         <ContentSection>
-          <div style={{ height: 900 }}>content</div>
+          <Grid container spacing={5}>
+            <Grid item xs={12} sm={12} md={8}>
+              <Card
+                head={
+                  <div
+                    style={{
+                      display: 'flex',
+                      alignItems: 'center',
+                      justifyContent: 'space-between',
+                    }}
+                  >
+                    <div>Mortgage</div>
+                    <div>
+                      <Button>Edit</Button>
+                      <Button>Delete</Button>
+                    </div>
+                  </div>
+                }
+              >
+                <div
+                  style={{
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'space-between',
+                  }}
+                >
+                  <div>
+                    Balance: $2320.45
+                    <br />
+                    Due Date: 09/20/2023
+                  </div>
+                  <div>
+                    Paid
+                    <Switch />
+                  </div>
+                </div>
+              </Card>
+              <br />
+              <Card
+                head={
+                  <div
+                    style={{
+                      display: 'flex',
+                      alignItems: 'center',
+                      justifyContent: 'space-between',
+                    }}
+                  >
+                    <div>Mortgage</div>
+                    <div>
+                      <Button>Edit</Button>
+                      <Button>Delete</Button>
+                    </div>
+                  </div>
+                }
+              >
+                <div
+                  style={{
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'space-between',
+                  }}
+                >
+                  <div>
+                    Balance: $2320.45
+                    <br />
+                    Due Date: 09/20/2023
+                  </div>
+                  <div>
+                    Paid
+                    <Switch checked={true} />
+                  </div>
+                </div>
+              </Card>
+            </Grid>
+            <Grid item xs={12} sm={12} md={4}>
+              Right col...
+            </Grid>
+          </Grid>
         </ContentSection>
       </div>
     </div>
