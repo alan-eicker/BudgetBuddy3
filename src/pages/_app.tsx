@@ -7,14 +7,9 @@ import { useRouter } from 'next/router';
 import type { AppProps } from 'next/app';
 import { ThemeProvider, createTheme } from '@mui/material/styles';
 import CssBaseline from '@mui/material/CssBaseline';
-import PersonIcon from '@mui/icons-material/Person';
-import LogoutIcon from '@mui/icons-material/Logout';
-import AccountCircleOutlinedIcon from '@mui/icons-material/AccountCircleOutlined';
-import Header from '@/components/presentational/Header';
-import Layout from '@/components/presentational/Layout';
-import DropdownMenu from '@/components/presentational/DropdownMenu';
 import { Hydrate, QueryClientProvider } from 'react-query';
-import useAuth from '@/hooks/auth';
+import Layout from '@/components/presentational/Layout';
+import AppHeader from '@/features/AppHeader';
 import OverlayProvider from '@/providers/OverlayProvider';
 import { queryClient } from '../api';
 
@@ -24,30 +19,9 @@ const darkTheme = createTheme({
   },
 });
 
-const date = new Date().toDateString();
-
 export default function App({ Component, pageProps }: AppProps) {
   const { pathname } = useRouter();
-  const { logout } = useAuth();
-
   const showHeader = pathname !== '/' && pathname !== '/account/register';
-
-  const header = (
-    <Header title="BudgetBuddy">
-      <time dateTime={date}>{date}</time>
-      <DropdownMenu
-        triggerButtonText={<AccountCircleOutlinedIcon />}
-        menuItems={[
-          { url: '/account/profile', text: 'My Profile', icon: <PersonIcon /> },
-          {
-            onClick: logout,
-            text: 'Log Out',
-            icon: <LogoutIcon />,
-          },
-        ]}
-      />
-    </Header>
-  );
 
   return (
     <QueryClientProvider client={queryClient}>
@@ -55,7 +29,7 @@ export default function App({ Component, pageProps }: AppProps) {
         <ThemeProvider theme={darkTheme}>
           <CssBaseline />
           <OverlayProvider>
-            <Layout showHeader={showHeader} header={header}>
+            <Layout showHeader={showHeader} header={<AppHeader />}>
               <Component {...pageProps} />
             </Layout>
           </OverlayProvider>

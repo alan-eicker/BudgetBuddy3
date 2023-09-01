@@ -1,15 +1,15 @@
+import { useState } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
 import { Alert } from '@mui/material';
 import LoadingButton from '@mui/lab/LoadingButton';
-import styles from './LoginForm.module.scss';
 import BrandLogo from '@/components/presentational/BrandLogo';
-import useAuth from '../../hooks/auth';
+import { useAuth } from '@/hooks/useAuth';
 import { useFormik } from 'formik';
 import * as yup from 'yup';
-import { useState } from 'react';
+import styles from './LoginForm.module.scss';
 
 const LoginForm = (): JSX.Element => {
   const router = useRouter();

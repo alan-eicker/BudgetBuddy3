@@ -1,8 +1,8 @@
 import { useState } from 'react';
 import { useRouter } from 'next/router';
-import { useOverlayContext } from '../providers/OverlayProvider';
+import { useOverlayContext } from '@/providers/OverlayProvider';
 
-const useAuth = () => {
+export const useAuth = () => {
   const [authError, setAuthError] = useState(false);
   const router = useRouter();
   const { setShowOverlay } = useOverlayContext();
@@ -22,5 +22,3 @@ const useAuth = () => {
 
   return { authError, login, logout };
 };
-
-export default useAuth;

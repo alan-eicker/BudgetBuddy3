@@ -1,8 +1,8 @@
+import classnames from 'classnames';
 import Backdrop from '@mui/material/Backdrop';
 import CircularProgress from '@mui/material/CircularProgress';
-import { useOverlayContext } from '../../../providers/OverlayProvider';
+import { useOverlayContext } from '@/providers/OverlayProvider';
 import styles from './Layout.module.scss';
-import classnames from 'classnames';
 
 export interface LayoutProps {
   header: JSX.Element;
@@ -16,6 +16,7 @@ const Layout = ({
   showHeader = false,
 }: LayoutProps): JSX.Element => {
   const { showOverlay } = useOverlayContext();
+  const hasHeader = showHeader && header;
 
   return (
     <>
@@ -26,10 +27,10 @@ const Layout = ({
         <CircularProgress color="inherit" />
       </Backdrop>
       <div className={styles.layoutContainer}>
-        {showHeader && header && header}
+        {hasHeader && header}
         <main
           className={classnames(styles.layoutMain, {
-            [styles.hasHeader]: showHeader,
+            [styles.hasHeader]: hasHeader,
           })}
         >
           {children}

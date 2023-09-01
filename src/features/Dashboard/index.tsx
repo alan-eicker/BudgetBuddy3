@@ -8,8 +8,8 @@ import Jumbotron from '@/components/presentational/Jumbtron';
 import LineChart from '@/components/presentational/LineChart';
 import Card from '@/components/presentational/Card';
 import ContentSection from '@/components/presentational/ContentSection';
-import { queryClient, getAllExpenseGroups } from '../../api';
-import { Expense } from '../../generated/graphql';
+import { queryClient, getAllExpenseGroups } from '@/api';
+import { Expense } from '@/generated/graphql';
 
 const chartData = [
   {
