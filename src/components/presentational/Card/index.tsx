@@ -4,7 +4,7 @@ import styles from './Card.module.scss';
 interface CardProps {
   head: string | JSX.Element;
   children: React.ReactNode;
-  height?: number | string | undefined;
+  height?: number | string;
 }
 
 const Card = ({ head, children, height }: CardProps) => (

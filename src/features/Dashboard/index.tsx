@@ -9,6 +9,7 @@ import LineChart from '@/components/presentational/LineChart';
 import Card from '@/components/presentational/Card';
 import ContentSection from '@/components/presentational/ContentSection';
 import { queryClient, getAllExpenseGroups } from '@/api';
+import { GetAllExpenseGroupsQuery } from '@/generated/graphql';
 import { Expense } from '@/generated/graphql';
 
 const chartData = [
@@ -96,8 +97,9 @@ const getTotalOverdueBalances = (expenses: Expense[]): number => {
 };
 
 export async function getServerSideProps() {
-  await queryClient.prefetchQuery(['expenseGroups'], () =>
-    getAllExpenseGroups(),
+  await queryClient.prefetchQuery<GetAllExpenseGroupsQuery>(
+    ['expenseGroups'],
+    () => getAllExpenseGroups(),
   );
 
   return {
@@ -108,7 +110,9 @@ export async function getServerSideProps() {
 }
 
 const Dashboard = () => {
-  const { data } = useQuery(['expenseGroups'], () => getAllExpenseGroups());
+  const { data } = useQuery<GetAllExpenseGroupsQuery>(['expenseGroups'], () =>
+    getAllExpenseGroups(),
+  );
 
   return (
     <>

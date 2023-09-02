@@ -1,12 +1,49 @@
+import { GetServerSidePropsContext } from 'next';
+import { useRouter } from 'next/router';
+import { dehydrate, useQuery } from 'react-query';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import Grid from '@mui/material/Grid';
 import Switch from '@mui/material/Switch';
 import ContentSection from '@/components/presentational/ContentSection';
 import Card from '@/components/presentational/Card';
+import { queryClient, getExpenseGroupById } from '@/api';
+import { GetExpenseGroupByIdQuery } from '@/generated/graphql';
+import { useOverlayContext } from '../../providers/OverlayProvider';
 import styles from './ExpenseGroupDetail.module.scss';
+import { useEffect } from 'react';
+
+export async function getServerSideProps(context: GetServerSidePropsContext) {
+  const id = context.query.expenseGroupId as string;
+  await queryClient.prefetchQuery<GetExpenseGroupByIdQuery>(
+    ['expenseGroup' + id],
+    () => getExpenseGroupById({ id }),
+  );
+
+  return {
+    props: {
+      dehydratedState: dehydrate(queryClient),
+    },
+  };
+}
 
 const ExpenseGroupDetail = (): JSX.Element => {
+  const { query } = useRouter();
+  const { setShowOverlay } = useOverlayContext();
+
+  const { data } = useQuery<GetExpenseGroupByIdQuery>(
+    ['expenseGroup' + query.expenseGroupId],
+    () => getExpenseGroupById({ id: query.expenseGroupId as string }),
+  );
+
+  useEffect(() => {
+    setShowOverlay(!data);
+  }, [data, setShowOverlay]);
+
+  if (!data) return <></>;
+
+  const { name, totalBudget, expenses } = data.expenseGroup;
+
   return (
     <div className={styles.container}>
       <div className={styles.head}>
@@ -17,10 +54,10 @@ const ExpenseGroupDetail = (): JSX.Element => {
                 &laquo; Back to dashboard
               </Button>
               <Typography component="h1" variant="h4">
-                08/25/2023 - 09/08/2023
+                {name}
               </Typography>
               <Typography component="h2" variant="h6">
-                Total Budget: $5,728.00
+                Total Budget: ${totalBudget.toFixed(2)}
               </Typography>
             </Grid>
             <Grid
@@ -48,77 +85,47 @@ const ExpenseGroupDetail = (): JSX.Element => {
         <ContentSection>
           <Grid container spacing={5}>
             <Grid item xs={12} sm={12} md={8}>
-              <Card
-                head={
-                  <div
-                    style={{
-                      display: 'flex',
-                      alignItems: 'center',
-                      justifyContent: 'space-between',
-                    }}
-                  >
-                    <div>Mortgage</div>
-                    <div>
-                      <Button>Edit</Button>
-                      <Button>Delete</Button>
-                    </div>
-                  </div>
-                }
-              >
-                <div
-                  style={{
-                    display: 'flex',
-                    alignItems: 'center',
-                    justifyContent: 'space-between',
-                  }}
-                >
-                  <div>
-                    Balance: $2320.45
-                    <br />
-                    Due Date: 09/20/2023
-                  </div>
-                  <div>
-                    Paid
-                    <Switch />
-                  </div>
-                </div>
-              </Card>
-              <br />
-              <Card
-                head={
-                  <div
-                    style={{
-                      display: 'flex',
-                      alignItems: 'center',
-                      justifyContent: 'space-between',
-                    }}
-                  >
-                    <div>Mortgage</div>
-                    <div>
-                      <Button>Edit</Button>
-                      <Button>Delete</Button>
-                    </div>
-                  </div>
-                }
-              >
-                <div
-                  style={{
-                    display: 'flex',
-                    alignItems: 'center',
-                    justifyContent: 'space-between',
-                  }}
-                >
-                  <div>
-                    Balance: $2320.45
-                    <br />
-                    Due Date: 09/20/2023
-                  </div>
-                  <div>
-                    Paid
-                    <Switch checked={true} />
-                  </div>
-                </div>
-              </Card>
+              <ul>
+                {expenses.map((expense) => (
+                  <li key={expense?.id}>
+                    <Card
+                      head={
+                        <div
+                          style={{
+                            display: 'flex',
+                            alignItems: 'center',
+                            justifyContent: 'space-between',
+                          }}
+                        >
+                          <div>{expense?.name}</div>
+                          <div>
+                            <Button>Edit</Button>
+                            <Button>Delete</Button>
+                          </div>
+                        </div>
+                      }
+                    >
+                      <div
+                        style={{
+                          display: 'flex',
+                          alignItems: 'center',
+                          justifyContent: 'space-between',
+                        }}
+                      >
+                        <div>
+                          Balance: ${expense?.balance.toFixed(2)}
+                          <br />
+                          Due Date: {expense?.dueDate}
+                        </div>
+                        <div>
+                          Paid
+                          <Switch checked={expense?.isPaid} />
+                        </div>
+                      </div>
+                    </Card>
+                  </li>
+                ))}
+              </ul>
             </Grid>
             <Grid item xs={12} sm={12} md={4}>
               Right col...

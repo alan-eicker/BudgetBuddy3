@@ -11,3 +11,18 @@ query getAllExpenseGroups {
     }
   }
 }
+
+query getExpenseGroupById($id: String!) {
+  expenseGroup: getExpenseGroupById(id: $id) {
+    id
+    name
+    totalBudget
+    expenses {
+      id
+      name
+      balance
+      dueDate
+      isPaid
+    }
+  }
+}
