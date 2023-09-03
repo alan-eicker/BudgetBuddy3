@@ -10,7 +10,8 @@ import ContentSection from '@/components/presentational/ContentSection';
 import Card from '@/components/presentational/Card';
 import { queryClient, getExpenseGroupById } from '@/api';
 import { GetExpenseGroupByIdQuery } from '@/generated/graphql';
-import { useOverlayContext } from '../../providers/OverlayProvider';
+import { useOverlayContext } from '@/providers/OverlayProvider';
+import { formatNumber } from '@/utils/numbers';
 import styles from './ExpenseGroupDetail.module.scss';
 import { useEffect } from 'react';
 
@@ -60,7 +61,7 @@ const ExpenseGroupDetail = (): JSX.Element => {
                 {name}
               </Typography>
               <Typography component="h2" variant="h6">
-                Total Budget: ${totalBudget.toFixed(2)}
+                Total Budget: ${formatNumber(totalBudget)}
               </Typography>
             </Grid>
             <Grid
@@ -88,46 +89,72 @@ const ExpenseGroupDetail = (): JSX.Element => {
         <ContentSection>
           <Grid container spacing={5}>
             <Grid item xs={12} sm={12} md={8}>
-              <ul>
-                {expenses.map((expense) => (
-                  <li key={expense?.id}>
-                    <Card
-                      head={
+              {expenses && (
+                <ul>
+                  {expenses.map((expense) => (
+                    <li key={expense.id}>
+                      <Card
+                        head={
+                          <Box
+                            display="flex"
+                            alignItems="center"
+                            justifyContent="space-between"
+                          >
+                            <div>{expense.name}</div>
+                            <div>
+                              <Button>Edit</Button>
+                              <Button>Delete</Button>
+                            </div>
+                          </Box>
+                        }
+                      >
                         <Box
                           display="flex"
                           alignItems="center"
                           justifyContent="space-between"
                         >
-                          <div>{expense?.name}</div>
                           <div>
-                            <Button>Edit</Button>
-                            <Button>Delete</Button>
+                            <div>Balance: ${formatNumber(expense.balance)}</div>
+                            <div>Due Date: {expense.dueDate}</div>
+                          </div>
+                          <div>
+                            Paid
+                            <Switch checked={expense.isPaid} />
                           </div>
                         </Box>
-                      }
-                    >
-                      <Box
-                        display="flex"
-                        alignItems="center"
-                        justifyContent="space-between"
-                      >
-                        <div>
-                          Balance: ${expense?.balance.toFixed(2)}
-                          <br />
-                          Due Date: {expense?.dueDate}
-                        </div>
-                        <div>
-                          Paid
-                          <Switch checked={expense?.isPaid} />
-                        </div>
-                      </Box>
-                    </Card>
-                  </li>
-                ))}
-              </ul>
+                      </Card>
+                    </li>
+                  ))}
+                </ul>
+              )}
             </Grid>
             <Grid item xs={12} sm={12} md={4}>
-              Right col...
+              <Card
+                head={
+                  <h3 style={{ textAlign: 'center' }}>Spending Snapshot</h3>
+                }
+              >
+                <ul style={{ textAlign: 'center' }}>
+                  <li>
+                    <Typography component="h4">Total Balance</Typography>
+                    <Typography fontSize={26} fontWeight="bold">
+                      ${formatNumber(7490.45)}
+                    </Typography>
+                  </li>
+                  <li>
+                    <Typography component="h4">Unpaid Balance</Typography>
+                    <Typography fontSize={26} fontWeight="bold">
+                      ${formatNumber(2345.23)}
+                    </Typography>
+                  </li>
+                  <li>
+                    <Typography component="h4">Left Over Balance</Typography>
+                    <Typography fontSize={26} fontWeight="bold">
+                      ${formatNumber(1234.45)}
+                    </Typography>
+                  </li>
+                </ul>
+              </Card>
             </Grid>
           </Grid>
         </ContentSection>

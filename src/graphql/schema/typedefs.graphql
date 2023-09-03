@@ -16,7 +16,7 @@ type ExpenseGroup {
   id: ID!
   name: String!
   totalBudget: Float!
-  expenses: [Expense]!
+  expenses: [Expense!]
 }
 
 type Expense {
