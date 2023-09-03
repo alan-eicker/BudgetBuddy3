@@ -24,7 +24,21 @@ const expenseGroups = [
         id: '3',
         name: 'T-Mobile',
         balance: 131.32,
-        dueDate: '08/14/2023',
+        dueDate: '08/19/2023',
+        isPaid: false,
+      },
+      {
+        id: '3',
+        name: 'Nicor',
+        balance: 234.1,
+        dueDate: '08/19/2023',
+        isPaid: true,
+      },
+      {
+        id: '3',
+        name: 'Gym',
+        balance: 10.0,
+        dueDate: '08/27/2023',
         isPaid: false,
       },
     ],
@@ -32,6 +46,7 @@ const expenseGroups = [
   {
     id: '2',
     name: '08/15/2023 - 08/31/2023',
+    totalBudget: 5467.0,
     expenses: [
       {
         id: '1',
@@ -59,6 +74,7 @@ const expenseGroups = [
   {
     id: '3',
     name: '09/01/2023 - 09/15/2023',
+    totalBudget: 5467.0,
     expenses: [
       {
         id: '1',
@@ -86,6 +102,7 @@ const expenseGroups = [
   {
     id: '4',
     name: '08/01/2023 - 08/15/2023',
+    totalBudget: 5467.0,
     expenses: [
       {
         id: '1',
@@ -113,6 +130,7 @@ const expenseGroups = [
   {
     id: '5',
     name: '08/15/2023 - 08/31/2023',
+    totalBudget: 5467.0,
     expenses: [
       {
         id: '1',
@@ -140,6 +158,7 @@ const expenseGroups = [
   {
     id: '6',
     name: '09/01/2023 - 09/15/2023',
+    totalBudget: 5467.0,
     expenses: [
       {
         id: '1',

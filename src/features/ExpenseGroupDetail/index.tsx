@@ -5,6 +5,7 @@ import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import Grid from '@mui/material/Grid';
 import Switch from '@mui/material/Switch';
+import Box from '@mui/material/Box';
 import ContentSection from '@/components/presentational/ContentSection';
 import Card from '@/components/presentational/Card';
 import { queryClient, getExpenseGroupById } from '@/api';
@@ -37,7 +38,9 @@ const ExpenseGroupDetail = (): JSX.Element => {
   );
 
   useEffect(() => {
-    setShowOverlay(!data);
+    if (!data) {
+      setShowOverlay(true);
+    }
   }, [data, setShowOverlay]);
 
   if (!data) return <></>;
@@ -90,27 +93,23 @@ const ExpenseGroupDetail = (): JSX.Element => {
                   <li key={expense?.id}>
                     <Card
                       head={
-                        <div
-                          style={{
-                            display: 'flex',
-                            alignItems: 'center',
-                            justifyContent: 'space-between',
-                          }}
+                        <Box
+                          display="flex"
+                          alignItems="center"
+                          justifyContent="space-between"
                         >
                           <div>{expense?.name}</div>
                           <div>
                             <Button>Edit</Button>
                             <Button>Delete</Button>
                           </div>
-                        </div>
+                        </Box>
                       }
                     >
-                      <div
-                        style={{
-                          display: 'flex',
-                          alignItems: 'center',
-                          justifyContent: 'space-between',
-                        }}
+                      <Box
+                        display="flex"
+                        alignItems="center"
+                        justifyContent="space-between"
                       >
                         <div>
                           Balance: ${expense?.balance.toFixed(2)}
@@ -121,7 +120,7 @@ const ExpenseGroupDetail = (): JSX.Element => {
                           Paid
                           <Switch checked={expense?.isPaid} />
                         </div>
-                      </div>
+                      </Box>
                     </Card>
                   </li>
                 ))}
