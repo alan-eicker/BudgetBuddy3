@@ -5,20 +5,33 @@ export const formatNumber = (num: number): string =>
     minimumFractionDigits: 2,
   });
 
-export const getSubTotalFromCollection = (collection, key) =>
+export const getSubTotalFromCollection = <T>(
+  collection: T[],
+  key: keyof T,
+): number =>
   collection.reduce(
-    (previousValue, nextValue) => previousValue + nextValue[key],
+    (previousValue: number, nextValue: T) =>
+      previousValue + (nextValue[key] as number),
     0,
   );
 
-export const getUnpaidBalanceFromCollection = (collection, key) =>
+export const getUnpaidBalanceFromCollection = <T extends { paid: boolean }>(
+  collection: T[],
+  key: keyof T,
+): number =>
   collection.reduce(
-    (previousValue, nextValue) =>
-      !nextValue.paid ? previousValue + nextValue[key] : previousValue,
+    (previousValue: number, nextValue: T) =>
+      !nextValue.paid
+        ? previousValue + (nextValue[key] as number)
+        : previousValue,
     0,
   );
 
-export const getOverDueExpenses = (expenses) =>
+export const getOverDueExpenses = <
+  T extends { dueDate: string; paid: boolean },
+>(
+  expenses: T[],
+): number =>
   expenses.reduce(
     (prevValue, nextValue) =>
       nextValue.dueDate &&
@@ -29,5 +42,7 @@ export const getOverDueExpenses = (expenses) =>
     0,
   );
 
-export const getLeftOverBalance = (totalBudget, subtotal) =>
-  totalBudget - subtotal;
+export const getLeftOverBalance = (
+  totalBudget: number,
+  subtotal: number,
+): number => totalBudget - subtotal;

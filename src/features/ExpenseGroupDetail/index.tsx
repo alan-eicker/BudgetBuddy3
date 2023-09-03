@@ -9,9 +9,9 @@ import Box from '@mui/material/Box';
 import ContentSection from '@/components/presentational/ContentSection';
 import Card from '@/components/presentational/Card';
 import { queryClient, getExpenseGroupById } from '@/api';
-import { GetExpenseGroupByIdQuery } from '@/generated/graphql';
+import { GetExpenseGroupByIdQuery, Expense } from '@/generated/graphql';
 import { useOverlayContext } from '@/providers/OverlayProvider';
-import { formatNumber } from '@/utils/numbers';
+import { formatNumber, getSubTotalFromCollection } from '@/utils/numbers';
 import styles from './ExpenseGroupDetail.module.scss';
 import { useEffect } from 'react';
 
@@ -138,7 +138,10 @@ const ExpenseGroupDetail = (): JSX.Element => {
                   <li>
                     <Typography component="h4">Total Balance</Typography>
                     <Typography fontSize={26} fontWeight="bold">
-                      ${formatNumber(7490.45)}
+                      $
+                      {formatNumber(
+                        getSubTotalFromCollection<Expense>(expenses, 'balance'),
+                      )}
                     </Typography>
                   </li>
                   <li>
