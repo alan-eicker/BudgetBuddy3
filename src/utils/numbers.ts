@@ -1,38 +1,39 @@
 import { getDaysPastDue } from './date';
 
-export const formatNumber = (num: number): string =>
-  num.toLocaleString('en', {
+export function formatNumber(num: number): string {
+  return num.toLocaleString('en', {
     minimumFractionDigits: 2,
   });
+}
 
-export const getSubTotalFromCollection = <T>(
+export function getSubTotalFromCollection<T>(
   collection: T[],
   key: keyof T,
-): number =>
-  collection.reduce(
+): number {
+  return collection.reduce(
     (previousValue: number, nextValue: T) =>
       previousValue + (nextValue[key] as number),
     0,
   );
+}
 
-export const getUnpaidBalanceFromCollection = <T extends { paid: boolean }>(
+export function getUnpaidBalanceFromCollection<T extends { paid: boolean }>(
   collection: T[],
   key: keyof T,
-): number =>
-  collection.reduce(
+): number {
+  return collection.reduce(
     (previousValue: number, nextValue: T) =>
       !nextValue.paid
         ? previousValue + (nextValue[key] as number)
         : previousValue,
     0,
   );
+}
 
-export const getOverDueExpenses = <
+export function getOverDueExpenses<
   T extends { dueDate: string; paid: boolean },
->(
-  expenses: T[],
-): number =>
-  expenses.reduce(
+>(expenses: T[]): number {
+  return expenses.reduce(
     (prevValue, nextValue) =>
       nextValue.dueDate &&
       !nextValue.paid &&
@@ -41,8 +42,11 @@ export const getOverDueExpenses = <
         : prevValue,
     0,
   );
+}
 
-export const getLeftOverBalance = (
+export function getLeftOverBalance(
   totalBudget: number,
   subtotal: number,
-): number => totalBudget - subtotal;
+): number {
+  return totalBudget - subtotal;
+}
