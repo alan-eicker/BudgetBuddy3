@@ -9,9 +9,13 @@ import Box from '@mui/material/Box';
 import ContentSection from '@/components/presentational/ContentSection';
 import Card from '@/components/presentational/Card';
 import { queryClient, getExpenseGroupById } from '@/api';
-import { GetExpenseGroupByIdQuery, Expense } from '@/generated/graphql';
+import { GetExpenseGroupByIdQuery } from '@/generated/graphql';
 import { useOverlayContext } from '@/providers/OverlayProvider';
-import { formatNumber, getSubTotalFromCollection } from '@/utils/numbers';
+import {
+  formatNumber,
+  getTotalBalanceOfAllExpenses,
+  getTotalUnpaidExpenses,
+} from '@/utils/numbers';
 import styles from './ExpenseGroupDetail.module.scss';
 import { useEffect } from 'react';
 
@@ -33,20 +37,28 @@ const ExpenseGroupDetail = (): JSX.Element => {
   const { query } = useRouter();
   const { setShowOverlay } = useOverlayContext();
 
-  const { data } = useQuery<GetExpenseGroupByIdQuery>(
+  const { data, error } = useQuery<GetExpenseGroupByIdQuery>(
     ['expenseGroup' + query.expenseGroupId],
     () => getExpenseGroupById({ id: query.expenseGroupId as string }),
   );
 
   useEffect(() => {
-    if (!data) {
-      setShowOverlay(true);
-    }
+    setShowOverlay(!data);
   }, [data, setShowOverlay]);
 
-  if (!data) return <></>;
+  if (!data) return <ContentSection>No data</ContentSection>;
+
+  let totalBalance = 0;
+  let unpaidExpenses = 0;
+  let getLeftOverBalance = 0;
 
   const { name, totalBudget, expenses } = data.expenseGroup;
+
+  if (expenses) {
+    totalBalance = getTotalBalanceOfAllExpenses(expenses, 'balance');
+    unpaidExpenses = getTotalUnpaidExpenses(expenses, 'balance');
+    getLeftOverBalance = totalBudget - totalBalance;
+  }
 
   return (
     <div className={styles.container}>
@@ -72,14 +84,19 @@ const ExpenseGroupDetail = (): JSX.Element => {
               md={6}
               className={styles.headRight}
             >
-              <Button variant="contained" size="small">
+              <Button className="text-center" variant="contained" size="small">
                 Edit Group
               </Button>
-              <Button variant="contained" size="small">
-                Duplicate
+              <Button className="text-center" variant="contained" size="small">
+                Duplicate Group
               </Button>
-              <Button color="error" variant="contained" size="small">
-                Delete
+              <Button
+                className="text-center"
+                color="error"
+                variant="contained"
+                size="small"
+              >
+                Delete Group
               </Button>
             </Grid>
           </Grid>
@@ -89,44 +106,42 @@ const ExpenseGroupDetail = (): JSX.Element => {
         <ContentSection>
           <Grid container spacing={5}>
             <Grid item xs={12} sm={12} md={8}>
-              {expenses && (
-                <ul>
-                  {expenses.map((expense) => (
-                    <li key={expense.id}>
-                      <Card
-                        head={
-                          <Box
-                            display="flex"
-                            alignItems="center"
-                            justifyContent="space-between"
-                          >
-                            <div>{expense.name}</div>
-                            <div>
-                              <Button>Edit</Button>
-                              <Button>Delete</Button>
-                            </div>
-                          </Box>
-                        }
-                      >
+              <ul>
+                {expenses.map((expense) => (
+                  <li key={expense.id}>
+                    <Card
+                      head={
                         <Box
                           display="flex"
                           alignItems="center"
                           justifyContent="space-between"
                         >
+                          <div>{expense.name}</div>
                           <div>
-                            <div>Balance: ${formatNumber(expense.balance)}</div>
-                            <div>Due Date: {expense.dueDate}</div>
-                          </div>
-                          <div>
-                            Paid
-                            <Switch checked={expense.isPaid} />
+                            <Button>Edit</Button>
+                            <Button>Delete</Button>
                           </div>
                         </Box>
-                      </Card>
-                    </li>
-                  ))}
-                </ul>
-              )}
+                      }
+                    >
+                      <Box
+                        display="flex"
+                        alignItems="center"
+                        justifyContent="space-between"
+                      >
+                        <div>
+                          <div>Balance: ${formatNumber(expense.balance)}</div>
+                          <div>Due Date: {expense.dueDate}</div>
+                        </div>
+                        <div>
+                          Paid
+                          <Switch checked={expense.isPaid} />
+                        </div>
+                      </Box>
+                    </Card>
+                  </li>
+                ))}
+              </ul>
             </Grid>
             <Grid item xs={12} sm={12} md={4}>
               <Card
@@ -138,22 +153,19 @@ const ExpenseGroupDetail = (): JSX.Element => {
                   <li>
                     <Typography component="h4">Total Balance</Typography>
                     <Typography fontSize={26} fontWeight="bold">
-                      $
-                      {formatNumber(
-                        getSubTotalFromCollection<Expense>(expenses, 'balance'),
-                      )}
+                      ${formatNumber(totalBalance)}
                     </Typography>
                   </li>
                   <li>
                     <Typography component="h4">Unpaid Balance</Typography>
                     <Typography fontSize={26} fontWeight="bold">
-                      ${formatNumber(2345.23)}
+                      ${formatNumber(unpaidExpenses)}
                     </Typography>
                   </li>
                   <li>
                     <Typography component="h4">Left Over Balance</Typography>
                     <Typography fontSize={26} fontWeight="bold">
-                      ${formatNumber(1234.45)}
+                      ${formatNumber(getLeftOverBalance)}
                     </Typography>
                   </li>
                 </ul>
