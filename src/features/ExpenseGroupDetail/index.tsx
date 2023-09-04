@@ -84,10 +84,20 @@ const ExpenseGroupDetail = (): JSX.Element => {
               md={6}
               className={styles.headRight}
             >
-              <Button className="text-center" variant="contained" size="small">
+              <Button
+                className="text-center"
+                variant="contained"
+                size="small"
+                onClick={() => {}}
+              >
                 Edit Group
               </Button>
-              <Button className="text-center" variant="contained" size="small">
+              <Button
+                className="text-center"
+                variant="contained"
+                size="small"
+                onClick={() => {}}
+              >
                 Duplicate Group
               </Button>
               <Button
@@ -95,6 +105,7 @@ const ExpenseGroupDetail = (): JSX.Element => {
                 color="error"
                 variant="contained"
                 size="small"
+                onClick={() => {}}
               >
                 Delete Group
               </Button>
