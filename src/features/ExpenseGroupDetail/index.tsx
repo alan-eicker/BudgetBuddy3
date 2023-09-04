@@ -37,7 +37,7 @@ const ExpenseGroupDetail = (): JSX.Element => {
   const { query } = useRouter();
   const { setShowOverlay } = useOverlayContext();
 
-  const { data, error } = useQuery<GetExpenseGroupByIdQuery>(
+  const { data } = useQuery<GetExpenseGroupByIdQuery>(
     ['expenseGroup' + query.expenseGroupId],
     () => getExpenseGroupById({ id: query.expenseGroupId as string }),
   );
@@ -106,42 +106,44 @@ const ExpenseGroupDetail = (): JSX.Element => {
         <ContentSection>
           <Grid container spacing={5}>
             <Grid item xs={12} sm={12} md={8}>
-              <ul>
-                {expenses.map((expense) => (
-                  <li key={expense.id}>
-                    <Card
-                      head={
+              {expenses && (
+                <ul>
+                  {expenses.map((expense) => (
+                    <li key={expense.id}>
+                      <Card
+                        head={
+                          <Box
+                            display="flex"
+                            alignItems="center"
+                            justifyContent="space-between"
+                          >
+                            <div>{expense.name}</div>
+                            <div>
+                              <Button>Edit</Button>
+                              <Button>Delete</Button>
+                            </div>
+                          </Box>
+                        }
+                      >
                         <Box
                           display="flex"
                           alignItems="center"
                           justifyContent="space-between"
                         >
-                          <div>{expense.name}</div>
                           <div>
-                            <Button>Edit</Button>
-                            <Button>Delete</Button>
+                            <div>Balance: ${formatNumber(expense.balance)}</div>
+                            <div>Due Date: {expense.dueDate}</div>
+                          </div>
+                          <div>
+                            Paid
+                            <Switch checked={expense.isPaid} />
                           </div>
                         </Box>
-                      }
-                    >
-                      <Box
-                        display="flex"
-                        alignItems="center"
-                        justifyContent="space-between"
-                      >
-                        <div>
-                          <div>Balance: ${formatNumber(expense.balance)}</div>
-                          <div>Due Date: {expense.dueDate}</div>
-                        </div>
-                        <div>
-                          Paid
-                          <Switch checked={expense.isPaid} />
-                        </div>
-                      </Box>
-                    </Card>
-                  </li>
-                ))}
-              </ul>
+                      </Card>
+                    </li>
+                  ))}
+                </ul>
+              )}
             </Grid>
             <Grid item xs={12} sm={12} md={4}>
               <Card
