@@ -75,29 +75,7 @@ const expenseGroups = [
     id: '3',
     name: '09/01/2023 - 09/15/2023',
     totalBudget: 5467.0,
-    expenses: [
-      {
-        id: '1',
-        name: 'Mortgage',
-        balance: 2500.44,
-        dueDate: '09/01/2023',
-        isPaid: true,
-      },
-      {
-        id: '2',
-        name: 'ComEd',
-        balance: 225.12,
-        dueDate: '09/12/2023',
-        isPaid: true,
-      },
-      {
-        id: '3',
-        name: 'T-Mobile',
-        balance: 131.32,
-        dueDate: '09/14/2023',
-        isPaid: false,
-      },
-    ],
+    expenses: null,
   },
   {
     id: '4',

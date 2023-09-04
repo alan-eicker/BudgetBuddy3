@@ -135,7 +135,9 @@ const Dashboard = () => {
         </Box>
         <Grid container spacing={2}>
           {data?.expenseGroups.map(({ id, name, expenses }) => {
-            const numOverdueBalances = getTotalOverdueBalances(expenses);
+            const numOverdueBalances = !expenses
+              ? 0
+              : getTotalOverdueBalances(expenses);
             return (
               <Grid key={id} item xs={12} sm={12} md={4}>
                 <Link href={`/account/dashboard/${id}`}>
@@ -149,7 +151,11 @@ const Dashboard = () => {
                     >
                       <div>
                         Total Balance:
-                        <br />${getTotalBalance(expenses)}
+                        <br />
+                        {expenses && '$' + getTotalBalance(expenses)}
+                        {!expenses && (
+                          <Button size="small">Add Expenses</Button>
+                        )}
                       </div>
                       {numOverdueBalances > 0 && (
                         <div style={{ textAlign: 'center' }}>
