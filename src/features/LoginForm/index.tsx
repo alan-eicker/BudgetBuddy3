@@ -1,4 +1,3 @@
-import { useState } from 'react';
 import Link from 'next/link';
 import TextField from '@mui/material/TextField';
 import Typography from '@mui/material/Typography';
@@ -6,33 +5,11 @@ import Button from '@mui/material/Button';
 import Alert from '@mui/material/Alert';
 import LoadingButton from '@mui/lab/LoadingButton';
 import BrandLogo from '@/components/BrandLogo';
-import { useLogin } from '@/features/LoginForm/useLogin';
-import { useFormik } from 'formik';
-import * as yup from 'yup';
+import { useAuth } from '@/shared/hooks/useAuth';
 
 const LoginForm = (): JSX.Element => {
-  const { loginError, login } = useLogin();
-  const [isloading, setIsLoading] = useState(false);
-
-  const initialValues = {
-    username: '',
-    password: '',
-  };
-
-  const validationSchema = yup.object({
-    username: yup.string().required('username is required'),
-    password: yup.string().required('password is required'),
-  });
-
-  const { errors, touched, values, handleChange, handleSubmit } = useFormik({
-    initialValues,
-    validationSchema,
-    validateOnBlur: false,
-    onSubmit: () => {
-      setIsLoading(true);
-      login();
-    },
-  });
+  const { loading, loginError, form } = useAuth();
+  const { values, errors, touched, handleChange, handleSubmit } = form;
 
   return (
     <form onSubmit={handleSubmit} noValidate>
@@ -76,7 +53,7 @@ const LoginForm = (): JSX.Element => {
         variant="contained"
         type="submit"
         size="large"
-        loading={isloading}
+        loading={loading}
       >
         Log In
       </LoadingButton>
