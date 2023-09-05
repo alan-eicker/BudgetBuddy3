@@ -8,7 +8,7 @@ import {
   useEffect,
 } from 'react';
 import { useRouter } from 'next/router';
-import { usePreviousRoute } from '@/hooks/usePreviousRoute';
+import { usePreviousRoute } from '@/shared/hooks/usePreviousRoute';
 
 interface OverlayContext {
   showOverlay: boolean;

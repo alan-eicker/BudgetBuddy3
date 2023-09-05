@@ -1,12 +1,12 @@
 import PersonIcon from '@mui/icons-material/Person';
 import LogoutIcon from '@mui/icons-material/Logout';
 import AccountCircleOutlinedIcon from '@mui/icons-material/AccountCircleOutlined';
-import { useAuth } from '@/hooks/useAuth';
+import { useLogin } from '@/features/LoginForm/useLogin';
 import Header from '@/components/Header';
 import DropdownMenu from '@/components/DropdownMenu';
 
 const AppHeader = () => {
-  const { logout } = useAuth();
+  const { logout } = useLogin();
   const date = new Date().toDateString();
 
   return (
