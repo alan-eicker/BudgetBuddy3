@@ -36,6 +36,7 @@ export const useAuth = () => {
       // if successful login
       router.push('/account/dashboard');
       // else call setLoginError(error)
+      // ...
     }, 1500);
   };
 
