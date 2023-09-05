@@ -1,7 +1,7 @@
 import Typography from '@mui/material/Typography';
 import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
-import BrandLogo from '@/components/presentational/BrandLogo';
+import BrandLogo from '@/components/BrandLogo';
 
 const RegisterUserForm = () => {
   return (

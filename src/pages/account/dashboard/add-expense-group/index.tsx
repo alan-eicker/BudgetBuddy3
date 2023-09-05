@@ -1,4 +1,4 @@
-import ContentSection from '@/components/presentational/ContentSection';
+import ContentSection from '@/components/ContentSection';
 
 const AddExpenseGroup = () => (
   <ContentSection>Add Expense Group</ContentSection>

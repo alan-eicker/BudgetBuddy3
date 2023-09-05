@@ -5,7 +5,7 @@ import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
 import { Alert } from '@mui/material';
 import LoadingButton from '@mui/lab/LoadingButton';
-import BrandLogo from '@/components/presentational/BrandLogo';
+import BrandLogo from '@/components/BrandLogo';
 import { useAuth } from '@/hooks/useAuth';
 import { useFormik } from 'formik';
 import * as yup from 'yup';

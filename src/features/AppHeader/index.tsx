@@ -2,8 +2,8 @@ import PersonIcon from '@mui/icons-material/Person';
 import LogoutIcon from '@mui/icons-material/Logout';
 import AccountCircleOutlinedIcon from '@mui/icons-material/AccountCircleOutlined';
 import { useAuth } from '@/hooks/useAuth';
-import Header from '@/components/presentational/Header';
-import DropdownMenu from '@/components/presentational/DropdownMenu';
+import Header from '@/components/Header';
+import DropdownMenu from '@/components/DropdownMenu';
 
 const AppHeader = () => {
   const { logout } = useAuth();

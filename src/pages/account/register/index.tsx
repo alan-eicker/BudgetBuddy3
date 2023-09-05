@@ -1,6 +1,6 @@
 import Head from 'next/head';
 import RegisterUserForm from '@/features/RegisterUserForm';
-import ContentSection from '@/components/presentational/ContentSection';
+import ContentSection from '@/components/ContentSection';
 
 const RegisterUserPage = () => {
   return (

@@ -1,6 +1,6 @@
 import Head from 'next/head';
 import LoginForm from '@/features/LoginForm';
-import ContentSection from '@/components/presentational/ContentSection';
+import ContentSection from '@/components/ContentSection';
 
 const HomePage = (): JSX.Element => {
   return (

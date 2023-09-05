@@ -4,7 +4,7 @@ import type { AppProps } from 'next/app';
 import { ThemeProvider, createTheme } from '@mui/material/styles';
 import CssBaseline from '@mui/material/CssBaseline';
 import { Hydrate, QueryClientProvider } from 'react-query';
-import Layout from '@/components/presentational/Layout';
+import Layout from '@/components/Layout';
 import AppHeader from '@/features/AppHeader';
 import OverlayProvider from '@/providers/OverlayProvider';
 import { queryClient } from '../api';
