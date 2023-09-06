@@ -7,4 +7,6 @@ export function authenticateUser(
   return { username: args.username };
 }
 
-// export function logout() {}
+export function logoutUser(parent, args): boolean {
+  return true;
+}

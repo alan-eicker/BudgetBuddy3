@@ -4,8 +4,12 @@ import { QueryClient } from 'react-query';
 import { getSdk } from '../src/generated/graphql';
 
 const gqlClient = new GraphQLClient('http://localhost:3000/api/graphql');
-export const { authenticateUser, getAllExpenseGroups, getExpenseGroupById } =
-  getSdk(gqlClient);
+export const {
+  authenticateUser,
+  logoutUser,
+  getAllExpenseGroups,
+  getExpenseGroupById,
+} = getSdk(gqlClient);
 
 export const queryClient = new QueryClient({
   defaultOptions: {

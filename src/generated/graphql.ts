@@ -58,6 +58,7 @@ export type Query = {
   authenticateUser: AuthResponse;
   getAllExpenseGroups: Array<Maybe<ExpenseGroup>>;
   getExpenseGroupById: ExpenseGroup;
+  logoutUser: Scalars['Boolean']['output'];
 };
 
 
@@ -100,6 +101,11 @@ export type AuthenticateUserQueryVariables = Exact<{
 
 
 export type AuthenticateUserQuery = { __typename?: 'Query', user: { __typename?: 'AuthResponse', username?: string | null, error?: string | null } };
+
+export type LogoutUserQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type LogoutUserQuery = { __typename?: 'Query', isLoggedOut: boolean };
 
 
 export const AddExpenseDocument = gql`
@@ -152,6 +158,11 @@ export const AuthenticateUserDocument = gql`
   }
 }
     `;
+export const LogoutUserDocument = gql`
+    query logoutUser {
+  isLoggedOut: logoutUser
+}
+    `;
 
 export type SdkFunctionWrapper = <T>(action: (requestHeaders?:Record<string, string>) => Promise<T>, operationName: string, operationType?: string) => Promise<T>;
 
@@ -171,6 +182,9 @@ export function getSdk(client: GraphQLClient, withWrapper: SdkFunctionWrapper = 
     },
     authenticateUser(variables: AuthenticateUserQueryVariables, requestHeaders?: GraphQLClientRequestHeaders): Promise<AuthenticateUserQuery> {
       return withWrapper((wrappedRequestHeaders) => client.request<AuthenticateUserQuery>(AuthenticateUserDocument, variables, {...requestHeaders, ...wrappedRequestHeaders}), 'authenticateUser', 'query');
+    },
+    logoutUser(variables?: LogoutUserQueryVariables, requestHeaders?: GraphQLClientRequestHeaders): Promise<LogoutUserQuery> {
+      return withWrapper((wrappedRequestHeaders) => client.request<LogoutUserQuery>(LogoutUserDocument, variables, {...requestHeaders, ...wrappedRequestHeaders}), 'logoutUser', 'query');
     }
   };
 }

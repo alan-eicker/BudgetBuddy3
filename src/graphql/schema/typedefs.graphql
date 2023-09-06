@@ -2,6 +2,7 @@ type Query {
   getAllExpenseGroups: [ExpenseGroup]!
   getExpenseGroupById(id: String!): ExpenseGroup!
   authenticateUser(username: String!, password: String!): AuthResponse!
+  logoutUser: Boolean!
 }
 
 type Mutation {

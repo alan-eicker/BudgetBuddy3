@@ -33,3 +33,7 @@ query authenticateUser($username: String!, $password: String!) {
     error
   }
 }
+
+query logoutUser {
+  isLoggedOut: logoutUser
+}
