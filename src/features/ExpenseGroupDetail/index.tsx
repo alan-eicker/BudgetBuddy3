@@ -174,32 +174,36 @@ const ExpenseGroupDetail = (): JSX.Element => {
                 </ul>
               </Grid>
               <Grid item xs={12} sm={12} md={4}>
-                <Card
-                  head={
-                    <h3 style={{ textAlign: 'center' }}>Spending Snapshot</h3>
-                  }
-                >
-                  <ul style={{ textAlign: 'center' }}>
-                    <li>
-                      <Typography component="h4">Total Balance</Typography>
-                      <Typography fontSize={26} fontWeight="bold">
-                        ${formatNumber(totalBalance)}
-                      </Typography>
-                    </li>
-                    <li>
-                      <Typography component="h4">Unpaid Balance</Typography>
-                      <Typography fontSize={26} fontWeight="bold">
-                        ${formatNumber(unpaidExpenses)}
-                      </Typography>
-                    </li>
-                    <li>
-                      <Typography component="h4">Left Over Balance</Typography>
-                      <Typography fontSize={26} fontWeight="bold">
-                        ${formatNumber(getLeftOverBalance)}
-                      </Typography>
-                    </li>
-                  </ul>
-                </Card>
+                <div className={styles.spendingSnapshotFixedContainer}>
+                  <Card
+                    head={
+                      <h3 style={{ textAlign: 'center' }}>Spending Snapshot</h3>
+                    }
+                  >
+                    <ul style={{ textAlign: 'center' }}>
+                      <li>
+                        <Typography component="h4">Total Balance</Typography>
+                        <Typography fontSize={26} fontWeight="bold">
+                          ${formatNumber(totalBalance)}
+                        </Typography>
+                      </li>
+                      <li>
+                        <Typography component="h4">Unpaid Balance</Typography>
+                        <Typography fontSize={26} fontWeight="bold">
+                          ${formatNumber(unpaidExpenses)}
+                        </Typography>
+                      </li>
+                      <li>
+                        <Typography component="h4">
+                          Left Over Balance
+                        </Typography>
+                        <Typography fontSize={26} fontWeight="bold">
+                          ${formatNumber(getLeftOverBalance)}
+                        </Typography>
+                      </li>
+                    </ul>
+                  </Card>
+                </div>
               </Grid>
             </Grid>
           )}
