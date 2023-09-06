@@ -5,6 +5,22 @@
   justify-content: center;
   padding: rem(32 0);
   position: relative;
+
+  &.isCompressed {
+    padding: rem(16 0);
+  }
+
+  &.noPaddingTop {
+    padding-top: 0;
+  }
+
+  &.noPaddingBottom {
+    padding-bottom: 0;
+  }
+
+  &.noPadding {
+    padding: 0;
+  }
 }
 
 .body {

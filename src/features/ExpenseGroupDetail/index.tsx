@@ -112,9 +112,14 @@ const ExpenseGroupDetail = (): JSX.Element => {
             </Grid>
           </Grid>
         </ContentSection>
+        <div style={{ backgroundColor: '#212a3b' }}>
+          <ContentSection compressed>
+            <Button>+ Add Expense</Button>
+          </ContentSection>
+        </div>
       </div>
       <div className={styles.body}>
-        <ContentSection>
+        <ContentSection noPaddingTop>
           {!expenses && (
             <>
               <p>No expense data to display.</p>
