@@ -6,6 +6,7 @@ import Typography from '@mui/material/Typography';
 import Grid from '@mui/material/Grid';
 import Switch from '@mui/material/Switch';
 import Box from '@mui/material/Box';
+import ReportProblemOutlinedIcon from '@mui/icons-material/ReportProblemOutlined';
 import ContentSection from '@/components/ContentSection';
 import Card from '@/components/Card';
 import { queryClient, getExpenseGroupById } from '@/api';
@@ -164,8 +165,18 @@ const ExpenseGroupDetail = (): JSX.Element => {
                           </div>
                         </Box>
                         {expense.note && (
-                          <Typography sx={{ marginTop: 1 }} fontSize={12}>
-                            {expense.note}
+                          <Typography
+                            display="flex"
+                            alignItems="center"
+                            sx={{ marginTop: 1 }}
+                            fontSize={12}
+                          >
+                            <ReportProblemOutlinedIcon
+                              color="info"
+                              fontSize="small"
+                              sx={{ marginRight: 0.5 }}
+                            />
+                            <span>{expense.note}</span>
                           </Typography>
                         )}
                       </Card>
