@@ -1,4 +1,4 @@
-import { ExpenseGroup } from '../../generated/graphql';
+import { ExpenseGroup } from '../../../generated/graphql';
 
 const expenseGroups = [
   {
@@ -163,13 +163,13 @@ const expenseGroups = [
   },
 ];
 
-const Query = {
-  getAllExpenseGroups: (): ExpenseGroup[] => {
-    return expenseGroups;
-  },
-  getExpenseGroupById(parent, args: { id: string }): ExpenseGroup {
-    return expenseGroups.find((group) => group.id === args.id);
-  },
-};
+export function getAllExpenseGroups(): ExpenseGroup[] {
+  return expenseGroups;
+}
 
-export default Query;
+export function getExpenseGroupById(
+  parent,
+  args: { id: string },
+): ExpenseGroup {
+  return expenseGroups.find((group) => group.id === args.id);
+}

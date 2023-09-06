@@ -17,6 +17,12 @@ export type Scalars = {
   Float: { input: number; output: number; }
 };
 
+export type AuthResponse = {
+  __typename?: 'AuthResponse';
+  error?: Maybe<Scalars['String']['output']>;
+  username?: Maybe<Scalars['String']['output']>;
+};
+
 export type Expense = {
   __typename?: 'Expense';
   balance: Scalars['Float']['output'];
@@ -49,8 +55,15 @@ export type MutationAddExpenseArgs = {
 
 export type Query = {
   __typename?: 'Query';
+  authenticateUser: AuthResponse;
   getAllExpenseGroups: Array<Maybe<ExpenseGroup>>;
   getExpenseGroupById: ExpenseGroup;
+};
+
+
+export type QueryAuthenticateUserArgs = {
+  password: Scalars['String']['input'];
+  username: Scalars['String']['input'];
 };
 
 
@@ -79,6 +92,14 @@ export type GetExpenseGroupByIdQueryVariables = Exact<{
 
 
 export type GetExpenseGroupByIdQuery = { __typename?: 'Query', expenseGroup: { __typename?: 'ExpenseGroup', id: string, name: string, totalBudget: number, expenses?: Array<{ __typename?: 'Expense', id: string, name: string, balance: number, dueDate: string, isPaid: boolean }> | null } };
+
+export type AuthenticateUserQueryVariables = Exact<{
+  username: Scalars['String']['input'];
+  password: Scalars['String']['input'];
+}>;
+
+
+export type AuthenticateUserQuery = { __typename?: 'Query', user: { __typename?: 'AuthResponse', username?: string | null, error?: string | null } };
 
 
 export const AddExpenseDocument = gql`
@@ -123,6 +144,14 @@ export const GetExpenseGroupByIdDocument = gql`
   }
 }
     `;
+export const AuthenticateUserDocument = gql`
+    query authenticateUser($username: String!, $password: String!) {
+  user: authenticateUser(username: $username, password: $password) {
+    username
+    error
+  }
+}
+    `;
 
 export type SdkFunctionWrapper = <T>(action: (requestHeaders?:Record<string, string>) => Promise<T>, operationName: string, operationType?: string) => Promise<T>;
 
@@ -139,6 +168,9 @@ export function getSdk(client: GraphQLClient, withWrapper: SdkFunctionWrapper = 
     },
     getExpenseGroupById(variables: GetExpenseGroupByIdQueryVariables, requestHeaders?: GraphQLClientRequestHeaders): Promise<GetExpenseGroupByIdQuery> {
       return withWrapper((wrappedRequestHeaders) => client.request<GetExpenseGroupByIdQuery>(GetExpenseGroupByIdDocument, variables, {...requestHeaders, ...wrappedRequestHeaders}), 'getExpenseGroupById', 'query');
+    },
+    authenticateUser(variables: AuthenticateUserQueryVariables, requestHeaders?: GraphQLClientRequestHeaders): Promise<AuthenticateUserQuery> {
+      return withWrapper((wrappedRequestHeaders) => client.request<AuthenticateUserQuery>(AuthenticateUserDocument, variables, {...requestHeaders, ...wrappedRequestHeaders}), 'authenticateUser', 'query');
     }
   };
 }

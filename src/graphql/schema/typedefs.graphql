@@ -1,6 +1,7 @@
 type Query {
   getAllExpenseGroups: [ExpenseGroup]!
   getExpenseGroupById(id: String!): ExpenseGroup!
+  authenticateUser(username: String!, password: String!): AuthResponse!
 }
 
 type Mutation {
@@ -10,6 +11,11 @@ type Mutation {
     dueDate: String!
     isPaid: Boolean!
   ): Expense!
+}
+
+type AuthResponse {
+  error: String
+  username: String
 }
 
 type ExpenseGroup {
