@@ -1,18 +1,23 @@
+import { jwtVerify } from 'jose';
 import { NextRequest, NextResponse } from 'next/server';
 
 export async function middleware(req: NextRequest) {
-  const token = req.cookies.get('token');
+  try {
+    const token = req.headers.get('Authorization') as string;
+    const secret = new TextEncoder().encode(process.env.JWT_SECRET);
+    const isValid = await jwtVerify(token, secret);
 
-  // Add logic to validate token;
-  // const isValid = false; // bcrypt...
+    if (!isValid) {
+      throw new Error();
+    }
 
-  // if (!token || !isValid) {
-  //   return NextResponse.redirect(new URL('/', req.url));
-  // }
-
-  return NextResponse.next();
+    return NextResponse.next();
+  } catch (err) {
+    return NextResponse.redirect(new URL('/', req.url));
+  }
 }
 
 export const config = {
-  matcher: ['/account/dashboard/:path*', '/account/dashboard/profile'],
+  matcher: [],
+  // matcher: ['/account/dashboard/:path*', '/account/dashboard/profile'],
 };

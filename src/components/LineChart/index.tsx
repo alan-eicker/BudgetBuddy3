@@ -95,7 +95,7 @@ const LineChart = ({
             <XAxis stroke={axisColor} dataKey="name" />
             <YAxis stroke={axisColor} />
             <Tooltip content={<ChartTooltip />} />
-            <Legend verticalAlign="top" height={legendHeight} />
+            <Legend height={legendHeight} />
             {createLines()}
           </RechartsLineChart>
         </ResponsiveContainer>
