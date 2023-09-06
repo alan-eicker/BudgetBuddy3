@@ -1,15 +1,50 @@
 import Link from 'next/link';
+import { useRouter } from 'next/router';
+import { useQuery } from 'react-query';
+import { useFormik } from 'formik';
+import * as yup from 'yup';
 import TextField from '@mui/material/TextField';
 import Typography from '@mui/material/Typography';
 import Button from '@mui/material/Button';
 import Alert from '@mui/material/Alert';
 import LoadingButton from '@mui/lab/LoadingButton';
 import BrandLogo from '@/components/BrandLogo';
-import { useAuth } from '@/shared/hooks/useAuth';
+import { AuthenticateUserQuery } from '@/generated/graphql';
+import { authenticateUser } from '@/api';
 
 const LoginForm = (): JSX.Element => {
-  const { loading, loginError, form } = useAuth();
-  const { values, errors, touched, handleChange, handleSubmit } = form;
+  const router = useRouter();
+
+  const initialValues = {
+    username: '',
+    password: '',
+  };
+
+  const validationSchema = yup.object({
+    username: yup.string().required('username is required'),
+    password: yup.string().required('password is required'),
+  });
+
+  const { values, errors, touched, handleChange, handleSubmit, isSubmitting } =
+    useFormik({
+      initialValues,
+      validationSchema,
+      validateOnBlur: false,
+      onSubmit: () => {},
+    });
+
+  const { data } = useQuery<AuthenticateUserQuery>(
+    ['authenticateUser'],
+    () => authenticateUser(values),
+    {
+      enabled: isSubmitting && !!values.username && !!values.password,
+      onSuccess: (data) => {
+        if (!data.user.error) {
+          router.push('/account/dashboard');
+        }
+      },
+    },
+  );
 
   return (
     <form onSubmit={handleSubmit} noValidate>
@@ -19,7 +54,7 @@ const LoginForm = (): JSX.Element => {
           BudgetBuddy
         </Typography>
       </Typography>
-      {loginError && (
+      {data?.user.error && (
         <Alert variant="outlined" severity="error">
           Invalid user credentials
         </Alert>
@@ -53,7 +88,7 @@ const LoginForm = (): JSX.Element => {
         variant="contained"
         type="submit"
         size="large"
-        loading={loading}
+        loading={isSubmitting}
       >
         Log In
       </LoadingButton>

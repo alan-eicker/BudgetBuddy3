@@ -7,7 +7,6 @@ import * as yup from 'yup';
 export const useAuth = () => {
   const router = useRouter();
   const [loginError, setLoginError] = useState(false);
-  const [loading, setLoading] = useState(false);
 
   const { setShowOverlay } = useOverlayContext();
 
@@ -25,10 +24,7 @@ export const useAuth = () => {
     initialValues,
     validationSchema,
     validateOnBlur: false,
-    onSubmit: () => {
-      setLoading(true);
-      login();
-    },
+    onSubmit: () => {},
   });
 
   const login = () => {
@@ -47,5 +43,5 @@ export const useAuth = () => {
     }, 1500);
   };
 
-  return { loginError, loading, form, logout };
+  return { loginError, form, logout };
 };
