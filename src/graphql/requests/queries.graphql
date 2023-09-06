@@ -8,6 +8,7 @@ query getAllExpenseGroups {
       balance
       dueDate
       isPaid
+      note
     }
   }
 }
@@ -23,6 +24,7 @@ query getExpenseGroupById($id: String!) {
       balance
       dueDate
       isPaid
+      note
     }
   }
 }

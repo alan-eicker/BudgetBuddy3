@@ -30,6 +30,7 @@ export type Expense = {
   id: Scalars['ID']['output'];
   isPaid: Scalars['Boolean']['output'];
   name: Scalars['String']['output'];
+  note?: Maybe<Scalars['String']['output']>;
 };
 
 export type ExpenseGroup = {
@@ -85,14 +86,14 @@ export type AddExpenseMutation = { __typename?: 'Mutation', addExpense: { __type
 export type GetAllExpenseGroupsQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type GetAllExpenseGroupsQuery = { __typename?: 'Query', expenseGroups: Array<{ __typename?: 'ExpenseGroup', id: string, name: string, expenses?: Array<{ __typename?: 'Expense', id: string, name: string, balance: number, dueDate: string, isPaid: boolean }> | null } | null> };
+export type GetAllExpenseGroupsQuery = { __typename?: 'Query', expenseGroups: Array<{ __typename?: 'ExpenseGroup', id: string, name: string, expenses?: Array<{ __typename?: 'Expense', id: string, name: string, balance: number, dueDate: string, isPaid: boolean, note?: string | null }> | null } | null> };
 
 export type GetExpenseGroupByIdQueryVariables = Exact<{
   id: Scalars['String']['input'];
 }>;
 
 
-export type GetExpenseGroupByIdQuery = { __typename?: 'Query', expenseGroup: { __typename?: 'ExpenseGroup', id: string, name: string, totalBudget: number, expenses?: Array<{ __typename?: 'Expense', id: string, name: string, balance: number, dueDate: string, isPaid: boolean }> | null } };
+export type GetExpenseGroupByIdQuery = { __typename?: 'Query', expenseGroup: { __typename?: 'ExpenseGroup', id: string, name: string, totalBudget: number, expenses?: Array<{ __typename?: 'Expense', id: string, name: string, balance: number, dueDate: string, isPaid: boolean, note?: string | null }> | null } };
 
 export type AuthenticateUserQueryVariables = Exact<{
   username: Scalars['String']['input'];
@@ -130,6 +131,7 @@ export const GetAllExpenseGroupsDocument = gql`
       balance
       dueDate
       isPaid
+      note
     }
   }
 }
@@ -146,6 +148,7 @@ export const GetExpenseGroupByIdDocument = gql`
       balance
       dueDate
       isPaid
+      note
     }
   }
 }

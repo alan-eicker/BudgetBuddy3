@@ -158,6 +158,11 @@ const ExpenseGroupDetail = (): JSX.Element => {
                             <Switch checked={expense.isPaid} />
                           </div>
                         </Box>
+                        {expense.note && (
+                          <Typography sx={{ marginTop: 1 }} fontSize={12}>
+                            {expense.note}
+                          </Typography>
+                        )}
                       </Card>
                     </li>
                   ))}

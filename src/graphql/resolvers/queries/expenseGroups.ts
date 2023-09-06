@@ -12,6 +12,7 @@ const expenseGroups = [
         balance: 2500.44,
         dueDate: '08/05/2023',
         isPaid: true,
+        note: 'Pay on the 5th of the month.',
       },
       {
         id: '2',
@@ -19,6 +20,7 @@ const expenseGroups = [
         balance: 240.56,
         dueDate: '08/10/2023',
         isPaid: false,
+        note: null,
       },
       {
         id: '3',
@@ -26,6 +28,7 @@ const expenseGroups = [
         balance: 131.32,
         dueDate: '08/19/2023',
         isPaid: false,
+        note: null,
       },
       {
         id: '3',
@@ -33,6 +36,7 @@ const expenseGroups = [
         balance: 234.1,
         dueDate: '08/19/2023',
         isPaid: true,
+        note: null,
       },
       {
         id: '3',
@@ -40,6 +44,7 @@ const expenseGroups = [
         balance: 10.0,
         dueDate: '08/27/2023',
         isPaid: false,
+        note: null,
       },
     ],
   },
@@ -54,6 +59,7 @@ const expenseGroups = [
         balance: 2500.44,
         dueDate: '08/16/2023',
         isPaid: true,
+        note: null,
       },
       {
         id: '2',
@@ -61,6 +67,7 @@ const expenseGroups = [
         balance: 320.99,
         dueDate: '08/21/2023',
         isPaid: true,
+        note: null,
       },
       {
         id: '3',
@@ -68,6 +75,7 @@ const expenseGroups = [
         balance: 131.32,
         dueDate: '08/31/2023',
         isPaid: false,
+        note: null,
       },
     ],
   },
@@ -88,6 +96,7 @@ const expenseGroups = [
         balance: 2500.44,
         dueDate: '08/05/2023',
         isPaid: true,
+        note: null,
       },
       {
         id: '2',
@@ -95,6 +104,7 @@ const expenseGroups = [
         balance: 240.56,
         dueDate: '08/10/2023',
         isPaid: true,
+        note: null,
       },
       {
         id: '3',
@@ -102,6 +112,7 @@ const expenseGroups = [
         balance: 131.32,
         dueDate: '08/14/2023',
         isPaid: true,
+        note: null,
       },
     ],
   },
@@ -116,6 +127,7 @@ const expenseGroups = [
         balance: 2500.44,
         dueDate: '08/16/2023',
         isPaid: true,
+        note: null,
       },
       {
         id: '2',
@@ -123,6 +135,7 @@ const expenseGroups = [
         balance: 320.99,
         dueDate: '06/21/2023',
         isPaid: false,
+        note: null,
       },
       {
         id: '3',
@@ -130,6 +143,7 @@ const expenseGroups = [
         balance: 131.32,
         dueDate: '08/31/2023',
         isPaid: true,
+        note: null,
       },
     ],
   },
@@ -144,6 +158,7 @@ const expenseGroups = [
         balance: 2500.44,
         dueDate: '09/01/2023',
         isPaid: true,
+        note: null,
       },
       {
         id: '2',
@@ -151,6 +166,7 @@ const expenseGroups = [
         balance: 225.12,
         dueDate: '09/12/2023',
         isPaid: false,
+        note: null,
       },
       {
         id: '3',
@@ -158,6 +174,7 @@ const expenseGroups = [
         balance: 131.32,
         dueDate: '09/14/2023',
         isPaid: false,
+        note: null,
       },
     ],
   },
