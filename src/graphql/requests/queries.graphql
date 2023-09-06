@@ -29,8 +29,8 @@ query getExpenseGroupById($id: String!) {
 
 query authenticateUser($username: String!, $password: String!) {
   user: authenticateUser(username: $username, password: $password) {
-    username
-    error
+    status
+    message
   }
 }
 

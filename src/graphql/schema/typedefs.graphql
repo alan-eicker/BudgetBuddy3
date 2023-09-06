@@ -15,8 +15,8 @@ type Mutation {
 }
 
 type AuthResponse {
-  error: String
-  username: String
+  status: Int!
+  message: String!
 }
 
 type ExpenseGroup {

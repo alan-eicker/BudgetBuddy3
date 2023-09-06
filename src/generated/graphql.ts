@@ -19,8 +19,8 @@ export type Scalars = {
 
 export type AuthResponse = {
   __typename?: 'AuthResponse';
-  error?: Maybe<Scalars['String']['output']>;
-  username?: Maybe<Scalars['String']['output']>;
+  message: Scalars['String']['output'];
+  status: Scalars['Int']['output'];
 };
 
 export type Expense = {
@@ -100,7 +100,7 @@ export type AuthenticateUserQueryVariables = Exact<{
 }>;
 
 
-export type AuthenticateUserQuery = { __typename?: 'Query', user: { __typename?: 'AuthResponse', username?: string | null, error?: string | null } };
+export type AuthenticateUserQuery = { __typename?: 'Query', user: { __typename?: 'AuthResponse', status: number, message: string } };
 
 export type LogoutUserQueryVariables = Exact<{ [key: string]: never; }>;
 
@@ -153,8 +153,8 @@ export const GetExpenseGroupByIdDocument = gql`
 export const AuthenticateUserDocument = gql`
     query authenticateUser($username: String!, $password: String!) {
   user: authenticateUser(username: $username, password: $password) {
-    username
-    error
+    status
+    message
   }
 }
     `;

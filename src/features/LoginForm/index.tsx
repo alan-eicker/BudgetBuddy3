@@ -39,7 +39,7 @@ const LoginForm = (): JSX.Element => {
     {
       enabled: isSubmitting && !!values.username && !!values.password,
       onSuccess: (data) => {
-        if (!data.user.error) {
+        if (data.user.status === 200) {
           router.push('/account/dashboard');
         }
       },
@@ -54,9 +54,9 @@ const LoginForm = (): JSX.Element => {
           BudgetBuddy
         </Typography>
       </Typography>
-      {data?.user.error && (
+      {data && data?.user.status !== 200 && (
         <Alert variant="outlined" severity="error">
-          Invalid user credentials
+          {data?.user.message}
         </Alert>
       )}
       <TextField

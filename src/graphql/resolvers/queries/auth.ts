@@ -4,7 +4,7 @@ export function authenticateUser(
   parent,
   args: { username: string; password: string },
 ): AuthResponse {
-  return { username: args.username };
+  return { status: 200, message: 'ok' };
 }
 
 export function logoutUser(parent, args): boolean {
