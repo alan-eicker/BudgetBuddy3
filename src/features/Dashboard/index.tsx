@@ -11,6 +11,7 @@ import ContentSection from '@/components/ContentSection';
 import { queryClient, getAllExpenseGroups } from '@/api';
 import { GetAllExpenseGroupsQuery } from '@/generated/graphql';
 import { getTotalBalance, getTotalOverdueBalances } from '@/utils/numbers';
+import { Typography } from '@mui/material';
 
 const chartData = [
   {
@@ -107,7 +108,7 @@ const Dashboard = () => {
         />
       </Jumbotron>
       <ContentSection>
-        <Box sx={{ pb: 2 }}>
+        <Box paddingBottom={2}>
           <Button href="/account/dashboard/add-expense-group">
             + Add Expense Group
           </Button>
@@ -121,12 +122,10 @@ const Dashboard = () => {
               <Grid key={_id} item xs={12} sm={12} md={4}>
                 <Link href={`/account/dashboard/${_id}`}>
                   <Card head={`${startDate} - ${endDate}`} height="100%">
-                    <div
-                      style={{
-                        display: 'flex',
-                        alignItems: 'center',
-                        justifyContent: 'space-between',
-                      }}
+                    <Box
+                      display="flex"
+                      alignItems="center"
+                      justifyContent="space-between"
                     >
                       <div>
                         Total Balance:
@@ -137,20 +136,18 @@ const Dashboard = () => {
                         )}
                       </div>
                       {numOverdueBalances > 0 && (
-                        <div style={{ textAlign: 'center' }}>
+                        <Box textAlign="center">
                           <ErrorOutlineIcon color="error" fontSize="large" />
-                          <div
-                            style={{
-                              fontSize: 11,
-                              color: '#f44336',
-                              marginTop: -5,
-                            }}
+                          <Typography
+                            fontSize={11}
+                            color="#f44336"
+                            marginTop={-0.5}
                           >
                             {numOverdueBalances} overdue expenses
-                          </div>
-                        </div>
+                          </Typography>
+                        </Box>
                       )}
-                    </div>
+                    </Box>
                   </Card>
                 </Link>
               </Grid>
