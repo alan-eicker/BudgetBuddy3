@@ -25,9 +25,9 @@ export type AuthResponse = {
 
 export type Expense = {
   __typename?: 'Expense';
+  _id: Scalars['ID']['output'];
   balance: Scalars['Float']['output'];
   dueDate: Scalars['String']['output'];
-  id: Scalars['ID']['output'];
   isPaid: Scalars['Boolean']['output'];
   name: Scalars['String']['output'];
   note?: Maybe<Scalars['String']['output']>;
@@ -35,9 +35,9 @@ export type Expense = {
 
 export type ExpenseGroup = {
   __typename?: 'ExpenseGroup';
+  _id: Scalars['ID']['output'];
   endDate: Scalars['String']['output'];
   expenses?: Maybe<Array<Expense>>;
-  id: Scalars['ID']['output'];
   startDate: Scalars['String']['output'];
   totalBudget: Scalars['Float']['output'];
 };
@@ -71,7 +71,7 @@ export type QueryAuthenticateUserArgs = {
 
 
 export type QueryGetExpenseGroupByIdArgs = {
-  id: Scalars['String']['input'];
+  _id: Scalars['String']['input'];
 };
 
 export type AddExpenseMutationVariables = Exact<{
@@ -82,19 +82,19 @@ export type AddExpenseMutationVariables = Exact<{
 }>;
 
 
-export type AddExpenseMutation = { __typename?: 'Mutation', addExpense: { __typename?: 'Expense', id: string, name: string, balance: number, dueDate: string, isPaid: boolean } };
+export type AddExpenseMutation = { __typename?: 'Mutation', addExpense: { __typename?: 'Expense', _id: string, name: string, balance: number, dueDate: string, isPaid: boolean } };
 
 export type GetAllExpenseGroupsQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type GetAllExpenseGroupsQuery = { __typename?: 'Query', expenseGroups: Array<{ __typename?: 'ExpenseGroup', id: string, startDate: string, endDate: string, totalBudget: number, expenses?: Array<{ __typename?: 'Expense', id: string, name: string, balance: number, dueDate: string, isPaid: boolean, note?: string | null }> | null } | null> };
+export type GetAllExpenseGroupsQuery = { __typename?: 'Query', expenseGroups: Array<{ __typename?: 'ExpenseGroup', _id: string, startDate: string, endDate: string, totalBudget: number, expenses?: Array<{ __typename?: 'Expense', _id: string, name: string, balance: number, dueDate: string, isPaid: boolean, note?: string | null }> | null } | null> };
 
 export type GetExpenseGroupByIdQueryVariables = Exact<{
-  id: Scalars['String']['input'];
+  _id: Scalars['String']['input'];
 }>;
 
 
-export type GetExpenseGroupByIdQuery = { __typename?: 'Query', expenseGroup: { __typename?: 'ExpenseGroup', id: string, startDate: string, endDate: string, totalBudget: number, expenses?: Array<{ __typename?: 'Expense', id: string, name: string, balance: number, dueDate: string, isPaid: boolean, note?: string | null }> | null } };
+export type GetExpenseGroupByIdQuery = { __typename?: 'Query', expenseGroup: { __typename?: 'ExpenseGroup', _id: string, startDate: string, endDate: string, totalBudget: number, expenses?: Array<{ __typename?: 'Expense', _id: string, name: string, balance: number, dueDate: string, isPaid: boolean, note?: string | null }> | null } };
 
 export type AuthenticateUserQueryVariables = Exact<{
   username: Scalars['String']['input'];
@@ -113,7 +113,7 @@ export type LogoutUserQuery = { __typename?: 'Query', isLoggedOut: boolean };
 export const AddExpenseDocument = gql`
     mutation addExpense($name: String!, $balance: Float!, $dueDate: String!, $isPaid: Boolean!) {
   addExpense(name: $name, balance: $balance, dueDate: $dueDate, isPaid: $isPaid) {
-    id
+    _id
     name
     balance
     dueDate
@@ -124,12 +124,12 @@ export const AddExpenseDocument = gql`
 export const GetAllExpenseGroupsDocument = gql`
     query getAllExpenseGroups {
   expenseGroups: getAllExpenseGroups {
-    id
+    _id
     startDate
     endDate
     totalBudget
     expenses {
-      id
+      _id
       name
       balance
       dueDate
@@ -140,14 +140,14 @@ export const GetAllExpenseGroupsDocument = gql`
 }
     `;
 export const GetExpenseGroupByIdDocument = gql`
-    query getExpenseGroupById($id: String!) {
-  expenseGroup: getExpenseGroupById(id: $id) {
-    id
+    query getExpenseGroupById($_id: String!) {
+  expenseGroup: getExpenseGroupById(_id: $_id) {
+    _id
     startDate
     endDate
     totalBudget
     expenses {
-      id
+      _id
       name
       balance
       dueDate

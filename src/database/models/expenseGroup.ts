@@ -1,7 +1,7 @@
 import mongoose from 'mongoose';
 
 const ExpenseSchema = new mongoose.Schema({
-  title: String,
+  name: String,
   balance: Number,
   dueDate: String,
   isPaid: Boolean,
@@ -15,4 +15,5 @@ const ExpenseGroupSchema = new mongoose.Schema({
   expenses: [ExpenseSchema],
 });
 
-export default mongoose.model('ExpenseGroups', ExpenseGroupSchema);
+export default mongoose.models.ExpenseGroups ||
+  mongoose.model('ExpenseGroups', ExpenseGroupSchema);

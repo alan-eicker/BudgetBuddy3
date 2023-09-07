@@ -41,7 +41,7 @@ const ExpenseGroupDetail = (): JSX.Element => {
 
   const { data } = useQuery<GetExpenseGroupByIdQuery>(
     ['expenseGroup' + query.expenseGroupId],
-    () => getExpenseGroupById({ id: query.expenseGroupId as string }),
+    () => getExpenseGroupById({ _id: query.expenseGroupId as string }),
   );
 
   const mapOverdueStatustoExpenses = (expenses: Expense[]) => {
@@ -142,7 +142,7 @@ const ExpenseGroupDetail = (): JSX.Element => {
               <Grid item xs={12} sm={12} md={8}>
                 <ul style={{ marginTop: 2 }}>
                   {mapOverdueStatustoExpenses(expenses).map((expense) => (
-                    <li key={expense.id}>
+                    <li key={expense._id}>
                       <Card
                         hasError={expense.isOverdue}
                         head={

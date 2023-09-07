@@ -1,11 +1,11 @@
 query getAllExpenseGroups {
   expenseGroups: getAllExpenseGroups {
-    id
+    _id
     startDate
     endDate
     totalBudget
     expenses {
-      id
+      _id
       name
       balance
       dueDate
@@ -15,14 +15,14 @@ query getAllExpenseGroups {
   }
 }
 
-query getExpenseGroupById($id: String!) {
-  expenseGroup: getExpenseGroupById(id: $id) {
-    id
+query getExpenseGroupById($_id: String!) {
+  expenseGroup: getExpenseGroupById(_id: $_id) {
+    _id
     startDate
     endDate
     totalBudget
     expenses {
-      id
+      _id
       name
       balance
       dueDate

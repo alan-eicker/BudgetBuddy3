@@ -10,7 +10,7 @@ mutation addExpense(
     dueDate: $dueDate
     isPaid: $isPaid
   ) {
-    id
+    _id
     name
     balance
     dueDate

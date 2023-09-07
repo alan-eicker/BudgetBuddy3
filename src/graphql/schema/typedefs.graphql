@@ -1,6 +1,6 @@
 type Query {
   getAllExpenseGroups: [ExpenseGroup]!
-  getExpenseGroupById(id: String!): ExpenseGroup!
+  getExpenseGroupById(_id: String!): ExpenseGroup!
   authenticateUser(username: String!, password: String!): AuthResponse!
   logoutUser: Boolean!
 }
@@ -20,7 +20,7 @@ type AuthResponse {
 }
 
 type ExpenseGroup {
-  id: ID!
+  _id: ID!
   startDate: String!
   endDate: String!
   totalBudget: Float!
@@ -28,7 +28,7 @@ type ExpenseGroup {
 }
 
 type Expense {
-  id: ID!
+  _id: ID!
   name: String!
   balance: Float!
   dueDate: String!
