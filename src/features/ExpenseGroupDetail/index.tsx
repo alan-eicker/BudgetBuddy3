@@ -7,6 +7,7 @@ import Typography from '@mui/material/Typography';
 import Grid from '@mui/material/Grid';
 import Switch from '@mui/material/Switch';
 import Box from '@mui/material/Box';
+import ErrorOutlineIcon from '@mui/icons-material/ErrorOutline';
 import ErrorOutlineOutlinedIcon from '@mui/icons-material/ErrorOutlineOutlined';
 import ContentSection from '@/components/ContentSection';
 import Card from '@/components/Card';
@@ -166,7 +167,25 @@ const ExpenseGroupDetail = (): JSX.Element => {
                             alignItems="center"
                             justifyContent="space-between"
                           >
-                            <div>{expense.name}</div>
+                            <Box display="flex" alignItems="center">
+                              <span>{expense.name}</span>
+                              {expense.isOverdue && (
+                                <Box
+                                  marginLeft={0.5}
+                                  display="flex"
+                                  alignItems="center"
+                                >
+                                  <ErrorOutlineIcon color="error" />
+                                  <Typography
+                                    marginLeft={0.5}
+                                    color="#f44336"
+                                    fontSize={12}
+                                  >
+                                    Overdue
+                                  </Typography>
+                                </Box>
+                              )}
+                            </Box>
                             <div>
                               <Button>Edit</Button>
                               <Button>Delete</Button>
