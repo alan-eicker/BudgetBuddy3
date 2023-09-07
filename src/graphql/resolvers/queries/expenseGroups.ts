@@ -11,14 +11,14 @@ export async function getAllExpenseGroups(): Promise<ExpenseGroup[]> {
 }
 
 export async function getExpenseGroupById(
-  parent: any,
+  _: any,
   args: QueryGetExpenseGroupByIdArgs,
 ): Promise<ExpenseGroup | null> {
   return await ExpenseGroupModel.findById(args._id);
 }
 
 export async function deleteExpenseGroup(
-  parent: any,
+  _: any,
   args: QueryDeleteExpenseGroupArgs,
 ): Promise<StatusResponse> {
   try {

@@ -1,12 +1,16 @@
-import { StatusResponse } from '../../../generated/graphql';
+import {
+  StatusResponse,
+  AuthenticateUserQueryVariables,
+  LogoutUserQueryVariables,
+} from '../../../generated/graphql';
 
 export function authenticateUser(
-  parent,
-  args: { username: string; password: string },
+  _: any,
+  args: AuthenticateUserQueryVariables,
 ): StatusResponse {
   return { code: 200, message: 'ok' };
 }
 
-export function logoutUser(parent, args): boolean {
+export function logoutUser(_: any, args: LogoutUserQueryVariables): boolean {
   return true;
 }
