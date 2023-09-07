@@ -6,16 +6,17 @@ import Typography from '@mui/material/Typography';
 import Grid from '@mui/material/Grid';
 import Switch from '@mui/material/Switch';
 import Box from '@mui/material/Box';
-import ReportProblemOutlinedIcon from '@mui/icons-material/ReportProblemOutlined';
+import ErrorOutlineOutlinedIcon from '@mui/icons-material/ErrorOutlineOutlined';
 import ContentSection from '@/components/ContentSection';
 import Card from '@/components/Card';
 import { queryClient, getExpenseGroupById } from '@/api';
-import { GetExpenseGroupByIdQuery } from '@/generated/graphql';
+import { GetExpenseGroupByIdQuery, Expense } from '@/generated/graphql';
 import { useOverlayContext } from '@/providers/OverlayProvider';
 import {
   formatNumber,
   getTotalBalanceOfAllExpenses,
   getTotalUnpaidExpenses,
+  isOverDue,
 } from '@/utils/numbers';
 import styles from './ExpenseGroupDetail.module.scss';
 import { useEffect } from 'react';
@@ -42,6 +43,13 @@ const ExpenseGroupDetail = (): JSX.Element => {
     ['expenseGroup' + query.expenseGroupId],
     () => getExpenseGroupById({ id: query.expenseGroupId as string }),
   );
+
+  const mapOverdueStatustoExpenses = (expenses: Expense[]) => {
+    return expenses.map((expense: Expense) => ({
+      ...expense,
+      isOverdue: isOverDue(expense),
+    }));
+  };
 
   useEffect(() => {
     setShowOverlay(!data);
@@ -132,10 +140,11 @@ const ExpenseGroupDetail = (): JSX.Element => {
           {expenses && (
             <Grid container spacing={5}>
               <Grid item xs={12} sm={12} md={8}>
-                <ul>
-                  {expenses.map((expense) => (
+                <ul style={{ marginTop: 2 }}>
+                  {mapOverdueStatustoExpenses(expenses).map((expense) => (
                     <li key={expense.id}>
                       <Card
+                        hasError={expense.isOverdue}
                         head={
                           <Box
                             display="flex"
@@ -171,7 +180,7 @@ const ExpenseGroupDetail = (): JSX.Element => {
                             sx={{ marginTop: 1 }}
                             fontSize={12}
                           >
-                            <ReportProblemOutlinedIcon
+                            <ErrorOutlineOutlinedIcon
                               color="info"
                               fontSize="small"
                               sx={{ marginRight: 0.5 }}

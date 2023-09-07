@@ -31,18 +31,27 @@ export function getTotalUnpaidExpenses(
   );
 }
 
-export function getOverDueBalance(expenses: Expense[]): number {
-  return expenses.reduce(
-    (prevValue, nextValue) =>
-      nextValue.dueDate &&
-      !nextValue.isPaid &&
-      getDaysPastDue(nextValue.dueDate).isPastDue
-        ? prevValue + 1
-        : prevValue,
-    0,
-  );
-}
+export const getTotalBalance = (expenses: Expense[]): string => {
+  const total = expenses.reduce((acc, curr) => {
+    return acc + curr.balance;
+  }, 0);
 
-export function getDifference(num1: number, num2: number): number {
-  return num1 - num2;
-}
+  return total.toFixed(2);
+};
+
+export const getTotalOverdueBalances = (expenses: Expense[]): number => {
+  let overdueExpenses = 0;
+  const unpaidExpenses = expenses.filter((expense) => !expense.isPaid);
+
+  unpaidExpenses.forEach((unpaidExpense) => {
+    if (new Date() > new Date(unpaidExpense.dueDate)) {
+      overdueExpenses += 1;
+    }
+  });
+
+  return overdueExpenses;
+};
+
+export const isOverDue = (expense: Expense) => {
+  return new Date() > new Date(expense.dueDate) && !expense.isPaid;
+};

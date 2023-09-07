@@ -10,7 +10,7 @@ import Card from '@/components/Card';
 import ContentSection from '@/components/ContentSection';
 import { queryClient, getAllExpenseGroups } from '@/api';
 import { GetAllExpenseGroupsQuery } from '@/generated/graphql';
-import { Expense } from '@/generated/graphql';
+import { getTotalBalance, getTotalOverdueBalances } from '@/utils/numbers';
 
 const chartData = [
   {
@@ -74,27 +74,6 @@ const chartData = [
     2023: 7100,
   },
 ];
-
-const getTotalBalance = (expenses: Expense[]): string => {
-  const total = expenses.reduce((acc, curr) => {
-    return acc + curr.balance;
-  }, 0);
-
-  return total.toFixed(2);
-};
-
-const getTotalOverdueBalances = (expenses: Expense[]): number => {
-  let overdueExpenses = 0;
-  const unpaidExpenses = expenses.filter((expense) => !expense.isPaid);
-
-  unpaidExpenses.forEach((unpaidExpense) => {
-    if (new Date() > new Date(unpaidExpense.dueDate)) {
-      overdueExpenses += 1;
-    }
-  });
-
-  return overdueExpenses;
-};
 
 export async function getServerSideProps() {
   await queryClient.prefetchQuery<GetAllExpenseGroupsQuery>(

@@ -7,6 +7,10 @@
   &:hover {
     box-shadow: 0 0 0 rem(2) lighten($brand, 14%);
   }
+
+  &.hasError {
+    box-shadow: 0 0 0 rem(1) $error;
+  }
 }
 
 .head {
