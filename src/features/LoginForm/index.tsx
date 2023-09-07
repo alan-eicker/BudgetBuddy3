@@ -54,9 +54,9 @@ const LoginForm = (): JSX.Element => {
           BudgetBuddy
         </Typography>
       </Typography>
-      {data && data?.user.status !== 200 && (
+      {data && data?.status.code !== 200 && (
         <Alert variant="outlined" severity="error">
-          {data?.user.message}
+          {data?.status.message}
         </Alert>
       )}
       <TextField

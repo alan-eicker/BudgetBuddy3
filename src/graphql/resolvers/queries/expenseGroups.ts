@@ -1,27 +1,33 @@
-import { ExpenseGroup, StatusResponse } from '@/generated/graphql';
+import {
+  ExpenseGroup,
+  StatusResponse,
+  QueryGetExpenseGroupByIdArgs,
+  QueryDeleteExpenseGroupArgs,
+} from '@/generated/graphql';
 import ExpenseGroupModel from '@/database/models/expenseGroup';
 
 export async function getAllExpenseGroups(): Promise<ExpenseGroup[]> {
   return await ExpenseGroupModel.find({});
 }
 
-export async function getExpenseGroupById(parent, args): Promise<ExpenseGroup> {
+export async function getExpenseGroupById(
+  parent: any,
+  args: QueryGetExpenseGroupByIdArgs,
+): Promise<ExpenseGroup | null> {
   return await ExpenseGroupModel.findById(args._id);
 }
 
 export async function deleteExpenseGroup(
-  parent,
-  args,
+  parent: any,
+  args: QueryDeleteExpenseGroupArgs,
 ): Promise<StatusResponse> {
   try {
     await ExpenseGroupModel.deleteOne({ _id: args._id });
-    return {
-      code: 200,
-    };
-  } catch (err) {
+    return { code: 200 };
+  } catch {
     return {
       code: 500,
-      message: `Could not delete expense group ${args._id}`,
+      message: `Could not delete expense group [${args._id}].`,
     };
   }
 }
