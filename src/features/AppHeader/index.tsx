@@ -34,6 +34,7 @@ const AppHeader = () => {
           { url: '/account/profile', text: 'My Profile', icon: <PersonIcon /> },
           {
             onClick: () => setInitLogout(true),
+            url: 'javascript:void(0)',
             text: 'Log Out',
             icon: <LogoutIcon />,
           },

@@ -17,12 +17,6 @@ export type Scalars = {
   Float: { input: number; output: number; }
 };
 
-export type AuthResponse = {
-  __typename?: 'AuthResponse';
-  message: Scalars['String']['output'];
-  status: Scalars['Int']['output'];
-};
-
 export type Expense = {
   __typename?: 'Expense';
   _id: Scalars['ID']['output'];
@@ -57,7 +51,8 @@ export type MutationAddExpenseArgs = {
 
 export type Query = {
   __typename?: 'Query';
-  authenticateUser: AuthResponse;
+  authenticateUser: StatusResponse;
+  deleteExpenseGroup: StatusResponse;
   getAllExpenseGroups: Array<Maybe<ExpenseGroup>>;
   getExpenseGroupById: ExpenseGroup;
   logoutUser: Scalars['Boolean']['output'];
@@ -70,8 +65,19 @@ export type QueryAuthenticateUserArgs = {
 };
 
 
+export type QueryDeleteExpenseGroupArgs = {
+  _id: Scalars['String']['input'];
+};
+
+
 export type QueryGetExpenseGroupByIdArgs = {
   _id: Scalars['String']['input'];
+};
+
+export type StatusResponse = {
+  __typename?: 'StatusResponse';
+  code: Scalars['Int']['output'];
+  message?: Maybe<Scalars['String']['output']>;
 };
 
 export type AddExpenseMutationVariables = Exact<{
@@ -96,13 +102,20 @@ export type GetExpenseGroupByIdQueryVariables = Exact<{
 
 export type GetExpenseGroupByIdQuery = { __typename?: 'Query', expenseGroup: { __typename?: 'ExpenseGroup', _id: string, startDate: string, endDate: string, totalBudget: number, expenses?: Array<{ __typename?: 'Expense', _id: string, name: string, balance: number, dueDate: string, isPaid: boolean, note?: string | null }> | null } };
 
+export type DeleteExpenseGroupQueryVariables = Exact<{
+  _id: Scalars['String']['input'];
+}>;
+
+
+export type DeleteExpenseGroupQuery = { __typename?: 'Query', status: { __typename?: 'StatusResponse', code: number, message?: string | null } };
+
 export type AuthenticateUserQueryVariables = Exact<{
   username: Scalars['String']['input'];
   password: Scalars['String']['input'];
 }>;
 
 
-export type AuthenticateUserQuery = { __typename?: 'Query', user: { __typename?: 'AuthResponse', status: number, message: string } };
+export type AuthenticateUserQuery = { __typename?: 'Query', status: { __typename?: 'StatusResponse', code: number, message?: string | null } };
 
 export type LogoutUserQueryVariables = Exact<{ [key: string]: never; }>;
 
@@ -157,10 +170,18 @@ export const GetExpenseGroupByIdDocument = gql`
   }
 }
     `;
+export const DeleteExpenseGroupDocument = gql`
+    query deleteExpenseGroup($_id: String!) {
+  status: deleteExpenseGroup(_id: $_id) {
+    code
+    message
+  }
+}
+    `;
 export const AuthenticateUserDocument = gql`
     query authenticateUser($username: String!, $password: String!) {
-  user: authenticateUser(username: $username, password: $password) {
-    status
+  status: authenticateUser(username: $username, password: $password) {
+    code
     message
   }
 }
@@ -186,6 +207,9 @@ export function getSdk(client: GraphQLClient, withWrapper: SdkFunctionWrapper = 
     },
     getExpenseGroupById(variables: GetExpenseGroupByIdQueryVariables, requestHeaders?: GraphQLClientRequestHeaders): Promise<GetExpenseGroupByIdQuery> {
       return withWrapper((wrappedRequestHeaders) => client.request<GetExpenseGroupByIdQuery>(GetExpenseGroupByIdDocument, variables, {...requestHeaders, ...wrappedRequestHeaders}), 'getExpenseGroupById', 'query');
+    },
+    deleteExpenseGroup(variables: DeleteExpenseGroupQueryVariables, requestHeaders?: GraphQLClientRequestHeaders): Promise<DeleteExpenseGroupQuery> {
+      return withWrapper((wrappedRequestHeaders) => client.request<DeleteExpenseGroupQuery>(DeleteExpenseGroupDocument, variables, {...requestHeaders, ...wrappedRequestHeaders}), 'deleteExpenseGroup', 'query');
     },
     authenticateUser(variables: AuthenticateUserQueryVariables, requestHeaders?: GraphQLClientRequestHeaders): Promise<AuthenticateUserQuery> {
       return withWrapper((wrappedRequestHeaders) => client.request<AuthenticateUserQuery>(AuthenticateUserDocument, variables, {...requestHeaders, ...wrappedRequestHeaders}), 'authenticateUser', 'query');

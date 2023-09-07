@@ -1,7 +1,8 @@
 type Query {
   getAllExpenseGroups: [ExpenseGroup]!
   getExpenseGroupById(_id: String!): ExpenseGroup!
-  authenticateUser(username: String!, password: String!): AuthResponse!
+  authenticateUser(username: String!, password: String!): StatusResponse!
+  deleteExpenseGroup(_id: String!): StatusResponse!
   logoutUser: Boolean!
 }
 
@@ -14,9 +15,9 @@ type Mutation {
   ): Expense!
 }
 
-type AuthResponse {
-  status: Int!
-  message: String!
+type StatusResponse {
+  code: Int!
+  message: String
 }
 
 type ExpenseGroup {

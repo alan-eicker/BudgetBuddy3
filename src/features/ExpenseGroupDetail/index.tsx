@@ -1,3 +1,4 @@
+import { useEffect, useState } from 'react';
 import { GetServerSidePropsContext } from 'next';
 import { useRouter } from 'next/router';
 import { dehydrate, useQuery } from 'react-query';
@@ -9,7 +10,7 @@ import Box from '@mui/material/Box';
 import ErrorOutlineOutlinedIcon from '@mui/icons-material/ErrorOutlineOutlined';
 import ContentSection from '@/components/ContentSection';
 import Card from '@/components/Card';
-import { queryClient, getExpenseGroupById } from '@/api';
+import { queryClient, getExpenseGroupById, deleteExpenseGroup } from '@/api';
 import { GetExpenseGroupByIdQuery, Expense } from '@/generated/graphql';
 import { useOverlayContext } from '@/providers/OverlayProvider';
 import {
@@ -19,13 +20,12 @@ import {
   isOverDue,
 } from '@/utils/numbers';
 import styles from './ExpenseGroupDetail.module.scss';
-import { useEffect } from 'react';
 
 export async function getServerSideProps(context: GetServerSidePropsContext) {
-  const id = context.query.expenseGroupId as string;
+  const _id = context.query.expenseGroupId as string;
   await queryClient.prefetchQuery<GetExpenseGroupByIdQuery>(
-    ['expenseGroup' + id],
-    () => getExpenseGroupById({ id }),
+    ['expenseGroup' + _id],
+    () => getExpenseGroupById({ _id }),
   );
 
   return {
@@ -36,12 +36,28 @@ export async function getServerSideProps(context: GetServerSidePropsContext) {
 }
 
 const ExpenseGroupDetail = (): JSX.Element => {
-  const { query } = useRouter();
+  const router = useRouter();
+  const { query } = router;
   const { setShowOverlay } = useOverlayContext();
+  const [initDelete, setInitDelete] = useState(false);
 
   const { data } = useQuery<GetExpenseGroupByIdQuery>(
     ['expenseGroup' + query.expenseGroupId],
     () => getExpenseGroupById({ _id: query.expenseGroupId as string }),
+  );
+
+  useQuery(
+    ['deleteExpenseGroup' + query.expenseGroupId],
+    () => deleteExpenseGroup({ _id: query.expenseGroupId as string }),
+    {
+      enabled: initDelete,
+      onSuccess: ({ status }) => {
+        if (status.code === 200) {
+          queryClient.removeQueries('expenseGroups');
+          router.push('/account/dashboard');
+        }
+      },
+    },
   );
 
   const mapOverdueStatustoExpenses = (expenses: Expense[]) => {
@@ -114,7 +130,7 @@ const ExpenseGroupDetail = (): JSX.Element => {
                 color="error"
                 variant="contained"
                 size="small"
-                onClick={() => {}}
+                onClick={() => setInitDelete(true)}
               >
                 Delete Group
               </Button>

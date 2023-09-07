@@ -9,6 +9,7 @@ export const {
   logoutUser,
   getAllExpenseGroups,
   getExpenseGroupById,
+  deleteExpenseGroup,
 } = getSdk(gqlClient);
 
 export const queryClient = new QueryClient({

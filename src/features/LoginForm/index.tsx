@@ -39,7 +39,7 @@ const LoginForm = (): JSX.Element => {
     {
       enabled: isSubmitting && !!values.username && !!values.password,
       onSuccess: (data) => {
-        if (data.user.status === 200) {
+        if (data.status.code === 200) {
           router.push('/account/dashboard');
         }
       },
