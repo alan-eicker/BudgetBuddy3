@@ -1,26 +1,24 @@
 import { useRouter } from 'next/router';
-import { useQuery } from 'react-query';
 import PersonIcon from '@mui/icons-material/Person';
 import LogoutIcon from '@mui/icons-material/Logout';
 import AccountCircleOutlinedIcon from '@mui/icons-material/AccountCircleOutlined';
 import Header from '@/components/Header';
 import DropdownMenu from '@/components/DropdownMenu';
-import { logoutUser } from '@/api';
-import { useState } from 'react';
+import { queryClient, logoutUser } from '@/api';
 
 const AppHeader = () => {
   const router = useRouter();
-  const [initLogout, setInitLogout] = useState(false);
   const date = new Date().toDateString();
 
-  useQuery(['logoutUser'], () => logoutUser(), {
-    enabled: initLogout,
-    onSuccess: (data) => {
-      if (data.isLoggedOut) {
-        router.push('/');
-      }
-    },
-  });
+  const handleLogout = async () => {
+    const { isLoggedOut } = await queryClient.fetchQuery(['logoutUser'], () =>
+      logoutUser(),
+    );
+
+    if (isLoggedOut) {
+      router.push('/');
+    }
+  };
 
   return (
     <Header title="BudgetBuddy">
@@ -33,7 +31,7 @@ const AppHeader = () => {
         menuItems={[
           { url: '/account/profile', text: 'My Profile', icon: <PersonIcon /> },
           {
-            onClick: () => setInitLogout(true),
+            onClick: handleLogout,
             url: 'javascript:void(0)',
             text: 'Log Out',
             icon: <LogoutIcon />,

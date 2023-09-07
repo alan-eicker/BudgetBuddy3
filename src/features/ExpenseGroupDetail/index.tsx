@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import { GetServerSidePropsContext } from 'next';
 import { useRouter } from 'next/router';
 import { dehydrate, useQuery } from 'react-query';
@@ -37,28 +37,27 @@ export async function getServerSideProps(context: GetServerSidePropsContext) {
 
 const ExpenseGroupDetail = (): JSX.Element => {
   const router = useRouter();
-  const { query } = router;
+  const {
+    query: { expenseGroupId },
+  } = router;
   const { setShowOverlay } = useOverlayContext();
-  const [initDelete, setInitDelete] = useState(false);
 
   const { data } = useQuery<GetExpenseGroupByIdQuery>(
-    ['expenseGroup' + query.expenseGroupId],
-    () => getExpenseGroupById({ _id: query.expenseGroupId as string }),
+    ['expenseGroup' + expenseGroupId],
+    () => getExpenseGroupById({ _id: expenseGroupId as string }),
   );
 
-  useQuery(
-    ['deleteExpenseGroup' + query.expenseGroupId],
-    () => deleteExpenseGroup({ _id: query.expenseGroupId as string }),
-    {
-      enabled: initDelete,
-      onSuccess: ({ status }) => {
-        if (status.code === 200) {
-          queryClient.removeQueries('expenseGroups');
-          router.push('/account/dashboard');
-        }
-      },
-    },
-  );
+  const handleDelete = async () => {
+    const { status } = await queryClient.fetchQuery(
+      ['deleteExpenseGroup' + expenseGroupId],
+      () => deleteExpenseGroup({ _id: expenseGroupId as string }),
+    );
+
+    if (status.code === 200) {
+      queryClient.removeQueries('expenseGroups');
+      router.push('/account/dashboard');
+    }
+  };
 
   const mapOverdueStatustoExpenses = (expenses: Expense[]) => {
     return expenses.map((expense: Expense) => ({
@@ -130,7 +129,7 @@ const ExpenseGroupDetail = (): JSX.Element => {
                 color="error"
                 variant="contained"
                 size="small"
-                onClick={() => setInitDelete(true)}
+                onClick={() => handleDelete()}
               >
                 Delete Group
               </Button>
