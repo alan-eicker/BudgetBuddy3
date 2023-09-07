@@ -35,9 +35,10 @@ export type Expense = {
 
 export type ExpenseGroup = {
   __typename?: 'ExpenseGroup';
+  endDate: Scalars['String']['output'];
   expenses?: Maybe<Array<Expense>>;
   id: Scalars['ID']['output'];
-  name: Scalars['String']['output'];
+  startDate: Scalars['String']['output'];
   totalBudget: Scalars['Float']['output'];
 };
 
@@ -86,14 +87,14 @@ export type AddExpenseMutation = { __typename?: 'Mutation', addExpense: { __type
 export type GetAllExpenseGroupsQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type GetAllExpenseGroupsQuery = { __typename?: 'Query', expenseGroups: Array<{ __typename?: 'ExpenseGroup', id: string, name: string, expenses?: Array<{ __typename?: 'Expense', id: string, name: string, balance: number, dueDate: string, isPaid: boolean, note?: string | null }> | null } | null> };
+export type GetAllExpenseGroupsQuery = { __typename?: 'Query', expenseGroups: Array<{ __typename?: 'ExpenseGroup', id: string, startDate: string, endDate: string, totalBudget: number, expenses?: Array<{ __typename?: 'Expense', id: string, name: string, balance: number, dueDate: string, isPaid: boolean, note?: string | null }> | null } | null> };
 
 export type GetExpenseGroupByIdQueryVariables = Exact<{
   id: Scalars['String']['input'];
 }>;
 
 
-export type GetExpenseGroupByIdQuery = { __typename?: 'Query', expenseGroup: { __typename?: 'ExpenseGroup', id: string, name: string, totalBudget: number, expenses?: Array<{ __typename?: 'Expense', id: string, name: string, balance: number, dueDate: string, isPaid: boolean, note?: string | null }> | null } };
+export type GetExpenseGroupByIdQuery = { __typename?: 'Query', expenseGroup: { __typename?: 'ExpenseGroup', id: string, startDate: string, endDate: string, totalBudget: number, expenses?: Array<{ __typename?: 'Expense', id: string, name: string, balance: number, dueDate: string, isPaid: boolean, note?: string | null }> | null } };
 
 export type AuthenticateUserQueryVariables = Exact<{
   username: Scalars['String']['input'];
@@ -124,7 +125,9 @@ export const GetAllExpenseGroupsDocument = gql`
     query getAllExpenseGroups {
   expenseGroups: getAllExpenseGroups {
     id
-    name
+    startDate
+    endDate
+    totalBudget
     expenses {
       id
       name
@@ -140,7 +143,8 @@ export const GetExpenseGroupByIdDocument = gql`
     query getExpenseGroupById($id: String!) {
   expenseGroup: getExpenseGroupById(id: $id) {
     id
-    name
+    startDate
+    endDate
     totalBudget
     expenses {
       id

@@ -113,14 +113,14 @@ const Dashboard = () => {
           </Button>
         </Box>
         <Grid container spacing={2}>
-          {data?.expenseGroups.map(({ id, name, expenses }) => {
+          {data?.expenseGroups.map(({ id, startDate, endDate, expenses }) => {
             const numOverdueBalances = !expenses
               ? 0
               : getTotalOverdueBalances(expenses);
             return (
               <Grid key={id} item xs={12} sm={12} md={4}>
                 <Link href={`/account/dashboard/${id}`}>
-                  <Card head={name} height="100%">
+                  <Card head={`${startDate} - ${endDate}`} height="100%">
                     <div
                       style={{
                         display: 'flex',

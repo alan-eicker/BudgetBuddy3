@@ -1,7 +1,9 @@
 query getAllExpenseGroups {
   expenseGroups: getAllExpenseGroups {
     id
-    name
+    startDate
+    endDate
+    totalBudget
     expenses {
       id
       name
@@ -16,7 +18,8 @@ query getAllExpenseGroups {
 query getExpenseGroupById($id: String!) {
   expenseGroup: getExpenseGroupById(id: $id) {
     id
-    name
+    startDate
+    endDate
     totalBudget
     expenses {
       id

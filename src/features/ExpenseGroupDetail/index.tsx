@@ -61,7 +61,7 @@ const ExpenseGroupDetail = (): JSX.Element => {
   let unpaidExpenses = 0;
   let getLeftOverBalance = 0;
 
-  const { name, totalBudget, expenses } = data.expenseGroup;
+  const { startDate, endDate, totalBudget, expenses } = data.expenseGroup;
 
   if (expenses) {
     totalBalance = getTotalBalanceOfAllExpenses(expenses, 'balance');
@@ -79,7 +79,7 @@ const ExpenseGroupDetail = (): JSX.Element => {
                 &laquo; Back to dashboard
               </Button>
               <Typography component="h1" variant="h4">
-                {name}
+                {`${startDate} - ${endDate}`}
               </Typography>
               <Typography component="h2" variant="h6">
                 Total Budget: ${formatNumber(totalBudget)}

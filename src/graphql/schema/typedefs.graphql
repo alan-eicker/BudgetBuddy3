@@ -21,7 +21,8 @@ type AuthResponse {
 
 type ExpenseGroup {
   id: ID!
-  name: String!
+  startDate: String!
+  endDate: String!
   totalBudget: Float!
   expenses: [Expense!]
 }
