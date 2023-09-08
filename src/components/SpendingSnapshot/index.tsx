@@ -4,9 +4,8 @@ import ListItemText from '@mui/material/ListItemText';
 import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
 import Divider from '@mui/material/Divider';
-import ArrowDownwardRoundedIcon from '@mui/icons-material/ArrowDownwardRounded';
-import ArrowUpwardRoundedIcon from '@mui/icons-material/ArrowUpwardRounded';
 import Card from '../Card';
+import TrendingSnapshot from '../TrendingSnapshot';
 
 interface SpendingSnapshotProps {
   title?: string;
@@ -16,7 +15,7 @@ interface SpendingSnapshotProps {
 const SpendingSnapshot = ({
   title = 'Spending Snapshot',
   items,
-}: SpendingSnapshotProps) => (
+}: SpendingSnapshotProps): JSX.Element => (
   <Card
     head={
       <Typography component="h3" fontSize={20} textAlign="center">
@@ -24,10 +23,7 @@ const SpendingSnapshot = ({
       </Typography>
     }
   >
-    <Box textAlign="center" color="#8bc34a">
-      <ArrowDownwardRoundedIcon sx={{ fontSize: 50 }} />
-      <Box marginTop={-1}>Trending 5% Lower than last period</Box>
-    </Box>
+    <TrendingSnapshot value={7} direction="down" />
     <Box marginTop={2.5} marginBottom={2.5}>
       <Divider />
     </Box>
