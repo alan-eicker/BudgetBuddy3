@@ -1,6 +1,6 @@
 import Box from '@mui/material/Box';
-import ArrowDownwardRoundedIcon from '@mui/icons-material/ArrowDownwardRounded';
-import ArrowUpwardRoundedIcon from '@mui/icons-material/ArrowUpwardRounded';
+import TrendingDownIcon from '@mui/icons-material/TrendingDown';
+import TrendingUpIcon from '@mui/icons-material/TrendingUp';
 
 interface TrendingSnapshotProps {
   value: number;
@@ -9,12 +9,12 @@ interface TrendingSnapshotProps {
 
 const propValues = {
   up: {
-    Icon: ArrowUpwardRoundedIcon,
+    Icon: TrendingUpIcon,
     color: '#f44336',
     text: 'higher',
   },
   down: {
-    Icon: ArrowDownwardRoundedIcon,
+    Icon: TrendingDownIcon,
     color: '#8bc34a',
     text: 'lower',
   },
