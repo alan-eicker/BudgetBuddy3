@@ -10,11 +10,13 @@ import TrendingSnapshot from '../TrendingSnapshot';
 interface SpendingSnapshotProps {
   title?: string;
   items: [string, any][];
+  trending: 'up' | 'down';
 }
 
 const SpendingSnapshot = ({
   title = 'Spending Snapshot',
-  items,
+  trending = 'down',
+  items = [],
 }: SpendingSnapshotProps): JSX.Element => (
   <Card
     head={
@@ -23,7 +25,7 @@ const SpendingSnapshot = ({
       </Typography>
     }
   >
-    <TrendingSnapshot value={7} direction="down" />
+    <TrendingSnapshot value={7} direction={trending} />
     <Box marginTop={2.5} marginBottom={2.5}>
       <Divider />
     </Box>

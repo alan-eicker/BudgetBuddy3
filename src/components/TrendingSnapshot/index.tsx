@@ -7,22 +7,28 @@ interface TrendingSnapshotProps {
   direction: 'up' | 'down';
 }
 
-const colors = {
-  up: '#f44336',
-  down: '#8bc34a',
+const propValues = {
+  up: {
+    Icon: ArrowUpwardRoundedIcon,
+    color: '#f44336',
+    text: 'higher',
+  },
+  down: {
+    Icon: ArrowDownwardRoundedIcon,
+    color: '#8bc34a',
+    text: 'lower',
+  },
 };
 
 const TrendingSnapshot = ({
   value,
   direction,
 }: TrendingSnapshotProps): JSX.Element => {
-  const TrendingIcon =
-    direction === 'up' ? ArrowUpwardRoundedIcon : ArrowDownwardRoundedIcon;
-  const text = direction === 'up' ? 'higher' : 'lower';
+  const { Icon, color, text } = propValues[direction];
 
   return (
-    <Box textAlign="center" color={colors[direction]}>
-      <TrendingIcon sx={{ fontSize: 50 }} />
+    <Box textAlign="center" color={color}>
+      <Icon sx={{ fontSize: 50 }} />
       <Box marginTop={-1}>
         Trending {value}% {text} than last period
       </Box>
