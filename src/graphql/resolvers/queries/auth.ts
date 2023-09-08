@@ -2,7 +2,7 @@ import {
   StatusResponse,
   AuthenticateUserQueryVariables,
   LogoutUserQueryVariables,
-} from '../../../generated/graphql';
+} from '../../generated/graphql';
 
 export function authenticateUser(
   _: any,

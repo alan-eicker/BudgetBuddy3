@@ -1,7 +1,4 @@
-import {
-  Expense,
-  AddExpenseMutationVariables,
-} from '../../../generated/graphql';
+import { Expense, AddExpenseMutationVariables } from '../../generated/graphql';
 
 export function addExpense(
   parent: unknown,

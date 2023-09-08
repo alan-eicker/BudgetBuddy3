@@ -3,7 +3,7 @@ import {
   StatusResponse,
   QueryGetExpenseGroupByIdArgs,
   QueryDeleteExpenseGroupArgs,
-} from '@/generated/graphql';
+} from '@/graphql/generated/graphql';
 import ExpenseGroupModel from '@/database/models/expenseGroup';
 
 export async function getAllExpenseGroups(): Promise<ExpenseGroup[]> {

@@ -6,7 +6,7 @@ import AccountCircleOutlinedIcon from '@mui/icons-material/AccountCircleOutlined
 import Header from '@/components/Header';
 import DropdownMenu from '@/components/DropdownMenu';
 import { queryClient, logoutUser } from '@/api';
-import { LogoutUserQuery } from '@/generated/graphql';
+import { LogoutUserQuery } from '@/graphql/generated/graphql';
 
 const AppHeader = () => {
   const router = useRouter();

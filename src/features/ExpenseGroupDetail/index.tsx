@@ -16,7 +16,7 @@ import {
   GetExpenseGroupByIdQuery,
   Expense,
   DeleteExpenseGroupQuery,
-} from '@/generated/graphql';
+} from '@/graphql/generated/graphql';
 import { useOverlayContext } from '@/providers/OverlayProvider';
 import {
   formatNumber,

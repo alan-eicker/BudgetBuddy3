@@ -1,5 +1,5 @@
 import { getDaysPastDue } from './date';
-import { Expense } from '@/generated/graphql';
+import { Expense } from '@/graphql/generated/graphql';
 
 export function formatNumber(num: number): string {
   return num.toLocaleString('en', {
