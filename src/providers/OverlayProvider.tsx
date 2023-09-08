@@ -25,7 +25,7 @@ export const useOverlayContext = () => useContext(OverlayContext);
 const OverlayProvider = ({ children }: { children: ReactNode }) => {
   const { pathname } = useRouter();
   const prevoiusRoute = usePreviousRoute();
-  const [showOverlay, setShowOverlay] = useState(false);
+  const [showOverlay, setShowOverlay] = useState(true);
 
   useEffect(() => {
     if (pathname !== prevoiusRoute) {

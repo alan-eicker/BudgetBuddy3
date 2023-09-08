@@ -14,12 +14,12 @@ import {
   NameType,
   Payload,
 } from 'recharts/types/component/DefaultTooltipContent';
-import Box from '@mui/material/Box';
+import Box, { BoxProps } from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import { COLOR_PALETTE } from './colors';
 import styles from './LineChart.module.scss';
 
-interface LineChartProps {
+interface LineChartProps extends BoxProps {
   title: string;
   titleElement?: 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6' | 'div';
   height: number;
@@ -42,6 +42,7 @@ const LineChart = ({
   gridColor = '#000',
   legendHeight = 40,
   data,
+  ...boxProps
 }: LineChartProps) => {
   if (!data.length) {
     return null;
@@ -69,6 +70,7 @@ const LineChart = ({
   const ChartTooltip = ({
     active,
     payload,
+    ...boxProps
   }: TooltipProps<ValueType, NameType>) => {
     if (active && payload && payload.length) {
       return (
@@ -91,9 +93,9 @@ const LineChart = ({
   };
 
   return (
-    <div className={styles.container}>
+    <Box className={styles.container} {...boxProps}>
       <TitleElement className={styles.title}>{title}</TitleElement>
-      <div className={styles.content}>
+      <Box className={styles.content}>
         <ResponsiveContainer width="100%" height={height}>
           <RechartsLineChart data={data}>
             <CartesianGrid stroke={gridColor} strokeDasharray="3 3" />
@@ -104,8 +106,8 @@ const LineChart = ({
             {createLines()}
           </RechartsLineChart>
         </ResponsiveContainer>
-      </div>
-    </div>
+      </Box>
+    </Box>
   );
 };
 

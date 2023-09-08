@@ -3,17 +3,17 @@ import Link from 'next/link';
 import AppBar from '@mui/material/AppBar';
 import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
-import Box from '@mui/material/Box';
+import Box, { BoxProps } from '@mui/material/Box';
 import BrandLogo from '../BrandLogo';
 import styles from './Header.module.scss';
 
-export interface HeaderProps {
+export interface HeaderProps extends BoxProps {
   title: string;
   children?: ReactNode;
 }
 
-const Header = ({ children, title }: HeaderProps): JSX.Element => (
-  <Box className={styles.header}>
+const Header = ({ children, title, ...boxProps }: HeaderProps): JSX.Element => (
+  <Box className={styles.header} {...boxProps}>
     <AppBar position="static">
       <Toolbar>
         <Typography

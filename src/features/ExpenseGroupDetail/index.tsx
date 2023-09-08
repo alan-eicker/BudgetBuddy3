@@ -143,20 +143,17 @@ const ExpenseGroupDetail = (): JSX.Element => {
         </ContentSection>
         <Box style={{ backgroundColor: '#212a3b' }}>
           <ContentSection compressed>
-            <Button>+ Add Expense</Button>
+            <Grid container spacing={5}>
+              <Grid item xs={12} sm={12} md={8} textAlign="right">
+                <Button>+ Add Expense</Button>
+              </Grid>
+            </Grid>
           </ContentSection>
         </Box>
       </Box>
       <Box className={styles.body}>
         <ContentSection noPaddingTop>
-          {!expenses && (
-            <>
-              <Typography>No expense data to display.</Typography>
-              <Button sx={{ marginTop: 2 }} size="small" variant="contained">
-                + Add Expense
-              </Button>
-            </>
-          )}
+          {!expenses && <Typography>No expense data to display.</Typography>}
           {expenses && (
             <Grid container spacing={5}>
               <Grid item xs={12} sm={12} md={8}>

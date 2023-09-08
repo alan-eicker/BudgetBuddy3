@@ -1,7 +1,16 @@
 import { ReactNode } from 'react';
 import classnames from 'classnames';
-import Box from '@mui/material/Box';
+import Box, { BoxProps } from '@mui/material/Box';
 import styles from './ContentSection.module.scss';
+
+interface ContentSectionProp extends BoxProps {
+  children: ReactNode;
+  maxWidth?: number | undefined;
+  compressed?: boolean;
+  noPaddingTop?: boolean;
+  noPaddingBottom?: boolean;
+  noPadding?: boolean;
+}
 
 const ContentSection = ({
   children,
@@ -10,15 +19,10 @@ const ContentSection = ({
   noPaddingTop,
   noPaddingBottom,
   noPadding,
-}: {
-  children: ReactNode;
-  maxWidth?: number | undefined;
-  compressed?: boolean;
-  noPaddingTop?: boolean;
-  noPaddingBottom?: boolean;
-  noPadding?: boolean;
-}): JSX.Element => (
+  ...boxProps
+}: ContentSectionProp): JSX.Element => (
   <Box
+    {...boxProps}
     className={classnames(styles.container, {
       [styles.isCompressed]: compressed,
       [styles.noPaddingTop]: noPaddingTop,
