@@ -25,7 +25,12 @@ const SpendingSnapshot = ({
       </Typography>
     }
   >
-    <TrendingSnapshot value={7} direction={trending} />
+    {/* TODO: need to get get the previous data range and % difference */}
+    <TrendingSnapshot
+      value={7}
+      direction={trending}
+      prevPeriod="09/01/2023 - 09/15/2023"
+    />
     <Box marginTop={2.5} marginBottom={2.5}>
       <Divider />
     </Box>

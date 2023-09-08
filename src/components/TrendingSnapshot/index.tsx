@@ -5,6 +5,7 @@ import TrendingUpIcon from '@mui/icons-material/TrendingUp';
 interface TrendingSnapshotProps {
   value: number;
   direction: 'up' | 'down';
+  prevPeriod: string;
 }
 
 const propValues = {
@@ -23,6 +24,7 @@ const propValues = {
 const TrendingSnapshot = ({
   value,
   direction,
+  prevPeriod,
 }: TrendingSnapshotProps): JSX.Element => {
   const { Icon, color, text } = propValues[direction];
 
@@ -30,7 +32,8 @@ const TrendingSnapshot = ({
     <Box textAlign="center" color={color}>
       <Icon sx={{ fontSize: 50 }} />
       <Box marginTop={-1}>
-        Trending {value}% {text} than last period
+        Trending {value}% {text} from
+        <br /> {prevPeriod}
       </Box>
     </Box>
   );
