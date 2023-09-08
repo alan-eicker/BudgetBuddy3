@@ -1,5 +1,6 @@
 import { ReactNode } from 'react';
 import classnames from 'classnames';
+import Box from '@mui/material/Box';
 import styles from './ContentSection.module.scss';
 
 const ContentSection = ({
@@ -17,7 +18,7 @@ const ContentSection = ({
   noPaddingBottom?: boolean;
   noPadding?: boolean;
 }): JSX.Element => (
-  <div
+  <Box
     className={classnames(styles.container, {
       [styles.isCompressed]: compressed,
       [styles.noPaddingTop]: noPaddingTop,
@@ -25,10 +26,10 @@ const ContentSection = ({
       [styles.noPadding]: noPadding,
     })}
   >
-    <div className={styles.body} style={{ maxWidth }}>
+    <Box className={styles.body} style={{ maxWidth }}>
       {children}
-    </div>
-  </div>
+    </Box>
+  </Box>
 );
 
 export default ContentSection;

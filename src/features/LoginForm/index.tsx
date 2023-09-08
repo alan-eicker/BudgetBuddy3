@@ -51,7 +51,7 @@ const LoginForm = (): JSX.Element => {
     <form onSubmit={handleSubmit} noValidate>
       <Box textAlign="center">
         <BrandLogo size={70} />
-        <Typography component="h1" variant="h5" fontWeight={600}>
+        <Typography component="h1" variant="h5">
           BudgetBuddy
         </Typography>
       </Box>
@@ -94,7 +94,7 @@ const LoginForm = (): JSX.Element => {
         Log In
       </LoadingButton>
       <Box textAlign="center">
-        <p>
+        <Box marginBottom={1}>
           <Button
             size="small"
             color="info"
@@ -103,8 +103,8 @@ const LoginForm = (): JSX.Element => {
           >
             Forgot your Password?
           </Button>
-        </p>
-        <p>
+        </Box>
+        <Box>
           <Button
             size="small"
             color="info"
@@ -113,7 +113,7 @@ const LoginForm = (): JSX.Element => {
           >
             Create an Account
           </Button>
-        </p>
+        </Box>
       </Box>
     </form>
   );

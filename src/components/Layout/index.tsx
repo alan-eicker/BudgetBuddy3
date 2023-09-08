@@ -1,5 +1,6 @@
 import classnames from 'classnames';
 import Backdrop from '@mui/material/Backdrop';
+import Box from '@mui/material/Box';
 import CircularProgress from '@mui/material/CircularProgress';
 import { useOverlayContext } from '@/providers/OverlayProvider';
 import styles from './Layout.module.scss';
@@ -26,16 +27,17 @@ const Layout = ({
       >
         <CircularProgress color="inherit" />
       </Backdrop>
-      <div className={styles.container}>
+      <Box className={styles.container}>
         {hasHeader && header}
-        <main
+        <Box
+          component="main"
           className={classnames(styles.main, {
             [styles.hasHeader]: hasHeader,
           })}
         >
           {children}
-        </main>
-      </div>
+        </Box>
+      </Box>
     </>
   );
 };

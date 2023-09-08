@@ -6,9 +6,11 @@ import ErrorOutlineIcon from '@mui/icons-material/ErrorOutline';
 import ErrorOutlineOutlinedIcon from '@mui/icons-material/ErrorOutlineOutlined';
 import Card from '@/components/Card';
 import { Expense } from '@/graphql/generated/graphql';
+import { ReactElement } from 'react';
 
 interface ExpenseCardProps extends Expense {
   isOverdue: boolean;
+  actions?: ReactElement<HTMLButtonElement>[];
 }
 
 const ExpenseCard = ({
@@ -18,6 +20,7 @@ const ExpenseCard = ({
   balance = 0,
   dueDate,
   note,
+  actions,
 }: ExpenseCardProps) => (
   <Card
     hasError={isOverdue}
@@ -41,10 +44,7 @@ const ExpenseCard = ({
             </>
           )}
         </Box>
-        <Box>
-          <Button>Edit</Button>
-          <Button>Delete</Button>
-        </Box>
+        {actions && <Box>{actions}</Box>}
       </Box>
     }
   >

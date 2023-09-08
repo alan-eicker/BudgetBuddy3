@@ -1,4 +1,5 @@
 import { ReactNode } from 'react';
+import Box from '@mui/material/Box';
 import styles from './Jumbotron.module.scss';
 
 export interface JumbotronProps {
@@ -6,7 +7,7 @@ export interface JumbotronProps {
 }
 
 const Jumbotron = ({ children }: JumbotronProps): JSX.Element => {
-  return <div className={styles.container}>{children}</div>;
+  return <Box className={styles.container}>{children}</Box>;
 };
 
 export default Jumbotron;

@@ -3,6 +3,7 @@ import Link from 'next/link';
 import AppBar from '@mui/material/AppBar';
 import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
+import Box from '@mui/material/Box';
 import BrandLogo from '../BrandLogo';
 import styles from './Header.module.scss';
 
@@ -12,25 +13,26 @@ export interface HeaderProps {
 }
 
 const Header = ({ children, title }: HeaderProps): JSX.Element => (
-  <div className={styles.header}>
+  <Box className={styles.header}>
     <AppBar position="static">
       <Toolbar>
         <Typography
           display="flex"
           alignItems="center"
           flexGrow={1}
-          variant="h6"
           component="div"
         >
           <Link href="/" className={styles.link}>
             <BrandLogo size={30} />
-            <span>{title}</span>
+            <Typography component="span" variant="h6">
+              {title}
+            </Typography>
           </Link>
         </Typography>
-        <div className={styles.nav}>{children}</div>
+        <Box className={styles.nav}>{children}</Box>
       </Toolbar>
     </AppBar>
-  </div>
+  </Box>
 );
 
 export default Header;

@@ -12,7 +12,9 @@ const RegisterUserForm = () => {
         component="div"
       >
         <BrandLogo size={60} />
-        <h1>Create an Account</h1>
+        <Typography component="h1" variant="h5">
+          Create an Account
+        </Typography>
       </Typography>
       <TextField required label="Email" name="email" />
       <TextField required label="Username" name="username" />

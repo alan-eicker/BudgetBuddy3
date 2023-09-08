@@ -9,10 +9,7 @@ import LineChart from '@/components/LineChart';
 import Card from '@/components/Card';
 import ContentSection from '@/components/ContentSection';
 import { queryClient, getAllExpenseGroups } from '@/api';
-import {
-  GetAllExpenseGroupsQuery,
-  ExpenseGroup,
-} from '@/graphql/generated/graphql';
+import { GetAllExpenseGroupsQuery } from '@/graphql/generated/graphql';
 import { getTotalBalance, getTotalOverdueBalances } from '@/utils/numbers';
 import { Typography } from '@mui/material';
 
@@ -130,14 +127,14 @@ const Dashboard = () => {
                       alignItems="center"
                       justifyContent="space-between"
                     >
-                      <div>
+                      <Box>
                         Total Balance:
                         <br />
                         {expenses && '$' + getTotalBalance(expenses)}
                         {!expenses && (
                           <Button size="small">Add Expenses</Button>
                         )}
-                      </div>
+                      </Box>
                       {numOverdueBalances > 0 && (
                         <Box textAlign="center">
                           <ErrorOutlineIcon color="error" fontSize="large" />

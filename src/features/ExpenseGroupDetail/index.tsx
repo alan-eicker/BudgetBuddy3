@@ -163,7 +163,13 @@ const ExpenseGroupDetail = (): JSX.Element => {
                 <List style={{ marginTop: 1 }} disablePadding dense>
                   {mapOverdueStatustoExpenses(expenses).map((expense) => (
                     <ListItem disablePadding key={expense._id}>
-                      <ExpenseCard {...expense} />
+                      <ExpenseCard
+                        {...expense}
+                        actions={[
+                          <Button key="edit-button">Edit</Button>,
+                          <Button key="delete-button">Delete</Button>,
+                        ]}
+                      />
                     </ListItem>
                   ))}
                 </List>

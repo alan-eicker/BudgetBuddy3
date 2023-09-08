@@ -14,6 +14,8 @@ import {
   NameType,
   Payload,
 } from 'recharts/types/component/DefaultTooltipContent';
+import Box from '@mui/material/Box';
+import Typography from '@mui/material/Typography';
 import { COLOR_PALETTE } from './colors';
 import styles from './LineChart.module.scss';
 
@@ -70,15 +72,18 @@ const LineChart = ({
   }: TooltipProps<ValueType, NameType>) => {
     if (active && payload && payload.length) {
       return (
-        <div className={styles.tooltip}>
+        <Box className={styles.tooltip}>
           {payload.map(
             ({ name, value, color }: Payload<ValueType, NameType>) => (
-              <div key={name}>
-                <span style={{ color }}>{name}</span>: ${value}
-              </div>
+              <Box key={name}>
+                <Typography component="span" color={color}>
+                  {name}
+                </Typography>
+                : ${value}
+              </Box>
             ),
           )}
-        </div>
+        </Box>
       );
     }
 
