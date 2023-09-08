@@ -172,22 +172,21 @@ const ExpenseGroupDetail = (): JSX.Element => {
                             justifyContent="space-between"
                           >
                             <Box display="flex" alignItems="center">
-                              <span>{expense.name}</span>
+                              <Typography component="h3" marginRight={1.5}>
+                                {expense.name}
+                              </Typography>
                               {expense.isOverdue && (
-                                <Box
-                                  marginLeft={0.5}
-                                  display="flex"
-                                  alignItems="center"
-                                >
+                                <>
                                   <ErrorOutlineIcon color="error" />
                                   <Typography
+                                    component="span"
                                     marginLeft={0.5}
                                     color="#f44336"
                                     fontSize={12}
                                   >
                                     Overdue
                                   </Typography>
-                                </Box>
+                                </>
                               )}
                             </Box>
                             <div>
@@ -213,9 +212,10 @@ const ExpenseGroupDetail = (): JSX.Element => {
                         </Box>
                         {expense.note && (
                           <Typography
+                            component="div"
                             display="flex"
                             alignItems="center"
-                            sx={{ marginTop: 1 }}
+                            marginTop={1}
                             fontSize={12}
                           >
                             <ErrorOutlineOutlinedIcon
