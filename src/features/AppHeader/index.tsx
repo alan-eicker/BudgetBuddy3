@@ -1,4 +1,5 @@
 import { useRouter } from 'next/router';
+import Typography from '@mui/material/Typography';
 import PersonIcon from '@mui/icons-material/Person';
 import LogoutIcon from '@mui/icons-material/Logout';
 import AccountCircleOutlinedIcon from '@mui/icons-material/AccountCircleOutlined';
@@ -24,9 +25,9 @@ const AppHeader = () => {
 
   return (
     <Header title="BudgetBuddy">
-      <time style={{ fontSize: 14 }} dateTime={date}>
+      <Typography component="time" fontSize={14} dateTime={date}>
         {date}
-      </time>
+      </Typography>
       <DropdownMenu
         triggerButtonText={<AccountCircleOutlinedIcon />}
         ariaLabel="my account button"
