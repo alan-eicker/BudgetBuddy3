@@ -1,4 +1,10 @@
-import { useEffect, useState, Dispatch, SetStateAction } from 'react';
+import {
+  useEffect,
+  useState,
+  Dispatch,
+  SetStateAction,
+  ReactNode,
+} from 'react';
 import { GetServerSidePropsContext } from 'next';
 import { useRouter } from 'next/router';
 import { dehydrate, useQuery } from 'react-query';
@@ -32,7 +38,7 @@ interface DeleteAction {
   _id: string;
   onCancel: Dispatch<SetStateAction<Object | undefined>>;
   onConfirm: () => Promise<void>;
-  message: string;
+  message: string | ReactNode;
 }
 
 export async function getServerSideProps(context: GetServerSidePropsContext) {
@@ -184,7 +190,17 @@ const ExpenseGroupDetail = (): JSX.Element => {
                         {...expense}
                         actions={[
                           <Button key="edit-button">Edit</Button>,
-                          <Button key="delete-button" onClick={() => {}}>
+                          <Button
+                            key="delete-button"
+                            onClick={() =>
+                              setDeleteAction({
+                                _id: expenseGroupId as string,
+                                onCancel: () => setDeleteAction(undefined),
+                                onConfirm: () => {},
+                                message: `Are you sure you want to delete ${expense.name}?`,
+                              })
+                            }
+                          >
                             Delete
                           </Button>,
                         ]}
