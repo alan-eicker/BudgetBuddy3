@@ -5,16 +5,12 @@ import { dehydrate, useQuery } from 'react-query';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import Grid from '@mui/material/Grid';
-import Switch from '@mui/material/Switch';
 import Box from '@mui/material/Box';
 import List from '@mui/material/List';
 import ListItem from '@mui/material/ListItem';
-import ListItemText from '@mui/material/ListItemText';
-import ErrorOutlineIcon from '@mui/icons-material/ErrorOutline';
-import ErrorOutlineOutlinedIcon from '@mui/icons-material/ErrorOutlineOutlined';
 import ContentSection from '@/components/ContentSection';
-import Card from '@/components/Card';
 import SpendingSnapshot from '@/components/SpendingSnapshot';
+import ExpenseCard from '@/components/ExpenseCard';
 import { queryClient, getExpenseGroupById, deleteExpenseGroup } from '@/api';
 import {
   GetExpenseGroupByIdQuery,
@@ -164,73 +160,10 @@ const ExpenseGroupDetail = (): JSX.Element => {
           {expenses && (
             <Grid container spacing={5}>
               <Grid item xs={12} sm={12} md={8}>
-                <List disablePadding dense>
+                <List style={{ marginTop: 1 }} disablePadding dense>
                   {mapOverdueStatustoExpenses(expenses).map((expense) => (
                     <ListItem disablePadding key={expense._id}>
-                      <Card
-                        hasError={expense.isOverdue}
-                        head={
-                          <Box
-                            display="flex"
-                            alignItems="center"
-                            justifyContent="space-between"
-                          >
-                            <Box display="flex" alignItems="center">
-                              <Typography
-                                component="h3"
-                                fontSize={20}
-                                marginRight={1.5}
-                              >
-                                {expense.name}
-                              </Typography>
-                              {expense.isOverdue && (
-                                <>
-                                  <ErrorOutlineIcon color="error" />
-                                  <Typography
-                                    component="span"
-                                    marginLeft={0.5}
-                                    color="#f44336"
-                                    fontSize={12}
-                                  >
-                                    Overdue
-                                  </Typography>
-                                </>
-                              )}
-                            </Box>
-                            <Box>
-                              <Button>Edit</Button>
-                              <Button>Delete</Button>
-                            </Box>
-                          </Box>
-                        }
-                      >
-                        <Box
-                          display="flex"
-                          alignItems="center"
-                          justifyContent="space-between"
-                        >
-                          <Box>
-                            <Box>Balance: ${formatNumber(expense.balance)}</Box>
-                            <Box>Due Date: {expense.dueDate}</Box>
-                          </Box>
-                          <Box>
-                            Paid
-                            <Switch checked={expense.isPaid} />
-                          </Box>
-                        </Box>
-                        {expense.note && (
-                          <Box display="flex" alignItems="center" marginTop={1}>
-                            <ErrorOutlineOutlinedIcon
-                              color="info"
-                              fontSize="small"
-                              sx={{ marginRight: 0.5 }}
-                            />
-                            <Typography component="span" fontSize={12}>
-                              {expense.note}
-                            </Typography>
-                          </Box>
-                        )}
-                      </Card>
+                      <ExpenseCard {...expense} />
                     </ListItem>
                   ))}
                 </List>

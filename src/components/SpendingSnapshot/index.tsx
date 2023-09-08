@@ -4,7 +4,7 @@ import ListItemText from '@mui/material/ListItemText';
 import Typography from '@mui/material/Typography';
 import Card from '../Card';
 
-interface SpendingSnapshot {
+interface SpendingSnapshotProps {
   title?: string;
   items: [string, any][];
 }
@@ -12,7 +12,7 @@ interface SpendingSnapshot {
 const SpendingSnapshot = ({
   title = 'Spending Snapshot',
   items,
-}: SpendingSnapshot) => (
+}: SpendingSnapshotProps) => (
   <Card
     head={
       <Typography component="h3" fontSize={20} textAlign="center">
