@@ -105,11 +105,12 @@ const groups = [
   },
 ];
 
-(() => {
-  groups.forEach((group) => {
-    const newGroup = new ExpenseGroup(group);
-    newGroup.save().then((res) => {
-      console.log(res);
-    });
+groups.forEach((group, i) => {
+  const newGroup = new ExpenseGroup(group);
+  newGroup.save().then(() => {
+    if (i === groups.length - 1) {
+      console.log('Done. Database updated.');
+      process.exit();
+    }
   });
-})();
+});
