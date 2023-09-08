@@ -1,8 +1,10 @@
+import { useEffect } from 'react';
 import Link from 'next/link';
 import { dehydrate, useQuery } from 'react-query';
 import ErrorOutlineIcon from '@mui/icons-material/ErrorOutline';
 import Grid from '@mui/material/Grid';
 import Box from '@mui/material/Box';
+import Typography from '@mui/material/Typography';
 import Button from '@mui/material/Button';
 import Jumbotron from '@/components/Jumbtron';
 import LineChart from '@/components/LineChart';
@@ -11,7 +13,7 @@ import ContentSection from '@/components/ContentSection';
 import { queryClient, getAllExpenseGroups } from '@/api';
 import { GetAllExpenseGroupsQuery } from '@/graphql/generated/graphql';
 import { getTotalBalance, getTotalOverdueBalances } from '@/utils/numbers';
-import { Typography } from '@mui/material';
+import { useLoaderOnDataFetch } from '@/shared/hooks/useLoaderOnDataFetch';
 
 const chartData = [
   {
@@ -93,6 +95,8 @@ const Dashboard = () => {
   const { data } = useQuery<GetAllExpenseGroupsQuery>(['expenseGroups'], () =>
     getAllExpenseGroups(),
   );
+
+  useLoaderOnDataFetch(data);
 
   return (
     <>

@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useEffect, useState, Dispatch, SetStateAction } from 'react';
 import { GetServerSidePropsContext } from 'next';
 import { useRouter } from 'next/router';
 import { dehydrate, useQuery } from 'react-query';
@@ -8,6 +8,7 @@ import Grid from '@mui/material/Grid';
 import Box from '@mui/material/Box';
 import List from '@mui/material/List';
 import ListItem from '@mui/material/ListItem';
+import Modal from '@mui/material/Modal';
 import ContentSection from '@/components/ContentSection';
 import SpendingSnapshot from '@/components/SpendingSnapshot';
 import ExpenseCard from '@/components/ExpenseCard';
@@ -18,6 +19,7 @@ import {
   DeleteExpenseGroupQuery,
 } from '@/graphql/generated/graphql';
 import { useOverlayContext } from '@/providers/OverlayProvider';
+import { useLoaderOnDataFetch } from '@/shared/hooks/useLoaderOnDataFetch';
 import {
   formatNumber,
   getTotalBalanceOfAllExpenses,
@@ -25,6 +27,13 @@ import {
   isOverDue,
 } from '@/utils/numbers';
 import styles from './ExpenseGroupDetail.module.scss';
+
+interface DeleteAction {
+  _id: string;
+  onCancel: Dispatch<SetStateAction<Object | undefined>>;
+  onConfirm: () => Promise<void>;
+  message: string;
+}
 
 export async function getServerSideProps(context: GetServerSidePropsContext) {
   const _id = context.query.expenseGroupId as string;
@@ -42,17 +51,22 @@ export async function getServerSideProps(context: GetServerSidePropsContext) {
 
 const ExpenseGroupDetail = (): JSX.Element => {
   const router = useRouter();
+
   const {
     query: { expenseGroupId },
   } = router;
-  const { setShowOverlay } = useOverlayContext();
+  const [deleteAction, setDeleteAction] = useState<DeleteAction>();
 
   const { data } = useQuery<GetExpenseGroupByIdQuery>(
     ['expenseGroup' + expenseGroupId],
     () => getExpenseGroupById({ _id: expenseGroupId as string }),
   );
 
+  const { setShowOverlay } = useOverlayContext();
+
   const handleDelete = async () => {
+    setShowOverlay(true);
+
     const { status } = await queryClient.fetchQuery<DeleteExpenseGroupQuery>(
       ['deleteExpenseGroup' + expenseGroupId],
       () => deleteExpenseGroup({ _id: expenseGroupId as string }),
@@ -71,9 +85,7 @@ const ExpenseGroupDetail = (): JSX.Element => {
     }));
   };
 
-  useEffect(() => {
-    setShowOverlay(!data);
-  }, [data, setShowOverlay]);
+  useLoaderOnDataFetch(data);
 
   if (!data) return <ContentSection>No data</ContentSection>;
 
@@ -134,7 +146,15 @@ const ExpenseGroupDetail = (): JSX.Element => {
                 color="error"
                 variant="contained"
                 size="small"
-                onClick={() => handleDelete()}
+                onClick={() =>
+                  setDeleteAction({
+                    _id: expenseGroupId as string,
+                    onCancel: () => setDeleteAction(undefined),
+                    onConfirm: handleDelete,
+                    message:
+                      'Are you sure you want to delete this expense group?',
+                  })
+                }
               >
                 Delete Group
               </Button>
@@ -164,7 +184,9 @@ const ExpenseGroupDetail = (): JSX.Element => {
                         {...expense}
                         actions={[
                           <Button key="edit-button">Edit</Button>,
-                          <Button key="delete-button">Delete</Button>,
+                          <Button key="delete-button" onClick={() => {}}>
+                            Delete
+                          </Button>,
                         ]}
                       />
                     </ListItem>
@@ -186,6 +208,40 @@ const ExpenseGroupDetail = (): JSX.Element => {
           )}
         </ContentSection>
       </Box>
+      {deleteAction && (
+        <Modal
+          open={true}
+          aria-labelledby="modal-modal-title"
+          aria-describedby="modal-modal-description"
+        >
+          <Box className={styles.modal}>
+            <Box padding={2.5} fontSize={18} component="h2">
+              {deleteAction.message}
+            </Box>
+            <Box
+              className={styles.modalButtons}
+              textAlign="center"
+              padding={2.5}
+            >
+              <Button
+                variant="contained"
+                color="error"
+                size="small"
+                onClick={deleteAction.onCancel}
+              >
+                Cancel
+              </Button>
+              <Button
+                variant="contained"
+                size="small"
+                onClick={deleteAction.onConfirm}
+              >
+                Delete
+              </Button>
+            </Box>
+          </Box>
+        </Modal>
+      )}
     </Box>
   );
 };
