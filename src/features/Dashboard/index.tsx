@@ -9,7 +9,7 @@ import LineChart from '@/components/LineChart';
 import Card from '@/components/Card';
 import ContentSection from '@/components/ContentSection';
 import { queryClient, getAllExpenseGroups } from '@/api';
-import { GetAllExpenseGroupsQuery } from '@/generated/graphql';
+import { GetAllExpenseGroupsQuery, ExpenseGroup } from '@/generated/graphql';
 import { getTotalBalance, getTotalOverdueBalances } from '@/utils/numbers';
 import { Typography } from '@mui/material';
 

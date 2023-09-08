@@ -5,14 +5,16 @@ import AccountCircleOutlinedIcon from '@mui/icons-material/AccountCircleOutlined
 import Header from '@/components/Header';
 import DropdownMenu from '@/components/DropdownMenu';
 import { queryClient, logoutUser } from '@/api';
+import { LogoutUserQuery } from '@/generated/graphql';
 
 const AppHeader = () => {
   const router = useRouter();
   const date = new Date().toDateString();
 
   const handleLogout = async () => {
-    const { isLoggedOut } = await queryClient.fetchQuery(['logoutUser'], () =>
-      logoutUser(),
+    const { isLoggedOut } = await queryClient.fetchQuery<LogoutUserQuery>(
+      ['logoutUser'],
+      () => logoutUser(),
     );
 
     if (isLoggedOut) {

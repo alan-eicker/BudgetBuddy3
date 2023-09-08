@@ -12,7 +12,11 @@ import ErrorOutlineOutlinedIcon from '@mui/icons-material/ErrorOutlineOutlined';
 import ContentSection from '@/components/ContentSection';
 import Card from '@/components/Card';
 import { queryClient, getExpenseGroupById, deleteExpenseGroup } from '@/api';
-import { GetExpenseGroupByIdQuery, Expense } from '@/generated/graphql';
+import {
+  GetExpenseGroupByIdQuery,
+  Expense,
+  DeleteExpenseGroupQuery,
+} from '@/generated/graphql';
 import { useOverlayContext } from '@/providers/OverlayProvider';
 import {
   formatNumber,
@@ -49,7 +53,7 @@ const ExpenseGroupDetail = (): JSX.Element => {
   );
 
   const handleDelete = async () => {
-    const { status } = await queryClient.fetchQuery(
+    const { status } = await queryClient.fetchQuery<DeleteExpenseGroupQuery>(
       ['deleteExpenseGroup' + expenseGroupId],
       () => deleteExpenseGroup({ _id: expenseGroupId as string }),
     );
