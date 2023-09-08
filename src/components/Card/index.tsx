@@ -1,5 +1,6 @@
 import React from 'react';
 import classnames from 'classnames';
+import Box from '@mui/material/Box';
 import styles from './Card.module.scss';
 
 interface CardProps {
@@ -10,15 +11,16 @@ interface CardProps {
 }
 
 const Card = ({ head, children, height, hasError }: CardProps) => (
-  <div
+  <Box
     className={classnames(styles.container, {
       [styles.hasError]: hasError,
     })}
-    style={{ height }}
+    height={height}
+    width="100%"
   >
-    <div className={styles.head}>{head}</div>
-    <div className={styles.body}>{children}</div>
-  </div>
+    <Box className={styles.head}>{head}</Box>
+    <Box className={styles.body}>{children}</Box>
+  </Box>
 );
 
 export default Card;

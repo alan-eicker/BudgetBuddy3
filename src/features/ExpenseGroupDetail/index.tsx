@@ -7,10 +7,14 @@ import Typography from '@mui/material/Typography';
 import Grid from '@mui/material/Grid';
 import Switch from '@mui/material/Switch';
 import Box from '@mui/material/Box';
+import List from '@mui/material/List';
+import ListItem from '@mui/material/ListItem';
+import ListItemText from '@mui/material/ListItemText';
 import ErrorOutlineIcon from '@mui/icons-material/ErrorOutline';
 import ErrorOutlineOutlinedIcon from '@mui/icons-material/ErrorOutlineOutlined';
 import ContentSection from '@/components/ContentSection';
 import Card from '@/components/Card';
+import SpendingSnapshot from '@/components/SpendingSnapshot';
 import { queryClient, getExpenseGroupById, deleteExpenseGroup } from '@/api';
 import {
   GetExpenseGroupByIdQuery,
@@ -90,11 +94,11 @@ const ExpenseGroupDetail = (): JSX.Element => {
   }
 
   return (
-    <div className={styles.container}>
-      <div className={styles.head}>
+    <Box className={styles.container}>
+      <Box className={styles.head}>
         <ContentSection>
           <Grid container spacing={2}>
-            <Grid item xs={12} sm={6} md={6} className={styles.headLeft}>
+            <Grid className={styles.headLeft} item xs={12} sm={6} md={6}>
               <Button href="/account/dashboard" size="small">
                 &laquo; Back to dashboard
               </Button>
@@ -106,12 +110,12 @@ const ExpenseGroupDetail = (): JSX.Element => {
               </Typography>
             </Grid>
             <Grid
+              className={styles.headRight}
               alignItems="center"
               item
               xs={12}
               sm={6}
               md={6}
-              className={styles.headRight}
             >
               <Button
                 className="text-center"
@@ -141,17 +145,17 @@ const ExpenseGroupDetail = (): JSX.Element => {
             </Grid>
           </Grid>
         </ContentSection>
-        <div style={{ backgroundColor: '#212a3b' }}>
+        <Box style={{ backgroundColor: '#212a3b' }}>
           <ContentSection compressed>
             <Button>+ Add Expense</Button>
           </ContentSection>
-        </div>
-      </div>
-      <div className={styles.body}>
+        </Box>
+      </Box>
+      <Box className={styles.body}>
         <ContentSection noPaddingTop>
           {!expenses && (
             <>
-              <p>No expense data to display.</p>
+              <Typography>No expense data to display.</Typography>
               <Button sx={{ marginTop: 2 }} size="small" variant="contained">
                 + Add Expense
               </Button>
@@ -160,9 +164,9 @@ const ExpenseGroupDetail = (): JSX.Element => {
           {expenses && (
             <Grid container spacing={5}>
               <Grid item xs={12} sm={12} md={8}>
-                <ul style={{ marginTop: 2 }}>
+                <List disablePadding dense>
                   {mapOverdueStatustoExpenses(expenses).map((expense) => (
-                    <li key={expense._id}>
+                    <ListItem disablePadding key={expense._id}>
                       <Card
                         hasError={expense.isOverdue}
                         head={
@@ -172,7 +176,11 @@ const ExpenseGroupDetail = (): JSX.Element => {
                             justifyContent="space-between"
                           >
                             <Box display="flex" alignItems="center">
-                              <Typography component="h3" marginRight={1.5}>
+                              <Typography
+                                component="h3"
+                                fontSize={20}
+                                marginRight={1.5}
+                              >
                                 {expense.name}
                               </Typography>
                               {expense.isOverdue && (
@@ -189,10 +197,10 @@ const ExpenseGroupDetail = (): JSX.Element => {
                                 </>
                               )}
                             </Box>
-                            <div>
+                            <Box>
                               <Button>Edit</Button>
                               <Button>Delete</Button>
-                            </div>
+                            </Box>
                           </Box>
                         }
                       >
@@ -201,14 +209,14 @@ const ExpenseGroupDetail = (): JSX.Element => {
                           alignItems="center"
                           justifyContent="space-between"
                         >
-                          <div>
-                            <div>Balance: ${formatNumber(expense.balance)}</div>
-                            <div>Due Date: {expense.dueDate}</div>
-                          </div>
-                          <div>
+                          <Box>
+                            <Box>Balance: ${formatNumber(expense.balance)}</Box>
+                            <Box>Due Date: {expense.dueDate}</Box>
+                          </Box>
+                          <Box>
                             Paid
                             <Switch checked={expense.isPaid} />
-                          </div>
+                          </Box>
                         </Box>
                         {expense.note && (
                           <Box display="flex" alignItems="center" marginTop={1}>
@@ -223,47 +231,26 @@ const ExpenseGroupDetail = (): JSX.Element => {
                           </Box>
                         )}
                       </Card>
-                    </li>
+                    </ListItem>
                   ))}
-                </ul>
+                </List>
               </Grid>
               <Grid item xs={12} sm={12} md={4}>
-                <div className={styles.spendingSnapshotFixedContainer}>
-                  <Card
-                    head={
-                      <h3 style={{ textAlign: 'center' }}>Spending Snapshot</h3>
-                    }
-                  >
-                    <ul style={{ textAlign: 'center' }}>
-                      <li>
-                        <Typography component="h4">Total Balance</Typography>
-                        <Typography fontSize={26} fontWeight="bold">
-                          ${formatNumber(totalBalance)}
-                        </Typography>
-                      </li>
-                      <li>
-                        <Typography component="h4">Unpaid Balance</Typography>
-                        <Typography fontSize={26} fontWeight="bold">
-                          ${formatNumber(unpaidExpenses)}
-                        </Typography>
-                      </li>
-                      <li>
-                        <Typography component="h4">
-                          Left Over Balance
-                        </Typography>
-                        <Typography fontSize={26} fontWeight="bold">
-                          ${formatNumber(getLeftOverBalance)}
-                        </Typography>
-                      </li>
-                    </ul>
-                  </Card>
-                </div>
+                <Box className={styles.spendingSnapshotFixedContainer}>
+                  <SpendingSnapshot
+                    items={[
+                      ['Total Balance', formatNumber(totalBalance)],
+                      ['Unpaid Balance', formatNumber(unpaidExpenses)],
+                      ['Left Over Balance', formatNumber(getLeftOverBalance)],
+                    ]}
+                  />
+                </Box>
               </Grid>
             </Grid>
           )}
         </ContentSection>
-      </div>
-    </div>
+      </Box>
+    </Box>
   );
 };
 
