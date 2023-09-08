@@ -15,7 +15,13 @@ const Header = ({ children, title }: HeaderProps): JSX.Element => (
   <div className={styles.header}>
     <AppBar position="static">
       <Toolbar>
-        <Typography className={styles.logo} variant="h6" component="div">
+        <Typography
+          display="flex"
+          alignItems="center"
+          flexGrow={1}
+          variant="h6"
+          component="div"
+        >
           <Link href="/" className={styles.link}>
             <BrandLogo size={30} />
             <span>{title}</span>

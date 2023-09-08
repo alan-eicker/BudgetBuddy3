@@ -3,6 +3,7 @@ import { useRouter } from 'next/router';
 import { useQuery } from 'react-query';
 import { useFormik } from 'formik';
 import * as yup from 'yup';
+import Box from '@mui/material/Box';
 import TextField from '@mui/material/TextField';
 import Typography from '@mui/material/Typography';
 import Button from '@mui/material/Button';
@@ -48,12 +49,12 @@ const LoginForm = (): JSX.Element => {
 
   return (
     <form onSubmit={handleSubmit} noValidate>
-      <Typography component="div" textAlign="center">
+      <Box textAlign="center">
         <BrandLogo size={70} />
         <Typography component="h1" variant="h5" fontWeight={600}>
           BudgetBuddy
         </Typography>
-      </Typography>
+      </Box>
       {data && data?.status.code !== 200 && (
         <Alert variant="outlined" severity="error">
           {data?.status.message}
@@ -92,7 +93,7 @@ const LoginForm = (): JSX.Element => {
       >
         Log In
       </LoadingButton>
-      <Typography component="div" textAlign="center">
+      <Box textAlign="center">
         <p>
           <Button
             size="small"
@@ -113,7 +114,7 @@ const LoginForm = (): JSX.Element => {
             Create an Account
           </Button>
         </p>
-      </Typography>
+      </Box>
     </form>
   );
 };

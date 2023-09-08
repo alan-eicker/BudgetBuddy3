@@ -211,20 +211,16 @@ const ExpenseGroupDetail = (): JSX.Element => {
                           </div>
                         </Box>
                         {expense.note && (
-                          <Typography
-                            component="div"
-                            display="flex"
-                            alignItems="center"
-                            marginTop={1}
-                            fontSize={12}
-                          >
+                          <Box display="flex" alignItems="center" marginTop={1}>
                             <ErrorOutlineOutlinedIcon
                               color="info"
                               fontSize="small"
                               sx={{ marginRight: 0.5 }}
                             />
-                            <span>{expense.note}</span>
-                          </Typography>
+                            <Typography component="span" fontSize={12}>
+                              {expense.note}
+                            </Typography>
+                          </Box>
                         )}
                       </Card>
                     </li>
