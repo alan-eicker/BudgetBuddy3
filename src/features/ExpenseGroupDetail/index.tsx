@@ -25,7 +25,7 @@ import {
   DeleteExpenseGroupQuery,
 } from '@/graphql/generated/graphql';
 import { useOverlayContext } from '@/providers/OverlayProvider';
-import { useLoaderOnDataFetch } from '@/shared/hooks/useLoaderOnDataFetch';
+import { usePageDataStateHandler } from '@/shared/hooks/usePageDataStateHandler';
 import {
   formatNumber,
   getTotalBalanceOfAllExpenses,
@@ -77,7 +77,7 @@ const ExpenseGroupDetail = (): JSX.Element | null => {
     }));
   };
 
-  useLoaderOnDataFetch(data, '/account/dashboard');
+  usePageDataStateHandler(data, '/account/dashboard');
 
   if (!data) return null;
 

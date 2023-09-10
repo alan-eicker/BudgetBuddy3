@@ -2,7 +2,7 @@ import { useEffect } from 'react';
 import { useRouter } from 'next/router';
 import { useOverlayContext } from '@/providers/OverlayProvider';
 
-export const useLoaderOnDataFetch = (data: any, fallbackUrl?: string) => {
+export const usePageDataStateHandler = (data: any, fallbackUrl?: string) => {
   const router = useRouter();
   const { setShowOverlay } = useOverlayContext();
 
