@@ -8,7 +8,6 @@ import {
   useEffect,
 } from 'react';
 import { useRouter } from 'next/router';
-import { usePreviousRoute } from '@/shared/hooks/usePreviousRoute';
 
 interface OverlayContext {
   showOverlay: boolean;
@@ -23,15 +22,18 @@ const OverlayContext = createContext<OverlayContext>({
 export const useOverlayContext = () => useContext(OverlayContext);
 
 const OverlayProvider = ({ children }: { children: ReactNode }) => {
-  const { pathname } = useRouter();
-  const prevoiusRoute = usePreviousRoute();
+  const { pathname, ...router } = useRouter();
   const [showOverlay, setShowOverlay] = useState(true);
 
   useEffect(() => {
-    if (pathname !== prevoiusRoute) {
+    router.events.on('routeChangeStart', () => {
+      setShowOverlay(true);
+    });
+
+    router.events.on('routeChangeComplete', () => {
       setShowOverlay(false);
-    }
-  }, [pathname, prevoiusRoute]);
+    });
+  }, []);
 
   return (
     <OverlayContext.Provider value={{ showOverlay, setShowOverlay }}>

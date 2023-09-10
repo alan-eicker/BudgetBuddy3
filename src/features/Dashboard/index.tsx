@@ -14,7 +14,7 @@ import ContentSection from '@/components/ContentSection';
 import NoData from '@/components/NoData';
 import { getAllExpenseGroups } from '@/api';
 import { GetAllExpenseGroupsQuery } from '@/graphql/generated/graphql';
-import { getTotalBalance, getTotalOverdueBalances } from '@/utils/numbers';
+import { getTotalBalance, getTotalOverdueBalances } from '@/utils/expenses';
 import { usePageDataStateHandler } from '@/shared/hooks/usePageDataStateHandler';
 
 const chartData = [

@@ -17,7 +17,6 @@ import Modal from '@mui/material/Modal';
 import ContentSection from '@/components/ContentSection';
 import SpendingSnapshot from '@/components/SpendingSnapshot';
 import ExpenseCard from '@/components/ExpenseCard';
-import NoData from '@/components/NoData';
 import { queryClient, getExpenseGroupById, deleteExpenseGroup } from '@/api';
 import {
   GetExpenseGroupByIdQuery,
@@ -31,7 +30,7 @@ import {
   getTotalBalanceOfAllExpenses,
   getTotalUnpaidExpenses,
   isOverDue,
-} from '@/utils/numbers';
+} from '@/utils/expenses';
 import styles from './ExpenseGroupDetail.module.scss';
 
 interface DeleteAction {
@@ -41,7 +40,7 @@ interface DeleteAction {
   message: string | ReactNode;
 }
 
-const ExpenseGroupDetail = (): JSX.Element | null => {
+const ExpenseGroupDetail = (): JSX.Element => {
   const router = useRouter();
 
   const {
@@ -77,9 +76,15 @@ const ExpenseGroupDetail = (): JSX.Element | null => {
     }));
   };
 
-  usePageDataStateHandler(data, '/account/dashboard');
+  usePageDataStateHandler(data);
 
-  if (!data) return null;
+  useEffect(() => {
+    if (!data) {
+      router.push('/account/dashboard');
+    }
+  }, [data, router]);
+
+  if (!data) return <></>;
 
   let totalBalance = 0;
   let unpaidExpenses = 0;
