@@ -85,7 +85,7 @@ const ExpenseGroupDetail = (): JSX.Element => {
   };
 
   const mapOverdueStatustoExpenses = (expenses: Expense[]) => {
-    return expenses.map((expense: Expense) => ({
+    return expenses.map((expense) => ({
       ...expense,
       isOverdue: isOverDue(expense),
     }));
@@ -211,6 +211,7 @@ const ExpenseGroupDetail = (): JSX.Element => {
               </Grid>
               <Grid item xs={12} sm={12} md={4}>
                 <Box className={styles.spendingSnapshotFixedContainer}>
+                  {/* TODO: get trending status */}
                   <SpendingSnapshot
                     items={[
                       ['Total Balance', formatNumber(totalBalance)],

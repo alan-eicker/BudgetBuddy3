@@ -10,7 +10,7 @@ import TrendingSnapshot from '../TrendingSnapshot';
 interface SpendingSnapshotProps {
   title?: string;
   items: [string, any][];
-  trending: 'up' | 'down';
+  trending?: 'up' | 'down';
 }
 
 const SpendingSnapshot = ({

@@ -5,7 +5,7 @@ const ExpenseGroupDetailPage = (): JSX.Element => {
   return (
     <>
       <Head>
-        <title>BudgetBuddy | Expense Group Details</title>
+        <title>BudgetBuddy | Expense Group Detail</title>
         <meta
           name="description"
           content="BudgetBuddy expense group detail page"

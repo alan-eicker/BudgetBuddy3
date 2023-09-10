@@ -1,4 +1,3 @@
-import { useEffect } from 'react';
 import Link from 'next/link';
 import { dehydrate, useQuery } from 'react-query';
 import ErrorOutlineIcon from '@mui/icons-material/ErrorOutline';
@@ -91,7 +90,7 @@ export async function getServerSideProps() {
   };
 }
 
-const Dashboard = () => {
+const Dashboard = (): JSX.Element => {
   const { data } = useQuery<GetAllExpenseGroupsQuery>(['expenseGroups'], () =>
     getAllExpenseGroups(),
   );
@@ -134,8 +133,9 @@ const Dashboard = () => {
                       <Box>
                         Total Balance:
                         <br />
-                        {expenses && '$' + getTotalBalance(expenses)}
-                        {!expenses && (
+                        {expenses ? (
+                          '$' + getTotalBalance(expenses)
+                        ) : (
                           <Button size="small">Add Expenses</Button>
                         )}
                       </Box>
