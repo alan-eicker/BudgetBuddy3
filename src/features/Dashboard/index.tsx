@@ -15,7 +15,6 @@ import NoData from '@/components/NoData';
 import { getAllExpenseGroups } from '@/api';
 import { GetAllExpenseGroupsQuery } from '@/graphql/generated/graphql';
 import { getTotalBalance, getTotalOverdueBalances } from '@/utils/expenses';
-import { usePageDataStateHandler } from '@/shared/hooks/usePageDataStateHandler';
 
 const chartData = [
   {
@@ -86,8 +85,6 @@ const Dashboard = (): JSX.Element => {
   const { data } = useQuery<GetAllExpenseGroupsQuery>(['expenseGroups'], () =>
     getAllExpenseGroups(),
   );
-
-  usePageDataStateHandler(data);
 
   if (data && !data?.expenseGroups.length)
     return (
