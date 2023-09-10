@@ -1,13 +1,6 @@
-import {
-  useEffect,
-  useState,
-  Dispatch,
-  SetStateAction,
-  ReactNode,
-} from 'react';
-import { GetServerSidePropsContext } from 'next';
+import { useState, Dispatch, SetStateAction, ReactNode } from 'react';
 import { useRouter } from 'next/router';
-import { dehydrate, useQuery } from 'react-query';
+import { useQuery } from 'react-query';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import Grid from '@mui/material/Grid';
@@ -39,20 +32,6 @@ interface DeleteAction {
   onCancel: Dispatch<SetStateAction<Object | undefined>>;
   onConfirm: () => Promise<void>;
   message: string | ReactNode;
-}
-
-export async function getServerSideProps(context: GetServerSidePropsContext) {
-  const _id = context.query.expenseGroupId as string;
-  await queryClient.prefetchQuery<GetExpenseGroupByIdQuery>(
-    ['expenseGroup' + _id],
-    () => getExpenseGroupById({ _id }),
-  );
-
-  return {
-    props: {
-      dehydratedState: dehydrate(queryClient),
-    },
-  };
 }
 
 const ExpenseGroupDetail = (): JSX.Element => {

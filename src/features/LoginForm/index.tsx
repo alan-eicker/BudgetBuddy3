@@ -98,19 +98,14 @@ const LoginForm = (): JSX.Element => {
           <Button
             size="small"
             color="info"
-            href="/account/reset-password"
+            href="/recover-password"
             component={Link}
           >
             Forgot your Password?
           </Button>
         </Box>
         <Box>
-          <Button
-            size="small"
-            color="info"
-            href="/account/register"
-            component={Link}
-          >
+          <Button size="small" color="info" href="/register" component={Link}>
             Create an Account
           </Button>
         </Box>

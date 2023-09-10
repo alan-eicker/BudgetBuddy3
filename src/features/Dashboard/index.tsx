@@ -1,5 +1,7 @@
+import { GetServerSidePropsContext } from 'next';
 import Link from 'next/link';
-import { dehydrate, useQuery } from 'react-query';
+import { useRouter } from 'next/router';
+import { useQuery } from 'react-query';
 import ErrorOutlineIcon from '@mui/icons-material/ErrorOutline';
 import Grid from '@mui/material/Grid';
 import Box from '@mui/material/Box';
@@ -9,7 +11,7 @@ import Jumbotron from '@/components/Jumbtron';
 import LineChart from '@/components/LineChart';
 import Card from '@/components/Card';
 import ContentSection from '@/components/ContentSection';
-import { queryClient, getAllExpenseGroups } from '@/api';
+import { getAllExpenseGroups } from '@/api';
 import { GetAllExpenseGroupsQuery } from '@/graphql/generated/graphql';
 import { getTotalBalance, getTotalOverdueBalances } from '@/utils/numbers';
 import { useLoaderOnDataFetch } from '@/shared/hooks/useLoaderOnDataFetch';
@@ -77,27 +79,21 @@ const chartData = [
   },
 ];
 
-export async function getServerSideProps() {
-  await queryClient.prefetchQuery<GetAllExpenseGroupsQuery>(
-    ['expenseGroups'],
-    () => getAllExpenseGroups(),
-  );
-
-  return {
-    props: {
-      dehydratedState: dehydrate(queryClient),
-    },
-  };
-}
-
 const Dashboard = (): JSX.Element | null => {
+  const router = useRouter();
+
   const { data } = useQuery<GetAllExpenseGroupsQuery>(['expenseGroups'], () =>
     getAllExpenseGroups(),
   );
 
   useLoaderOnDataFetch(data);
 
+  // TODO: Add optimistic ui
   if (!data) return null;
+
+  // if (!data.expenseGroups.length) {
+  //   router.push('/account/add-expense-group');
+  // }
 
   return (
     <>
@@ -125,7 +121,7 @@ const Dashboard = (): JSX.Element | null => {
               : getTotalOverdueBalances(expenses);
             return (
               <Grid key={_id} item xs={12} sm={12} md={4}>
-                <Link href={`/account/dashboard/${_id}`}>
+                <Link href={`/account/expense-group/${_id}`}>
                   <Card head={`${startDate} - ${endDate}`} height="100%">
                     <Box
                       display="flex"
