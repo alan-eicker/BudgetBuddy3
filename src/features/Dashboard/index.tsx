@@ -88,7 +88,7 @@ const Dashboard = (): JSX.Element => {
 
   useLoaderOnDataFetch(data);
 
-  if (!data?.expenseGroups.length) {
+  if (data && !data?.expenseGroups.length) {
     return (
       <ContentSection textAlign="center">
         <Typography>You have no expense groups to display</Typography>
