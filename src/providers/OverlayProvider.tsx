@@ -26,6 +26,10 @@ const OverlayProvider = ({ children }: { children: ReactNode }) => {
   const [showOverlay, setShowOverlay] = useState(true);
 
   useEffect(() => {
+    setShowOverlay(false);
+  }, []);
+
+  useEffect(() => {
     router.events.on('routeChangeStart', () => {
       setShowOverlay(true);
     });
@@ -33,7 +37,7 @@ const OverlayProvider = ({ children }: { children: ReactNode }) => {
     router.events.on('routeChangeComplete', () => {
       setShowOverlay(false);
     });
-  }, []);
+  }, [router]);
 
   return (
     <OverlayContext.Provider value={{ showOverlay, setShowOverlay }}>
