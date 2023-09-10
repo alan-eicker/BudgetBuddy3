@@ -90,12 +90,14 @@ export async function getServerSideProps() {
   };
 }
 
-const Dashboard = (): JSX.Element => {
+const Dashboard = (): JSX.Element | null => {
   const { data } = useQuery<GetAllExpenseGroupsQuery>(['expenseGroups'], () =>
     getAllExpenseGroups(),
   );
 
   useLoaderOnDataFetch(data);
+
+  if (!data) return null;
 
   return (
     <>
@@ -117,7 +119,7 @@ const Dashboard = (): JSX.Element => {
           </Button>
         </Box>
         <Grid container spacing={2}>
-          {data?.expenseGroups.map(({ _id, startDate, endDate, expenses }) => {
+          {data.expenseGroups.map(({ _id, startDate, endDate, expenses }) => {
             const numOverdueBalances = !expenses
               ? 0
               : getTotalOverdueBalances(expenses);
