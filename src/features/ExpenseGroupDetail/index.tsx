@@ -41,7 +41,7 @@ interface DeleteAction {
   message: string | ReactNode;
 }
 
-const ExpenseGroupDetail = (): JSX.Element => {
+const ExpenseGroupDetail = (): JSX.Element | null => {
   const router = useRouter();
 
   const {
@@ -79,13 +79,7 @@ const ExpenseGroupDetail = (): JSX.Element => {
 
   useLoaderOnDataFetch(data);
 
-  if (!data)
-    return (
-      <NoData
-        text="No data to display"
-        btn={{ children: 'Back', onClick: () => router.back() }}
-      />
-    );
+  if (!data) return null;
 
   let totalBalance = 0;
   let unpaidExpenses = 0;
