@@ -77,7 +77,7 @@ const ExpenseGroupDetail = (): JSX.Element | null => {
     }));
   };
 
-  useLoaderOnDataFetch(data);
+  useLoaderOnDataFetch(data, '/account/dashboard');
 
   if (!data) return null;
 
