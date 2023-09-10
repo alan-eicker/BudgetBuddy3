@@ -1,4 +1,10 @@
-import { useState, Dispatch, SetStateAction, ReactNode } from 'react';
+import {
+  useState,
+  Dispatch,
+  SetStateAction,
+  ReactNode,
+  useEffect,
+} from 'react';
 import { useRouter } from 'next/router';
 import { useQuery } from 'react-query';
 import Button from '@mui/material/Button';
@@ -11,6 +17,7 @@ import Modal from '@mui/material/Modal';
 import ContentSection from '@/components/ContentSection';
 import SpendingSnapshot from '@/components/SpendingSnapshot';
 import ExpenseCard from '@/components/ExpenseCard';
+import NoData from '@/components/NoData';
 import { queryClient, getExpenseGroupById, deleteExpenseGroup } from '@/api';
 import {
   GetExpenseGroupByIdQuery,
@@ -72,7 +79,13 @@ const ExpenseGroupDetail = (): JSX.Element => {
 
   useLoaderOnDataFetch(data);
 
-  if (!data) return <ContentSection>No data</ContentSection>;
+  if (!data)
+    return (
+      <NoData
+        text="No data to display"
+        btn={{ children: 'Back', onClick: () => router.back() }}
+      />
+    );
 
   let totalBalance = 0;
   let unpaidExpenses = 0;
@@ -162,7 +175,11 @@ const ExpenseGroupDetail = (): JSX.Element => {
           {expenses && (
             <Grid container spacing={5}>
               <Grid item xs={12} sm={12} md={8}>
-                <List style={{ marginTop: 1 }} disablePadding dense>
+                <List
+                  className={styles.expenseGroupList}
+                  style={{ marginTop: 1 }}
+                  disablePadding
+                >
                   {mapOverdueStatustoExpenses(expenses).map((expense) => (
                     <ListItem disablePadding key={expense._id}>
                       <ExpenseCard

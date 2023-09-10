@@ -11,6 +11,7 @@ import Jumbotron from '@/components/Jumbtron';
 import LineChart from '@/components/LineChart';
 import Card from '@/components/Card';
 import ContentSection from '@/components/ContentSection';
+import NoData from '@/components/NoData';
 import { getAllExpenseGroups } from '@/api';
 import { GetAllExpenseGroupsQuery } from '@/graphql/generated/graphql';
 import { getTotalBalance, getTotalOverdueBalances } from '@/utils/numbers';
@@ -88,18 +89,16 @@ const Dashboard = (): JSX.Element => {
 
   useLoaderOnDataFetch(data);
 
-  if (data && !data?.expenseGroups.length) {
+  if (data && !data?.expenseGroups.length)
     return (
-      <ContentSection textAlign="center">
-        <Typography>You have no expense groups to display</Typography>
-        <Box marginTop={3}>
-          <Button variant="contained" href="/account/add-expense-group">
-            + Add Expense Group
-          </Button>
-        </Box>
-      </ContentSection>
+      <NoData
+        text="You have no expense groups to display"
+        btn={{
+          children: '+ Add Expense Group',
+          href: '/account/add-expense-group',
+        }}
+      />
     );
-  }
 
   return (
     <>

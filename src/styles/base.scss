@@ -57,9 +57,3 @@ input[type='number'],
 textarea {
   background-color: $brand;
 }
-
-ul {
-  & > * + * {
-    margin-top: rem(16);
-  }
-}

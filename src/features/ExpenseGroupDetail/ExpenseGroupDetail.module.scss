@@ -59,6 +59,12 @@
   }
 }
 
+.expenseGroupList {
+  & > * + * {
+    margin-top: rem(16);
+  }
+}
+
 @media (min-width: $breakpoint-medium) {
   .headLeft {
     text-align: left;
