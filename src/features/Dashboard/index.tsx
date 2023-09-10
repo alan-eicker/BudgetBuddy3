@@ -79,7 +79,7 @@ const chartData = [
   },
 ];
 
-const Dashboard = (): JSX.Element | null => {
+const Dashboard = (): JSX.Element => {
   const router = useRouter();
 
   const { data } = useQuery<GetAllExpenseGroupsQuery>(['expenseGroups'], () =>
@@ -88,12 +88,18 @@ const Dashboard = (): JSX.Element | null => {
 
   useLoaderOnDataFetch(data);
 
-  // TODO: Add optimistic ui
-  if (!data) return null;
-
-  // if (!data.expenseGroups.length) {
-  //   router.push('/account/add-expense-group');
-  // }
+  if (!data?.expenseGroups.length) {
+    return (
+      <ContentSection textAlign="center">
+        <Typography>You have no expense groups to display</Typography>
+        <Box marginTop={3}>
+          <Button variant="contained" href="/account/add-expense-group">
+            + Add Expense Group
+          </Button>
+        </Box>
+      </ContentSection>
+    );
+  }
 
   return (
     <>
@@ -110,12 +116,10 @@ const Dashboard = (): JSX.Element | null => {
       </Jumbotron>
       <ContentSection>
         <Box paddingBottom={2}>
-          <Button href="/account/dashboard/add-expense-group">
-            + Add Expense Group
-          </Button>
+          <Button href="/account/add-expense-group">+ Add Expense Group</Button>
         </Box>
         <Grid container spacing={2}>
-          {data.expenseGroups.map(({ _id, startDate, endDate, expenses }) => {
+          {data?.expenseGroups.map(({ _id, startDate, endDate, expenses }) => {
             const numOverdueBalances = !expenses
               ? 0
               : getTotalOverdueBalances(expenses);
