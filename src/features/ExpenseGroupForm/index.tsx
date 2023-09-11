@@ -51,7 +51,7 @@ const ExpenseGroupForm = (): JSX.Element => {
   const { values, handleChange, handleSubmit, setFieldValue } = useFormik({
     initialValues,
     validationSchema,
-    validateOnBlur: false,
+    validateOnChange: false,
     onSubmit: () => {},
   });
 
@@ -106,7 +106,7 @@ const ExpenseGroupForm = (): JSX.Element => {
           </LocalizationProvider>
         </Box>
         <Box marginBottom={3}>
-          <Typography component="h2" variant="h6" marginBottom={1}>
+          <Typography component="h2" variant="h5" marginBottom={2}>
             Expenses
           </Typography>
           {values.expenses && (
