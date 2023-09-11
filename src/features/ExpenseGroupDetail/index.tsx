@@ -101,7 +101,10 @@ const ExpenseGroupDetail = (): JSX.Element => {
         <ContentSection>
           <Grid container spacing={2}>
             <Grid className={styles.headLeft} item xs={12} sm={6} md={6}>
-              <Button onClick={() => router.back()} size="small">
+              <Button
+                onClick={() => router.push('/account/dashboard')}
+                size="small"
+              >
                 &laquo; Back to dashboard
               </Button>
               <Typography component="h1" variant="h4">

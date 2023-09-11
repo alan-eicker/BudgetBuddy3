@@ -1,6 +1,5 @@
 import { GetServerSidePropsContext } from 'next';
 import Link from 'next/link';
-import { useRouter } from 'next/router';
 import { useQuery } from 'react-query';
 import ErrorOutlineIcon from '@mui/icons-material/ErrorOutline';
 import Grid from '@mui/material/Grid';
@@ -80,8 +79,6 @@ const chartData = [
 ];
 
 const Dashboard = (): JSX.Element => {
-  const router = useRouter();
-
   const { data } = useQuery<GetAllExpenseGroupsQuery>(['expenseGroups'], () =>
     getAllExpenseGroups(),
   );
