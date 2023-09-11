@@ -2,6 +2,7 @@ import { GetServerSidePropsContext } from 'next';
 import Link from 'next/link';
 import { useQuery } from 'react-query';
 import ErrorOutlineIcon from '@mui/icons-material/ErrorOutline';
+import CircularProgress from '@mui/material/CircularProgress';
 import Grid from '@mui/material/Grid';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
@@ -97,62 +98,81 @@ const Dashboard = (): JSX.Element => {
   return (
     <>
       <Jumbotron>
-        <LineChart
-          title="12 Month Spending Snapshot"
-          titleElement="h2"
-          height={250}
-          linecolors={['#03B2AF', '#96de49']}
-          axisColor="#fff"
-          gridColor="rgba(255,255,255,0.15)"
-          data={chartData}
-        />
+        {!data ? (
+          <CircularProgress />
+        ) : (
+          <LineChart
+            title="12 Month Spending Snapshot"
+            titleElement="h2"
+            height={250}
+            linecolors={['#03B2AF', '#96de49']}
+            axisColor="#fff"
+            gridColor="rgba(255,255,255,0.15)"
+            data={chartData}
+          />
+        )}
       </Jumbotron>
       <ContentSection>
-        <Box paddingBottom={2}>
-          <Button href="/account/add-expense-group">+ Add Expense Group</Button>
-        </Box>
-        <Grid container spacing={2}>
-          {data?.expenseGroups.map(({ _id, startDate, endDate, expenses }) => {
-            const numOverdueBalances = !expenses
-              ? 0
-              : getTotalOverdueBalances(expenses);
-            return (
-              <Grid key={_id} item xs={12} sm={12} md={4}>
-                <Link href={`/account/expense-group/${_id}`}>
-                  <Card head={`${startDate} - ${endDate}`} height="100%">
-                    <Box
-                      display="flex"
-                      alignItems="center"
-                      justifyContent="space-between"
-                    >
-                      <Box>
-                        Total Balance:
-                        <br />
-                        {expenses ? (
-                          '$' + getTotalBalance(expenses)
-                        ) : (
-                          <Button size="small">Add Expenses</Button>
-                        )}
-                      </Box>
-                      {numOverdueBalances > 0 && (
-                        <Box textAlign="center">
-                          <ErrorOutlineIcon color="error" fontSize="large" />
-                          <Typography
-                            fontSize={11}
-                            color="#f44336"
-                            marginTop={-0.5}
+        {!data ? (
+          <Box textAlign="center">
+            <CircularProgress />
+          </Box>
+        ) : (
+          <>
+            <Box paddingBottom={2}>
+              <Button href="/account/add-expense-group">
+                + Add Expense Group
+              </Button>
+            </Box>
+            <Grid container spacing={2}>
+              {data.expenseGroups.map(
+                ({ _id, startDate, endDate, expenses }) => {
+                  const numOverdueBalances = !expenses
+                    ? 0
+                    : getTotalOverdueBalances(expenses);
+                  return (
+                    <Grid key={_id} item xs={12} sm={12} md={4}>
+                      <Link href={`/account/expense-group/${_id}`}>
+                        <Card head={`${startDate} - ${endDate}`} height="100%">
+                          <Box
+                            display="flex"
+                            alignItems="center"
+                            justifyContent="space-between"
                           >
-                            {numOverdueBalances} overdue expenses
-                          </Typography>
-                        </Box>
-                      )}
-                    </Box>
-                  </Card>
-                </Link>
-              </Grid>
-            );
-          })}
-        </Grid>
+                            <Box>
+                              Total Balance:
+                              <br />
+                              {expenses ? (
+                                '$' + getTotalBalance(expenses)
+                              ) : (
+                                <Button size="small">Add Expenses</Button>
+                              )}
+                            </Box>
+                            {numOverdueBalances > 0 && (
+                              <Box textAlign="center">
+                                <ErrorOutlineIcon
+                                  color="error"
+                                  fontSize="large"
+                                />
+                                <Typography
+                                  fontSize={11}
+                                  color="#f44336"
+                                  marginTop={-0.5}
+                                >
+                                  {numOverdueBalances} overdue expenses
+                                </Typography>
+                              </Box>
+                            )}
+                          </Box>
+                        </Card>
+                      </Link>
+                    </Grid>
+                  );
+                },
+              )}
+            </Grid>
+          </>
+        )}
       </ContentSection>
     </>
   );

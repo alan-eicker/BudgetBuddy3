@@ -1,6 +1,7 @@
 @import '../../styles/abstracts';
 
 .container {
+  align-items: center;
   background-color: darken($brand, 2%);
   display: flex;
   justify-content: center;
