@@ -19,7 +19,7 @@ export type Scalars = {
 
 export type Expense = {
   __typename?: 'Expense';
-  _id: Scalars['ID']['output'];
+  _id?: Maybe<Scalars['ID']['output']>;
   balance: Scalars['Float']['output'];
   dueDate: Scalars['String']['output'];
   isPaid: Scalars['Boolean']['output'];
@@ -53,7 +53,7 @@ export type Query = {
   __typename?: 'Query';
   authenticateUser: StatusResponse;
   deleteExpenseGroup: StatusResponse;
-  getAllExpenseGroups: Array<ExpenseGroup>;
+  getAllExpenseGroups: Array<Maybe<ExpenseGroup>>;
   getExpenseGroupById: ExpenseGroup;
   logoutUser: Scalars['Boolean']['output'];
 };
@@ -88,19 +88,19 @@ export type AddExpenseMutationVariables = Exact<{
 }>;
 
 
-export type AddExpenseMutation = { __typename?: 'Mutation', addExpense: { __typename?: 'Expense', _id: string, name: string, balance: number, dueDate: string, isPaid: boolean } };
+export type AddExpenseMutation = { __typename?: 'Mutation', addExpense: { __typename?: 'Expense', _id?: string | null, name: string, balance: number, dueDate: string, isPaid: boolean } };
 
 export type GetAllExpenseGroupsQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type GetAllExpenseGroupsQuery = { __typename?: 'Query', expenseGroups: Array<{ __typename?: 'ExpenseGroup', _id: string, startDate: string, endDate: string, totalBudget: number, expenses: Array<{ __typename?: 'Expense', _id: string, name: string, balance: number, dueDate: string, isPaid: boolean, note?: string | null }> }> };
+export type GetAllExpenseGroupsQuery = { __typename?: 'Query', expenseGroups: Array<{ __typename?: 'ExpenseGroup', _id: string, startDate: string, endDate: string, totalBudget: number, expenses: Array<{ __typename?: 'Expense', _id?: string | null, name: string, balance: number, dueDate: string, isPaid: boolean, note?: string | null }> } | null> };
 
 export type GetExpenseGroupByIdQueryVariables = Exact<{
   _id: Scalars['String']['input'];
 }>;
 
 
-export type GetExpenseGroupByIdQuery = { __typename?: 'Query', expenseGroup: { __typename?: 'ExpenseGroup', _id: string, startDate: string, endDate: string, totalBudget: number, expenses: Array<{ __typename?: 'Expense', _id: string, name: string, balance: number, dueDate: string, isPaid: boolean, note?: string | null }> } };
+export type GetExpenseGroupByIdQuery = { __typename?: 'Query', expenseGroup: { __typename?: 'ExpenseGroup', _id: string, startDate: string, endDate: string, totalBudget: number, expenses: Array<{ __typename?: 'Expense', _id?: string | null, name: string, balance: number, dueDate: string, isPaid: boolean, note?: string | null }> } };
 
 export type DeleteExpenseGroupQueryVariables = Exact<{
   _id: Scalars['String']['input'];

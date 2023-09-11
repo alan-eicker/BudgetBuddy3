@@ -16,10 +16,10 @@ const RegisterUserForm = () => {
           Create an Account
         </Typography>
       </Typography>
-      <TextField required label="Email" name="email" />
-      <TextField required label="Username" name="username" />
-      <TextField required label="Password" name="password" />
-      <Button variant="contained" size="large">
+      <TextField fullWidth required label="Email" name="email" />
+      <TextField fullWidth required label="Username" name="username" />
+      <TextField fullWidth required label="Password" name="password" />
+      <Button variant="contained" size="large" fullWidth>
         Create User
       </Button>
     </form>

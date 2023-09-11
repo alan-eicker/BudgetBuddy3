@@ -8,11 +8,13 @@ import { Expense } from '@/graphql/generated/graphql';
 import { ReactElement } from 'react';
 
 interface ExpenseCardProps extends Expense {
-  isOverdue: boolean;
+  isDarkTheme?: boolean;
+  isOverdue?: boolean;
   actions?: ReactElement<HTMLButtonElement>[];
 }
 
 const ExpenseCard = ({
+  isDarkTheme = false,
   isOverdue = false,
   isPaid = false,
   name,
@@ -22,6 +24,7 @@ const ExpenseCard = ({
   actions,
 }: ExpenseCardProps) => (
   <Card
+    isDarkTheme={isDarkTheme}
     hasError={isOverdue}
     head={
       <Box display="flex" alignItems="center" justifyContent="space-between">

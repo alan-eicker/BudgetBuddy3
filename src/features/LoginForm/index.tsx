@@ -61,6 +61,7 @@ const LoginForm = (): JSX.Element => {
         </Alert>
       )}
       <TextField
+        fullWidth
         required
         label="Username"
         name="username"
@@ -73,6 +74,7 @@ const LoginForm = (): JSX.Element => {
         autoComplete="no"
       />
       <TextField
+        fullWidth
         required
         type="password"
         label="Password"
@@ -90,6 +92,7 @@ const LoginForm = (): JSX.Element => {
         type="submit"
         size="large"
         loading={isSubmitting}
+        fullWidth
       >
         Log In
       </LoadingButton>

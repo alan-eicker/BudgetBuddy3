@@ -29,7 +29,7 @@ type ExpenseGroup {
 }
 
 type Expense {
-  _id: ID!
+  _id: ID
   name: String!
   balance: Float!
   dueDate: String!

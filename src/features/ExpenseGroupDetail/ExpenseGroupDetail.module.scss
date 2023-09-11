@@ -50,7 +50,8 @@
   left: 50%;
   transform: translate(-50%, -50%);
   min-width: rem(320);
-  background-color: darken($brand, 15%);
+  background-color: darken($brand, 2%);
+  box-shadow: 0 0 rem(20) rgba(0, 0, 0, 0.7);
 }
 
 .modalButtons {

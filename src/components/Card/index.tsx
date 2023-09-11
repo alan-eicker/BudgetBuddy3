@@ -4,16 +4,25 @@ import Box, { BoxProps } from '@mui/material/Box';
 import styles from './Card.module.scss';
 
 interface CardProps extends BoxProps {
+  isDarkTheme?: boolean;
   head?: string | JSX.Element;
   children: React.ReactNode;
   height?: number | string;
   hasError?: boolean;
 }
 
-const Card = ({ head, children, height, hasError, ...boxProps }: CardProps) => (
+const Card = ({
+  head,
+  children,
+  height,
+  hasError,
+  isDarkTheme = false,
+  ...boxProps
+}: CardProps) => (
   <Box
     className={classnames(styles.container, {
       [styles.hasError]: hasError,
+      [styles.darkTheme]: isDarkTheme,
     })}
     height={height}
     width="100%"

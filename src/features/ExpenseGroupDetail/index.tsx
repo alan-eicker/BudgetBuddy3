@@ -221,11 +221,7 @@ const ExpenseGroupDetail = (): JSX.Element => {
         </ContentSection>
       </Box>
       {deleteAction && (
-        <Modal
-          open={true}
-          aria-labelledby="modal-modal-title"
-          aria-describedby="modal-modal-description"
-        >
+        <Modal open={true}>
           <Box className={styles.modal}>
             <Box padding={2.5} fontSize={18} component="h2">
               {deleteAction.message}

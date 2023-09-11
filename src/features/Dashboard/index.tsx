@@ -1,5 +1,6 @@
 import { GetServerSidePropsContext } from 'next';
 import Link from 'next/link';
+import { useRouter } from 'next/router';
 import { useQuery } from 'react-query';
 import ErrorOutlineIcon from '@mui/icons-material/ErrorOutline';
 import CircularProgress from '@mui/material/CircularProgress';
@@ -15,6 +16,7 @@ import NoData from '@/components/NoData';
 import { getAllExpenseGroups } from '@/api';
 import { GetAllExpenseGroupsQuery } from '@/graphql/generated/graphql';
 import { getTotalBalance, getTotalOverdueBalances } from '@/utils/expenses';
+import { Router } from 'next/router';
 
 const chartData = [
   {
@@ -80,6 +82,8 @@ const chartData = [
 ];
 
 const Dashboard = (): JSX.Element => {
+  const router = useRouter();
+
   const { data } = useQuery<GetAllExpenseGroupsQuery>(['expenseGroups'], () =>
     getAllExpenseGroups(),
   );
@@ -120,7 +124,7 @@ const Dashboard = (): JSX.Element => {
         ) : (
           <>
             <Box paddingBottom={2}>
-              <Button href="/account/add-expense-group">
+              <Button onClick={() => router.push('/account/add-expense-group')}>
                 + Add Expense Group
               </Button>
             </Box>
