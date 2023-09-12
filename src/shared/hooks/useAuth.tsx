@@ -1,14 +1,15 @@
 import { useState } from 'react';
 import { useRouter } from 'next/router';
-import { useOverlayContext } from '@/providers/OverlayProvider';
 import { useFormik } from 'formik';
 import * as yup from 'yup';
+import { useAppContext } from '@/providers/AppProvider';
+import { actionCreators as actions } from '@/store';
 
 export const useAuth = () => {
   const router = useRouter();
   const [loginError, setLoginError] = useState(false);
 
-  const { setShowOverlay } = useOverlayContext();
+  const { dispatch } = useAppContext();
 
   const initialValues = {
     username: '',
@@ -37,7 +38,7 @@ export const useAuth = () => {
   };
 
   const logout = () => {
-    setShowOverlay(true);
+    dispatch(actions.showOverlay(true));
     setTimeout(() => {
       router.push('/');
     }, 1500);

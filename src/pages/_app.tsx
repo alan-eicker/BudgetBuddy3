@@ -6,7 +6,7 @@ import CssBaseline from '@mui/material/CssBaseline';
 import { Hydrate, QueryClientProvider } from 'react-query';
 import Layout from '@/components/Layout';
 import AppHeader from '@/features/AppHeader';
-import OverlayProvider from '@/providers/OverlayProvider';
+import OverlayProvider from '@/providers/AppProvider';
 import { queryClient } from '../api';
 
 const darkTheme = createTheme({

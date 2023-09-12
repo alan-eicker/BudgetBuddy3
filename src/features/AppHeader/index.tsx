@@ -7,15 +7,16 @@ import Header from '@/components/Header';
 import DropdownMenu from '@/components/DropdownMenu';
 import { queryClient, logoutUser } from '@/api';
 import { LogoutUserQuery } from '@/graphql/generated/graphql';
-import { useOverlayContext } from '@/providers/OverlayProvider';
+import { useAppContext } from '@/providers/AppProvider';
+import { actionCreators as actions } from '@/store';
 
 const AppHeader = () => {
   const router = useRouter();
-  const { setShowOverlay } = useOverlayContext();
+  const { dispatch } = useAppContext();
   const date = new Date().toDateString();
 
   const handleLogout = async () => {
-    setShowOverlay(true);
+    dispatch(actions.showOverlay(true));
 
     const { isLoggedOut } = await queryClient.fetchQuery<LogoutUserQuery>(
       ['logoutUser'],

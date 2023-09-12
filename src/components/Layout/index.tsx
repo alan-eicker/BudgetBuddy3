@@ -2,7 +2,7 @@ import classnames from 'classnames';
 import Backdrop from '@mui/material/Backdrop';
 import Box from '@mui/material/Box';
 import CircularProgress from '@mui/material/CircularProgress';
-import { useOverlayContext } from '@/providers/OverlayProvider';
+import { useAppContext } from '@/providers/AppProvider';
 import styles from './Layout.module.scss';
 
 export interface LayoutProps {
@@ -16,7 +16,9 @@ const Layout = ({
   children,
   showHeader = false,
 }: LayoutProps): JSX.Element => {
-  const { showOverlay } = useOverlayContext();
+  const {
+    state: { showOverlay },
+  } = useAppContext();
   const hasHeader = showHeader && header;
 
   return (

@@ -23,13 +23,14 @@ import {
   Expense,
   DeleteExpenseGroupQuery,
 } from '@/graphql/generated/graphql';
-import { useOverlayContext } from '@/providers/OverlayProvider';
 import {
   formatNumber,
   getTotalBalanceOfAllExpenses,
   getTotalUnpaidExpenses,
   isOverDue,
 } from '@/utils/expenses';
+import { useAppContext } from '@/providers/AppProvider';
+import { actionCreators as actions } from '@/store';
 import styles from './ExpenseGroupDetail.module.scss';
 
 interface DeleteAction {
@@ -52,10 +53,10 @@ const ExpenseGroupDetail = (): JSX.Element => {
     () => getExpenseGroupById({ _id: expenseGroupId as string }),
   );
 
-  const { setShowOverlay } = useOverlayContext();
+  const { dispatch } = useAppContext();
 
   const handleDelete = async () => {
-    setShowOverlay(true);
+    dispatch(actions.showOverlay(true));
 
     const { status } = await queryClient.fetchQuery<DeleteExpenseGroupQuery>(
       ['deleteExpenseGroup' + expenseGroupId],
