@@ -164,9 +164,7 @@ const ExpenseGroupDetail = (): JSX.Element => {
           <ContentSection compressed>
             <Grid container spacing={5}>
               <Grid item xs={12} sm={12} md={8} textAlign="right">
-                <Button
-                  onClick={() => dispatch(actions.showExpenseFormModal(true))}
-                >
+                <Button onClick={() => dispatch(actions.expenseToEdit({}))}>
                   + Add Expense
                 </Button>
               </Grid>
@@ -193,7 +191,7 @@ const ExpenseGroupDetail = (): JSX.Element => {
                           <Button
                             key="edit-button"
                             onClick={() =>
-                              dispatch(actions.showExpenseFormModal(expense))
+                              dispatch(actions.expenseToEdit(expense))
                             }
                           >
                             Edit

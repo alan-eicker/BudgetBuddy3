@@ -45,14 +45,18 @@ const ExpenseForm = ({
   onClose,
 }: ExpenseFormProps): JSX.Element => {
   const {
-    state: { showExpenseFormModal: actionPayload },
+    state: { expenseToEdit },
   } = useAppContext();
 
   let initialValues: Expense;
   let expenseId;
 
-  if (typeof actionPayload === 'object') {
-    const { _id, ...expense } = actionPayload as Expense;
+  if (
+    expenseToEdit &&
+    typeof expenseToEdit === 'object' &&
+    '_id' in expenseToEdit
+  ) {
+    const { _id, ...expense } = expenseToEdit as Expense;
     expenseId = _id;
     initialValues = expense;
   } else {
@@ -64,6 +68,8 @@ const ExpenseForm = ({
       note: '',
     };
   }
+
+  console.log(initialValues);
 
   const validationSchema = yup.object({});
 
@@ -135,7 +141,7 @@ const ExpenseForm = ({
               label="Note"
               name="note"
               onChange={handleChange}
-              value={values.note}
+              value={values.note || ''}
               fullWidth
             />
           </Grid>

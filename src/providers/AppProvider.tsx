@@ -23,7 +23,7 @@ interface AppContext {
 const AppContext = createContext<AppContext>({
   state: {
     showOverlay: false,
-    showExpenseFormModal: false,
+    expenseToEdit: false,
   },
   dispatch: () => {},
 });

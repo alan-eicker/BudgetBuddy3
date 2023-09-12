@@ -30,6 +30,7 @@ const ExpenseGroupForm = (): JSX.Element => {
     totalBuget: '',
     expenses: [
       {
+        _id: '1',
         name: 'Morgage',
         balance: 2345.04,
         dueDate: '9/30/2023',
@@ -37,6 +38,7 @@ const ExpenseGroupForm = (): JSX.Element => {
         note: null,
       },
       {
+        _id: '2',
         name: 'ComEd',
         balance: 200.04,
         dueDate: '9/30/2023',
@@ -129,6 +131,9 @@ const ExpenseGroupForm = (): JSX.Element => {
                             marginLeft={0.5}
                             component="span"
                             fontSize={14}
+                            onClick={() =>
+                              dispatch(actions.expenseToEdit(expense))
+                            }
                           >
                             Edit
                           </Typography>
@@ -157,7 +162,7 @@ const ExpenseGroupForm = (): JSX.Element => {
           )}
           <Button
             size="small"
-            onClick={() => dispatch(actions.showExpenseFormModal(true))}
+            onClick={() => dispatch(actions.expenseToEdit({}))}
           >
             + Add Expense
           </Button>

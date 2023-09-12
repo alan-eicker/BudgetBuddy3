@@ -20,7 +20,7 @@ const Layout = ({
 }: LayoutProps): JSX.Element => {
   const {
     dispatch,
-    state: { showOverlay, showExpenseFormModal },
+    state: { showOverlay, expenseToEdit },
   } = useAppContext();
   const hasHeader = showHeader && header;
 
@@ -43,10 +43,10 @@ const Layout = ({
           {children}
         </Box>
       </Box>
-      {showExpenseFormModal && (
+      {expenseToEdit && (
         <ExpenseFormModal
           open={true}
-          onClose={() => dispatch(actions.showExpenseFormModal(false))}
+          onClose={() => dispatch(actions.expenseToEdit())}
         />
       )}
     </>
