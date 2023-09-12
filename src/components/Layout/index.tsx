@@ -2,7 +2,9 @@ import classnames from 'classnames';
 import Backdrop from '@mui/material/Backdrop';
 import Box from '@mui/material/Box';
 import CircularProgress from '@mui/material/CircularProgress';
+import ExpenseFormModal from '@/features/ExpenseFormModal';
 import { useAppContext } from '@/providers/AppProvider';
+import { actionCreators as actions } from '@/store';
 import styles from './Layout.module.scss';
 
 export interface LayoutProps {
@@ -17,7 +19,8 @@ const Layout = ({
   showHeader = false,
 }: LayoutProps): JSX.Element => {
   const {
-    state: { showOverlay },
+    dispatch,
+    state: { showOverlay, showExpenseFormModal },
   } = useAppContext();
   const hasHeader = showHeader && header;
 
@@ -40,6 +43,10 @@ const Layout = ({
           {children}
         </Box>
       </Box>
+      <ExpenseFormModal
+        open={showExpenseFormModal}
+        onClose={() => dispatch(actions.showExpenseFormModal(false))}
+      />
     </>
   );
 };

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { useRouter } from 'next/router';
 import { useFormik } from 'formik';
 import * as yup from 'yup';
@@ -15,14 +15,14 @@ import EditIcon from '@mui/icons-material/Edit';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
-import ExpenseFormModal from '@/features/ExpenseFormModal';
+import { useAppContext } from '@/providers/AppProvider';
+import { actionCreators as actions } from '@/store';
 
 const toFormattedDate = (date: string) => new Date(date).toLocaleDateString();
 
 const ExpenseGroupForm = (): JSX.Element => {
-  const [showModal, setShowModal] = useState(false);
-
   const router = useRouter();
+  const { dispatch } = useAppContext();
 
   const initialValues = {
     startDate: null,
@@ -155,7 +155,10 @@ const ExpenseGroupForm = (): JSX.Element => {
               })}
             </Box>
           )}
-          <Button size="small" onClick={() => setShowModal(true)}>
+          <Button
+            size="small"
+            onClick={() => dispatch(actions.showExpenseFormModal(true))}
+          >
             + Add Expense
           </Button>
         </Box>
@@ -171,7 +174,6 @@ const ExpenseGroupForm = (): JSX.Element => {
           Cancel
         </Button>
       </form>
-      <ExpenseFormModal open={showModal} onClose={setShowModal} />
     </ContentSection>
   );
 };

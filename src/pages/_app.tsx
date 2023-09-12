@@ -6,7 +6,7 @@ import CssBaseline from '@mui/material/CssBaseline';
 import { Hydrate, QueryClientProvider } from 'react-query';
 import Layout from '@/components/Layout';
 import AppHeader from '@/features/AppHeader';
-import OverlayProvider from '@/providers/AppProvider';
+import AppProvider from '@/providers/AppProvider';
 import { queryClient } from '../api';
 
 const darkTheme = createTheme({
@@ -24,11 +24,11 @@ export default function App({ Component, pageProps }: AppProps) {
       <Hydrate state={pageProps.dehydratedState}>
         <ThemeProvider theme={darkTheme}>
           <CssBaseline />
-          <OverlayProvider>
+          <AppProvider>
             <Layout showHeader={showHeader} header={<AppHeader />}>
               <Component {...pageProps} />
             </Layout>
-          </OverlayProvider>
+          </AppProvider>
         </ThemeProvider>
       </Hydrate>
     </QueryClientProvider>

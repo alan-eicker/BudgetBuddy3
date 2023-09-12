@@ -13,11 +13,10 @@ import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 import styles from './ExpenseFormModal.module.scss';
-import { title } from 'process';
 
 interface ExpenseFormProps {
   open: boolean;
-  onClose: Dispatch<SetStateAction<boolean>>;
+  onClose: () => void;
 }
 
 const expenseOptions = [
@@ -112,7 +111,7 @@ const ExpenseForm = ({
           variant="outlined"
           size="large"
           style={{ marginLeft: 8 }}
-          onClick={() => onClose(false)}
+          onClick={onClose}
         >
           Cancel
         </Button>

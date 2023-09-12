@@ -35,7 +35,7 @@ export function appReducer(state = initialState, action: Action) {
   switch (action.type) {
     case SHOW_OVERLAY:
       return { ...state, showOverlay: action.payload };
-    case SHOW_OVERLAY:
+    case SHOW_EXPENSE_FORM_MODAL:
       return { ...state, showExpenseFormModal: action.payload };
     default:
       return state;
