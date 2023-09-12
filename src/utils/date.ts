@@ -1,5 +1,6 @@
-export const toFormattedDate = (date: string) =>
+export function toFormattedDate(date: string) {
   new Date(date).toLocaleDateString();
+}
 
 export function getDaysPastDue(date: string): {
   isPastDue: boolean;

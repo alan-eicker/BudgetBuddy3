@@ -1,3 +1,4 @@
+import { Maybe } from 'graphql-yoga';
 import { useFormik } from 'formik';
 import * as yup from 'yup';
 import Grid from '@mui/material/Grid';
@@ -37,7 +38,7 @@ const ExpenseFormModal = ({
   } = useAppContext();
 
   let initialValues: Expense;
-  let expenseId: string;
+  let expenseId: Maybe<string>;
 
   if (
     expenseToEdit &&
@@ -115,8 +116,12 @@ const ExpenseFormModal = ({
             <LocalizationProvider dateAdapter={AdapterDayjs}>
               <DatePicker
                 label="Due Date"
+                format="MM/DD/YYYY"
                 onChange={(date) => {
-                  if (date) setFieldValue('dueDate', toFormattedDate(date));
+                  setFieldValue(
+                    'dueDate',
+                    toFormattedDate(dayjs(date).toString()),
+                  );
                 }}
                 slotProps={{
                   textField: {

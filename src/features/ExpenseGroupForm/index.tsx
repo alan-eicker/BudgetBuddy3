@@ -13,6 +13,7 @@ import Divider from '@mui/material/Divider';
 import ClearIcon from '@mui/icons-material/Clear';
 import EditIcon from '@mui/icons-material/Edit';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
+import dayjs from 'dayjs';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 import { useAppContext } from '@/providers/AppProvider';
@@ -72,7 +73,11 @@ const ExpenseGroupForm = (): JSX.Element => {
                     textField: { name: 'startDate', fullWidth: true },
                   }}
                   onChange={(date) => {
-                    if (date) setFieldValue('startDate', toFormattedDate(date));
+                    if (date)
+                      setFieldValue(
+                        'startDate',
+                        toFormattedDate(dayjs(date).toString()),
+                      );
                   }}
                   value={values.startDate}
                 />
@@ -84,7 +89,11 @@ const ExpenseGroupForm = (): JSX.Element => {
                     textField: { name: 'endDate', fullWidth: true },
                   }}
                   onChange={(date) => {
-                    if (date) setFieldValue('endDate', toFormattedDate(date));
+                    if (date)
+                      setFieldValue(
+                        'endDate',
+                        toFormattedDate(dayjs(date).toString()),
+                      );
                   }}
                   value={values.endDate}
                 />
