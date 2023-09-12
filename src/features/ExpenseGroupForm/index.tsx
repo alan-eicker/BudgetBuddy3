@@ -16,9 +16,8 @@ import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 import { useAppContext } from '@/providers/AppProvider';
+import { toFormattedDate } from '@/utils/date';
 import { actionCreators as actions } from '@/store';
-
-const toFormattedDate = (date: string) => new Date(date).toLocaleDateString();
 
 const ExpenseGroupForm = (): JSX.Element => {
   const router = useRouter();

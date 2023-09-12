@@ -12,7 +12,10 @@ import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 import { useAppContext } from '@/providers/AppProvider';
+import { actionCreators as actions } from '@/store';
+import { EXPENSE_DROPDOWN_OPTIONS } from '@/constants';
 import { Expense } from '@/graphql/generated/graphql';
+import { toFormattedDate } from '@/utils/date';
 import styles from './ExpenseFormModal.module.scss';
 
 interface ExpenseFormProps {
@@ -20,43 +23,28 @@ interface ExpenseFormProps {
   onClose: () => void;
 }
 
-const expenseOptions = [
-  'Morgage',
-  'Day Care',
-  'ComEd',
-  'Nicor',
-  'T-Moblie',
-  'Water Bill',
-  'Xfinity',
-  'Groceries',
-  'College Funds',
-  'Stash Investments',
-  'Gas',
-  'Gym',
-  'Jeep Payment',
-  'Therapist',
-  'Medical Payment',
-]
-  .sort()
-  .map((title) => ({ title }));
+const expenseOptions = EXPENSE_DROPDOWN_OPTIONS.sort().map((title) => ({
+  title,
+}));
 
-const ExpenseForm = ({
+const ExpenseFormModal = ({
   open = false,
   onClose,
 }: ExpenseFormProps): JSX.Element => {
   const {
+    dispatch,
     state: { expenseToEdit },
   } = useAppContext();
 
   let initialValues: Expense;
-  let expenseId;
+  let expenseId: string;
 
   if (
     expenseToEdit &&
     typeof expenseToEdit === 'object' &&
     '_id' in expenseToEdit
   ) {
-    const { _id, ...expense } = expenseToEdit as Expense;
+    const { _id, ...expense } = expenseToEdit;
     expenseId = _id;
     initialValues = expense;
   } else {
@@ -69,21 +57,31 @@ const ExpenseForm = ({
     };
   }
 
-  console.log(initialValues);
-
   const validationSchema = yup.object({});
 
-  const { values, errors, touched, handleChange, handleSubmit } = useFormik({
-    initialValues,
-    validationSchema,
-    validateOnChange: false,
-    validateOnMount: false,
-    onSubmit: () => {},
-  });
+  const { values, errors, touched, handleChange, handleSubmit, setFieldValue } =
+    useFormik({
+      initialValues,
+      validationSchema,
+      validateOnChange: false,
+      validateOnMount: false,
+      onSubmit: () => {
+        if (expenseId) {
+          // 1. Mutation to update existing expense
+          // dispatch(actions.updateExpense(values, expenseId));
+          // 2. Cache will have to be invalidated so expenses reflect changes
+        } else {
+          // 1. Mutation to add new expense
+          // dispatch(actions.addExpense(values, expenseId));
+          // 2. Cache will have to be invalidated so expenses reflect changes
+        }
+      },
+    });
 
   return (
     <Modal open={open}>
-      <form className={styles.modal}>
+      <form className={styles.modal} onSubmit={handleSubmit}>
+        {JSON.stringify(values, null, 2)}
         <Grid alignItems="center" marginBottom={2} container spacing={2}>
           <Grid item xs={12} sm={12} md={12}>
             <Autocomplete
@@ -118,6 +116,9 @@ const ExpenseForm = ({
             <LocalizationProvider dateAdapter={AdapterDayjs}>
               <DatePicker
                 label="Due Date"
+                onChange={(date) => {
+                  if (date) setFieldValue('dueDate', toFormattedDate(date));
+                }}
                 slotProps={{
                   textField: {
                     name: 'dueDate',
@@ -146,7 +147,7 @@ const ExpenseForm = ({
             />
           </Grid>
         </Grid>
-        <Button variant="contained" size="large">
+        <Button variant="contained" size="large" type="submit">
           Save
         </Button>
         <Button
@@ -162,4 +163,4 @@ const ExpenseForm = ({
   );
 };
 
-export default ExpenseForm;
+export default ExpenseFormModal;

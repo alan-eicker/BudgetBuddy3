@@ -1,0 +1,17 @@
+export const EXPENSE_DROPDOWN_OPTIONS = [
+  'Morgage',
+  'Day Care',
+  'ComEd',
+  'Nicor',
+  'T-Moblie',
+  'Water Bill',
+  'Xfinity',
+  'Groceries',
+  'College Funds',
+  'Stash Investments',
+  'Gas',
+  'Gym',
+  'Jeep Payment',
+  'Therapist',
+  'Medical Payment',
+];

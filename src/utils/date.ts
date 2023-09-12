@@ -1,8 +1,5 @@
-export const formatDate = (dateStr: string) => {
-  const dateStrParts = dateStr.split('-');
-  const dateStrYear = dateStrParts.shift();
-  return [...dateStrParts, dateStrYear].join('/');
-};
+export const toFormattedDate = (date: string) =>
+  new Date(date).toLocaleDateString();
 
 export function getDaysPastDue(date: string): {
   isPastDue: boolean;
