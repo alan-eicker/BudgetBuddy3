@@ -43,10 +43,12 @@ const Layout = ({
           {children}
         </Box>
       </Box>
-      <ExpenseFormModal
-        open={showExpenseFormModal}
-        onClose={() => dispatch(actions.showExpenseFormModal(false))}
-      />
+      {showExpenseFormModal && (
+        <ExpenseFormModal
+          open={true}
+          onClose={() => dispatch(actions.showExpenseFormModal(false))}
+        />
+      )}
     </>
   );
 };

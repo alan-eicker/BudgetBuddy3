@@ -1,6 +1,7 @@
 type Query {
   getAllExpenseGroups: [ExpenseGroup]!
   getExpenseGroupById(_id: String!): ExpenseGroup!
+  getExpense(_id: String!): Expense!
   authenticateUser(username: String!, password: String!): StatusResponse!
   deleteExpenseGroup(_id: String!): StatusResponse!
   logoutUser: Boolean!

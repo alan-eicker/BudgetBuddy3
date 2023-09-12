@@ -1,4 +1,8 @@
+import { Expense } from '@/graphql/generated/graphql';
+
 type actionType = 'SHOW_OVERLAY' | 'SHOW_EXPENSE_FORM_MODAL';
+
+type ShowExpenseFormModalPayload = boolean | Expense | null;
 
 export interface Action {
   type: actionType;
@@ -7,12 +11,12 @@ export interface Action {
 
 export interface ActionCreators {
   showOverlay: (payload: boolean) => Action;
-  showExpenseFormModal: (payload: boolean) => Action;
+  showExpenseFormModal: (payload?: ShowExpenseFormModalPayload) => Action;
 }
 
 export interface State {
   showOverlay: boolean;
-  showExpenseFormModal: boolean;
+  showExpenseFormModal: ShowExpenseFormModalPayload;
 }
 
 export const SHOW_OVERLAY = 'SHOW_OVERLAY';

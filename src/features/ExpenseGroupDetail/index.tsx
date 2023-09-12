@@ -1,3 +1,4 @@
+import mongoose from 'mongoose';
 import {
   useState,
   Dispatch,
@@ -163,7 +164,11 @@ const ExpenseGroupDetail = (): JSX.Element => {
           <ContentSection compressed>
             <Grid container spacing={5}>
               <Grid item xs={12} sm={12} md={8} textAlign="right">
-                <Button>+ Add Expense</Button>
+                <Button
+                  onClick={() => dispatch(actions.showExpenseFormModal(true))}
+                >
+                  + Add Expense
+                </Button>
               </Grid>
             </Grid>
           </ContentSection>
@@ -185,7 +190,14 @@ const ExpenseGroupDetail = (): JSX.Element => {
                       <ExpenseCard
                         {...expense}
                         actions={[
-                          <Button key="edit-button">Edit</Button>,
+                          <Button
+                            key="edit-button"
+                            onClick={() =>
+                              dispatch(actions.showExpenseFormModal(expense))
+                            }
+                          >
+                            Edit
+                          </Button>,
                           <Button
                             key="delete-button"
                             onClick={() =>

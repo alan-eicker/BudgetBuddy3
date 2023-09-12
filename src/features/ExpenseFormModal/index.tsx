@@ -1,17 +1,18 @@
-import { Dispatch, SetStateAction } from 'react';
 import { useFormik } from 'formik';
-import * as ypu from 'yup';
+import * as yup from 'yup';
 import Grid from '@mui/material/Grid';
 import TextField from '@mui/material/TextField';
 import Autocomplete from '@mui/material/Autocomplete';
 import Button from '@mui/material/Button';
 import Switch from '@mui/material/Switch';
-import InputAdornment from '@mui/material/InputAdornment';
 import FormLabel from '@mui/material/FormLabel';
 import Modal from '@mui/material/Modal';
+import dayjs, { Dayjs } from 'dayjs';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
+import { useAppContext } from '@/providers/AppProvider';
+import { Expense } from '@/graphql/generated/graphql';
 import styles from './ExpenseFormModal.module.scss';
 
 interface ExpenseFormProps {
@@ -43,14 +44,34 @@ const ExpenseForm = ({
   open = false,
   onClose,
 }: ExpenseFormProps): JSX.Element => {
-  const initialValues = {};
+  const {
+    state: { showExpenseFormModal: actionPayload },
+  } = useAppContext();
 
-  const validationSchema = ypu.object({});
+  let initialValues: Expense;
+  let expenseId;
 
-  const {} = useFormik({
+  if (typeof actionPayload === 'object') {
+    const { _id, ...expense } = actionPayload as Expense;
+    expenseId = _id;
+    initialValues = expense;
+  } else {
+    initialValues = {
+      name: '',
+      balance: 0,
+      dueDate: '',
+      isPaid: false,
+      note: '',
+    };
+  }
+
+  const validationSchema = yup.object({});
+
+  const { values, errors, touched, handleChange, handleSubmit } = useFormik({
     initialValues,
     validationSchema,
     validateOnChange: false,
+    validateOnMount: false,
     onSubmit: () => {},
   });
 
@@ -62,11 +83,14 @@ const ExpenseForm = ({
             <Autocomplete
               freeSolo
               options={expenseOptions.map((option) => option.title)}
+              value={values.name}
               renderInput={(params) => (
                 <TextField
                   {...params}
                   type="text"
+                  name="name"
                   label="Expense Name"
+                  onChange={handleChange}
                   InputProps={{
                     ...params.InputProps,
                     type: 'search',
@@ -78,11 +102,9 @@ const ExpenseForm = ({
           <Grid item xs={12} sm={3} md={4}>
             <TextField
               label="Balance"
-              InputProps={{
-                startAdornment: (
-                  <InputAdornment position="start">$</InputAdornment>
-                ),
-              }}
+              name="balance"
+              onChange={handleChange}
+              value={values.balance}
               fullWidth
             />
           </Grid>
@@ -91,17 +113,31 @@ const ExpenseForm = ({
               <DatePicker
                 label="Due Date"
                 slotProps={{
-                  textField: { name: 'dueDate', fullWidth: true },
+                  textField: {
+                    name: 'dueDate',
+                    fullWidth: true,
+                  },
                 }}
+                {...(values.dueDate && { value: dayjs(values.dueDate) })}
               />
             </LocalizationProvider>
           </Grid>
           <Grid item xs={12} sm={2} md={4}>
             <FormLabel>Paid</FormLabel>
-            <Switch />
+            <Switch
+              name="isPaid"
+              onChange={handleChange}
+              checked={values.isPaid}
+            />
           </Grid>
           <Grid item xs={12} sm={12} md={12}>
-            <TextField label="Note" fullWidth />
+            <TextField
+              label="Note"
+              name="note"
+              onChange={handleChange}
+              value={values.note}
+              fullWidth
+            />
           </Grid>
         </Grid>
         <Button variant="contained" size="large">
