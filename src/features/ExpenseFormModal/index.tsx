@@ -81,7 +81,6 @@ const ExpenseFormModal = ({
   return (
     <Modal open={open}>
       <form className={styles.modal} onSubmit={handleSubmit}>
-        {JSON.stringify(values, null, 2)}
         <Grid alignItems="center" marginBottom={2} container spacing={2}>
           <Grid item xs={12} sm={12} md={12}>
             <Autocomplete
