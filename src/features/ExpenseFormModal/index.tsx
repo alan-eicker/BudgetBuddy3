@@ -8,7 +8,7 @@ import Button from '@mui/material/Button';
 import Switch from '@mui/material/Switch';
 import FormLabel from '@mui/material/FormLabel';
 import Modal from '@mui/material/Modal';
-import dayjs, { Dayjs } from 'dayjs';
+import dayjs from 'dayjs';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
@@ -16,7 +16,6 @@ import { useAppContext } from '@/providers/AppProvider';
 import { actionCreators as actions } from '@/store';
 import { EXPENSE_DROPDOWN_OPTIONS } from '@/constants';
 import { Expense } from '@/graphql/generated/graphql';
-import { toFormattedDate } from '@/utils/date';
 import styles from './ExpenseFormModal.module.scss';
 
 interface ExpenseFormProps {
@@ -118,10 +117,7 @@ const ExpenseFormModal = ({
                 label="Due Date"
                 format="MM/DD/YYYY"
                 onChange={(date) => {
-                  setFieldValue(
-                    'dueDate',
-                    toFormattedDate(dayjs(date).toString()),
-                  );
+                  setFieldValue('dueDate', dayjs(date).format('MM/DD/YYYY'));
                 }}
                 slotProps={{
                   textField: {

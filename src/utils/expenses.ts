@@ -1,4 +1,3 @@
-import { getDaysPastDue } from './date';
 import { Expense } from '@/graphql/generated/graphql';
 
 export function formatNumber(num: number): string {

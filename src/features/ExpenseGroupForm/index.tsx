@@ -17,7 +17,6 @@ import dayjs from 'dayjs';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 import { useAppContext } from '@/providers/AppProvider';
-import { toFormattedDate } from '@/utils/date';
 import { actionCreators as actions } from '@/store';
 
 const ExpenseGroupForm = (): JSX.Element => {
@@ -54,6 +53,7 @@ const ExpenseGroupForm = (): JSX.Element => {
     initialValues,
     validationSchema,
     validateOnChange: false,
+    validateOnMount: false,
     onSubmit: () => {},
   });
 
@@ -69,15 +69,15 @@ const ExpenseGroupForm = (): JSX.Element => {
               <Grid item xs={12} sm={4} md={4}>
                 <DatePicker
                   label="Start Date"
+                  format="MM/DD/YYYY"
                   slotProps={{
                     textField: { name: 'startDate', fullWidth: true },
                   }}
                   onChange={(date) => {
-                    if (date)
-                      setFieldValue(
-                        'startDate',
-                        toFormattedDate(dayjs(date).toString()),
-                      );
+                    setFieldValue(
+                      'startDate',
+                      dayjs(date).format('MM/DD/YYYY'),
+                    );
                   }}
                   value={values.startDate}
                 />
@@ -85,15 +85,12 @@ const ExpenseGroupForm = (): JSX.Element => {
               <Grid item xs={12} sm={4} md={4}>
                 <DatePicker
                   label="End Date"
+                  format="MM/DD/YYYY"
                   slotProps={{
                     textField: { name: 'endDate', fullWidth: true },
                   }}
                   onChange={(date) => {
-                    if (date)
-                      setFieldValue(
-                        'endDate',
-                        toFormattedDate(dayjs(date).toString()),
-                      );
+                    setFieldValue('endDate', dayjs(date).format('MM/DD/YYYY'));
                   }}
                   value={values.endDate}
                 />
@@ -102,13 +99,9 @@ const ExpenseGroupForm = (): JSX.Element => {
                 <TextField
                   type="number"
                   name="totalBuget"
-                  InputProps={{
-                    startAdornment: (
-                      <InputAdornment position="start">$</InputAdornment>
-                    ),
-                  }}
                   label="Total Budget"
                   fullWidth
+                  onChange={handleChange}
                   value={values.totalBuget}
                 />
               </Grid>
