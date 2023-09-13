@@ -31,6 +31,7 @@ import {
   isOverDue,
 } from '@/utils/expenses';
 import { useAppContext } from '@/providers/AppProvider';
+import { useExpenseFormModalContext } from '@/providers/ExpenseFormModalContext';
 import { actionCreators as actions } from '@/store';
 import styles from './ExpenseGroupDetail.module.scss';
 
@@ -43,6 +44,7 @@ interface DeleteAction {
 
 const ExpenseGroupDetail = (): JSX.Element => {
   const router = useRouter();
+  const { setExpenseFormState } = useExpenseFormModalContext();
 
   const {
     query: { expenseGroupId },
@@ -56,7 +58,7 @@ const ExpenseGroupDetail = (): JSX.Element => {
 
   const { dispatch } = useAppContext();
 
-  const handleDelete = async () => {
+  const handleExpenseGroupDelete = async () => {
     dispatch(actions.showOverlay(true));
 
     const { status } = await queryClient.fetchQuery<DeleteExpenseGroupQuery>(
@@ -68,6 +70,14 @@ const ExpenseGroupDetail = (): JSX.Element => {
       queryClient.removeQueries('expenseGroups');
       router.push('/account/dashboard');
     }
+  };
+
+  const addNewExpense = (newExpense: Expense) => {
+    console.log(newExpense);
+  };
+
+  const updateExpense = (newExpense: Expense) => {
+    console.log(newExpense);
   };
 
   const mapOverdueStatustoExpenses = (expenses: Expense[]) => {
@@ -149,7 +159,7 @@ const ExpenseGroupDetail = (): JSX.Element => {
                   setDeleteAction({
                     _id: expenseGroupId as string,
                     onCancel: () => setDeleteAction(undefined),
-                    onConfirm: handleDelete,
+                    onConfirm: handleExpenseGroupDelete,
                     message:
                       'Are you sure you want to delete this expense group?',
                   })
@@ -164,7 +174,13 @@ const ExpenseGroupDetail = (): JSX.Element => {
           <ContentSection compressed>
             <Grid container spacing={5}>
               <Grid item xs={12} sm={12} md={8} textAlign="right">
-                <Button onClick={() => dispatch(actions.expenseToEdit({}))}>
+                <Button
+                  onClick={() =>
+                    setExpenseFormState({
+                      onSubmitCallback: addNewExpense,
+                    })
+                  }
+                >
                   + Add Expense
                 </Button>
               </Grid>
@@ -191,7 +207,10 @@ const ExpenseGroupDetail = (): JSX.Element => {
                           <Button
                             key="edit-button"
                             onClick={() =>
-                              dispatch(actions.expenseToEdit(expense))
+                              setExpenseFormState({
+                                expense,
+                                onSubmitCallback: updateExpense,
+                              })
                             }
                           >
                             Edit

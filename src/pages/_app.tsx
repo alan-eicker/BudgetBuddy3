@@ -21,8 +21,8 @@ export default function App({ Component, pageProps }: AppProps) {
   const { pathname } = useRouter();
   const showHeader = pathname !== '/' && pathname !== '/account/register';
   const includeExpenseModalProvider =
-    pathname === '/account/expense-group' ||
-    pathname === '/account/add-expense-group';
+    pathname.match(/\/account\/expense-group/) ||
+    pathname.match(/\/account\/add-expense-group/);
 
   return (
     <QueryClientProvider client={queryClient}>

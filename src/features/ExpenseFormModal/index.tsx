@@ -54,23 +54,8 @@ const ExpenseFormModal = ({ open = false }: ExpenseFormProps): JSX.Element => {
       validationSchema,
       validateOnChange: false,
       validateOnMount: false,
-      onSubmit: () => {
-        if (expenseId) {
-          // 1. Mutation to update existing expense
-          // dispatch(actions.updateExpense(values, expenseId));
-          // 2. Cache will have to be invalidated so expenses reflect changes
-        } else {
-          console.log({
-            name: 'ComEd',
-            balance: 200.04,
-            dueDate: '9/30/2023',
-            isPaid: false,
-            note: null,
-          });
-          // 1. Mutation to add new expense
-          // dispatch(actions.addExpense(values, expenseId));
-          // 2. Cache will have to be invalidated so expenses reflect changes
-        }
+      onSubmit: (formData: Expense) => {
+        expenseFormState?.onSubmitCallback(formData);
       },
     });
 
