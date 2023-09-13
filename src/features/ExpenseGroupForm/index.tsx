@@ -5,7 +5,6 @@ import * as yup from 'yup';
 import Typography from '@mui/material/Typography';
 import ContentSection from '@/components/ContentSection';
 import TextField from '@mui/material/TextField';
-import InputAdornment from '@mui/material/InputAdornment';
 import Grid from '@mui/material/Grid';
 import Button from '@mui/material/Button';
 import Box from '@mui/material/Box';
@@ -18,6 +17,7 @@ import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 import { useAppContext } from '@/providers/AppProvider';
 import { actionCreators as actions } from '@/store';
+import { Expense } from '@/graphql/generated/graphql';
 
 const ExpenseGroupForm = (): JSX.Element => {
   const router = useRouter();
@@ -28,22 +28,22 @@ const ExpenseGroupForm = (): JSX.Element => {
     endDate: null,
     totalBuget: '',
     expenses: [
-      {
-        _id: '1',
-        name: 'Morgage',
-        balance: 2345.04,
-        dueDate: '9/30/2023',
-        isPaid: false,
-        note: null,
-      },
-      {
-        _id: '2',
-        name: 'ComEd',
-        balance: 200.04,
-        dueDate: '9/30/2023',
-        isPaid: false,
-        note: null,
-      },
+      // {
+      //   _id: '1',
+      //   name: 'Morgage',
+      //   balance: 2345.04,
+      //   dueDate: '9/30/2023',
+      //   isPaid: false,
+      //   note: null,
+      // },
+      // {
+      //   _id: '2',
+      //   name: 'ComEd',
+      //   balance: 200.04,
+      //   dueDate: '9/30/2023',
+      //   isPaid: false,
+      //   note: null,
+      // },
     ],
   };
 
@@ -112,11 +112,11 @@ const ExpenseGroupForm = (): JSX.Element => {
           <Typography component="h2" variant="h5" marginBottom={2}>
             Expenses
           </Typography>
-          {values.expenses && (
+          {!!values.expenses.length && (
             <Box marginBottom={1}>
-              {values.expenses.map((expense, i) => {
+              {values.expenses.map((expense: Expense, i) => {
                 return (
-                  <React.Fragment key={expense.name || i}>
+                  <React.Fragment key={expense._id}>
                     <Box
                       display="flex"
                       justifyContent="space-between"
