@@ -3,17 +3,20 @@ mutation addExpense(
   $balance: Float!
   $dueDate: String!
   $isPaid: Boolean!
+  $note: String
 ) {
   addExpense(
     name: $name
     balance: $balance
     dueDate: $dueDate
     isPaid: $isPaid
+    note: $note
   ) {
     _id
     name
     balance
     dueDate
     isPaid
+    note
   }
 }

@@ -1,4 +1,5 @@
 import '@/styles/globals.scss';
+import { NextPage } from 'next';
 import { useRouter } from 'next/router';
 import type { AppProps } from 'next/app';
 import { ThemeProvider, createTheme } from '@mui/material/styles';
@@ -7,6 +8,7 @@ import { Hydrate, QueryClientProvider } from 'react-query';
 import Layout from '@/components/Layout';
 import AppHeader from '@/features/AppHeader';
 import AppProvider from '@/providers/AppProvider';
+import ExpenseFormModalProvider from '@/providers/ExpenseFormModalContext';
 import { queryClient } from '../api';
 
 const darkTheme = createTheme({
@@ -18,6 +20,9 @@ const darkTheme = createTheme({
 export default function App({ Component, pageProps }: AppProps) {
   const { pathname } = useRouter();
   const showHeader = pathname !== '/' && pathname !== '/account/register';
+  const includeExpenseModalProvider =
+    pathname === '/account/expense-group' ||
+    pathname === '/account/add-expense-group';
 
   return (
     <QueryClientProvider client={queryClient}>
@@ -26,7 +31,13 @@ export default function App({ Component, pageProps }: AppProps) {
           <CssBaseline />
           <AppProvider>
             <Layout showHeader={showHeader} header={<AppHeader />}>
-              <Component {...pageProps} />
+              {includeExpenseModalProvider ? (
+                <ExpenseFormModalProvider>
+                  <Component {...pageProps} />
+                </ExpenseFormModalProvider>
+              ) : (
+                <Component {...pageProps} />
+              )}
             </Layout>
           </AppProvider>
         </ThemeProvider>

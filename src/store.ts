@@ -2,7 +2,12 @@ import { Expense } from '@/graphql/generated/graphql';
 
 type actionType = 'SHOW_OVERLAY' | 'SHOW_EXPENSE_FORM_MODAL';
 
-type ExpenseToEditPayload = Expense | {} | null;
+type ExpenseToEditPayload = ExpenseToEdit | null;
+
+export interface ExpenseToEdit {
+  expense: Expense;
+  onSubmitCallback: () => any;
+}
 
 export interface Action {
   type: actionType;

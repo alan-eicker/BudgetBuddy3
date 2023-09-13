@@ -10,5 +10,6 @@ export function addExpense(
     balance: args.balance,
     dueDate: args.dueDate,
     isPaid: args.isPaid,
+    note: args.note,
   };
 }

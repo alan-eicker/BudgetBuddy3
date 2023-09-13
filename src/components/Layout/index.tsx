@@ -47,6 +47,7 @@ const Layout = ({
         <ExpenseFormModal
           open={true}
           onClose={() => dispatch(actions.expenseToEdit())}
+          {...expenseToEdit}
         />
       )}
     </>

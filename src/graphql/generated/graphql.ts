@@ -47,6 +47,7 @@ export type MutationAddExpenseArgs = {
   dueDate: Scalars['String']['input'];
   isPaid: Scalars['Boolean']['input'];
   name: Scalars['String']['input'];
+  note?: InputMaybe<Scalars['String']['input']>;
 };
 
 export type Query = {
@@ -54,6 +55,7 @@ export type Query = {
   authenticateUser: StatusResponse;
   deleteExpenseGroup: StatusResponse;
   getAllExpenseGroups: Array<Maybe<ExpenseGroup>>;
+  getExpense: Expense;
   getExpenseGroupById: ExpenseGroup;
   logoutUser: Scalars['Boolean']['output'];
 };
@@ -66,6 +68,11 @@ export type QueryAuthenticateUserArgs = {
 
 
 export type QueryDeleteExpenseGroupArgs = {
+  _id: Scalars['String']['input'];
+};
+
+
+export type QueryGetExpenseArgs = {
   _id: Scalars['String']['input'];
 };
 
@@ -85,10 +92,11 @@ export type AddExpenseMutationVariables = Exact<{
   balance: Scalars['Float']['input'];
   dueDate: Scalars['String']['input'];
   isPaid: Scalars['Boolean']['input'];
+  note?: InputMaybe<Scalars['String']['input']>;
 }>;
 
 
-export type AddExpenseMutation = { __typename?: 'Mutation', addExpense: { __typename?: 'Expense', _id?: string | null, name: string, balance: number, dueDate: string, isPaid: boolean } };
+export type AddExpenseMutation = { __typename?: 'Mutation', addExpense: { __typename?: 'Expense', _id?: string | null, name: string, balance: number, dueDate: string, isPaid: boolean, note?: string | null } };
 
 export type GetAllExpenseGroupsQueryVariables = Exact<{ [key: string]: never; }>;
 
@@ -124,13 +132,20 @@ export type LogoutUserQuery = { __typename?: 'Query', isLoggedOut: boolean };
 
 
 export const AddExpenseDocument = gql`
-    mutation addExpense($name: String!, $balance: Float!, $dueDate: String!, $isPaid: Boolean!) {
-  addExpense(name: $name, balance: $balance, dueDate: $dueDate, isPaid: $isPaid) {
+    mutation addExpense($name: String!, $balance: Float!, $dueDate: String!, $isPaid: Boolean!, $note: String) {
+  addExpense(
+    name: $name
+    balance: $balance
+    dueDate: $dueDate
+    isPaid: $isPaid
+    note: $note
+  ) {
     _id
     name
     balance
     dueDate
     isPaid
+    note
   }
 }
     `;

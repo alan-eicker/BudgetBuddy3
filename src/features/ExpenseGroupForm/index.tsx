@@ -16,26 +16,26 @@ import dayjs from 'dayjs';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 import { useAppContext } from '@/providers/AppProvider';
-import { actionCreators as actions } from '@/store';
+import { useExpenseFormModalContext } from '@/providers/ExpenseFormModalContext';
 import { Expense } from '@/graphql/generated/graphql';
 
 const ExpenseGroupForm = (): JSX.Element => {
   const router = useRouter();
-  const { dispatch } = useAppContext();
+  const { setExpenseFormState } = useExpenseFormModalContext();
 
   const initialValues = {
     startDate: null,
     endDate: null,
     totalBuget: '',
     expenses: [
-      // {
-      //   _id: '1',
-      //   name: 'Morgage',
-      //   balance: 2345.04,
-      //   dueDate: '9/30/2023',
-      //   isPaid: false,
-      //   note: null,
-      // },
+      {
+        _id: '1',
+        name: 'Morgage',
+        balance: 2345.04,
+        dueDate: '9/30/2023',
+        isPaid: false,
+        note: null,
+      },
       // {
       //   _id: '2',
       //   name: 'ComEd',
@@ -133,7 +133,10 @@ const ExpenseGroupForm = (): JSX.Element => {
                             component="span"
                             fontSize={14}
                             onClick={() =>
-                              dispatch(actions.expenseToEdit(expense))
+                              setExpenseFormState({
+                                expense,
+                                onSubmitCallback: () => {},
+                              })
                             }
                           >
                             Edit
@@ -163,7 +166,11 @@ const ExpenseGroupForm = (): JSX.Element => {
           )}
           <Button
             size="small"
-            onClick={() => dispatch(actions.expenseToEdit({}))}
+            onClick={() =>
+              setExpenseFormState({
+                onSubmitCallback: () => {},
+              })
+            }
           >
             + Add Expense
           </Button>

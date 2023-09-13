@@ -12,41 +12,30 @@ import dayjs from 'dayjs';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
-import { useAppContext } from '@/providers/AppProvider';
-import { actionCreators as actions } from '@/store';
 import { EXPENSE_DROPDOWN_OPTIONS } from '@/constants';
+import { useExpenseFormModalContext } from '@/providers/ExpenseFormModalContext';
 import { Expense } from '@/graphql/generated/graphql';
 import styles from './ExpenseFormModal.module.scss';
 
 interface ExpenseFormProps {
   open: boolean;
-  onClose: () => void;
 }
 
 const expenseOptions = EXPENSE_DROPDOWN_OPTIONS.sort().map((title) => ({
   title,
 }));
 
-const ExpenseFormModal = ({
-  open = false,
-  onClose,
-}: ExpenseFormProps): JSX.Element => {
-  const {
-    dispatch,
-    state: { expenseToEdit },
-  } = useAppContext();
+const ExpenseFormModal = ({ open = false }: ExpenseFormProps): JSX.Element => {
+  const { expenseFormState, setExpenseFormState } =
+    useExpenseFormModalContext();
 
   let initialValues: Expense;
   let expenseId: Maybe<string>;
 
-  if (
-    expenseToEdit &&
-    typeof expenseToEdit === 'object' &&
-    '_id' in expenseToEdit
-  ) {
-    const { _id, ...expense } = expenseToEdit;
+  if (expenseFormState?.expense) {
+    const { _id, ...expenseData } = expenseFormState.expense;
     expenseId = _id;
-    initialValues = expense;
+    initialValues = expenseData;
   } else {
     initialValues = {
       name: '',
@@ -71,6 +60,13 @@ const ExpenseFormModal = ({
           // dispatch(actions.updateExpense(values, expenseId));
           // 2. Cache will have to be invalidated so expenses reflect changes
         } else {
+          console.log({
+            name: 'ComEd',
+            balance: 200.04,
+            dueDate: '9/30/2023',
+            isPaid: false,
+            note: null,
+          });
           // 1. Mutation to add new expense
           // dispatch(actions.addExpense(values, expenseId));
           // 2. Cache will have to be invalidated so expenses reflect changes
@@ -154,7 +150,7 @@ const ExpenseFormModal = ({
           variant="outlined"
           size="large"
           style={{ marginLeft: 8 }}
-          onClick={onClose}
+          onClick={() => setExpenseFormState(null)}
         >
           Cancel
         </Button>
