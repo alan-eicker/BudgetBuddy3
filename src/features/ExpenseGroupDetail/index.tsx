@@ -18,6 +18,7 @@ import Modal from '@mui/material/Modal';
 import ContentSection from '@/components/ContentSection';
 import SpendingSnapshot from '@/components/SpendingSnapshot';
 import ExpenseCard from '@/components/ExpenseCard';
+import ConfirmationModal from '@/components/ConfirmationModal';
 import { queryClient, getExpenseGroupById, deleteExpenseGroup } from '@/api';
 import {
   GetExpenseGroupByIdQuery,
@@ -41,6 +42,8 @@ interface DeleteAction {
   message: string | ReactNode;
 }
 
+interface DuplicateAction {}
+
 const ExpenseGroupDetail = (): JSX.Element => {
   const router = useRouter();
   const { setExpenseFormState } = useExpenseFormModalContext();
@@ -49,13 +52,14 @@ const ExpenseGroupDetail = (): JSX.Element => {
     query: { expenseGroupId },
   } = router;
   const [deleteAction, setDeleteAction] = useState<DeleteAction>();
+  const [duplicateAction, setDuplicateAction] = useState<DuplicateAction>();
 
   const { data } = useQuery<GetExpenseGroupByIdQuery>(
     ['expenseGroup' + expenseGroupId],
     () => getExpenseGroupById({ _id: expenseGroupId as string }),
   );
 
-  const { actions } = useAppContext();
+  const { setShowOverlay } = useAppContext();
 
   const handleExpenseGroupDelete = async () => {
     setShowOverlay(true);
@@ -250,34 +254,11 @@ const ExpenseGroupDetail = (): JSX.Element => {
         </ContentSection>
       </Box>
       {deleteAction && (
-        <Modal open={true}>
-          <Box className={styles.modal}>
-            <Box padding={2.5} fontSize={18} component="h2">
-              {deleteAction.message}
-            </Box>
-            <Box
-              className={styles.modalButtons}
-              textAlign="center"
-              padding={2.5}
-            >
-              <Button
-                variant="contained"
-                color="error"
-                size="small"
-                onClick={deleteAction.onCancel}
-              >
-                Cancel
-              </Button>
-              <Button
-                variant="contained"
-                size="small"
-                onClick={deleteAction.onConfirm}
-              >
-                Delete
-              </Button>
-            </Box>
-          </Box>
-        </Modal>
+        <ConfirmationModal
+          message={deleteAction.message}
+          onConfirm={deleteAction.onConfirm}
+          onCancel={deleteAction.onCancel}
+        />
       )}
     </Box>
   );
