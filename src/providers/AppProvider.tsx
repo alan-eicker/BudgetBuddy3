@@ -1,11 +1,5 @@
 import { useReducer } from 'react';
-import {
-  useContext,
-  createContext,
-  ReactNode,
-  Dispatch,
-  useEffect,
-} from 'react';
+import { useContext, createContext, ReactNode, useEffect } from 'react';
 import { useRouter } from 'next/router';
 import {
   appReducer,
@@ -14,7 +8,6 @@ import {
   State,
   PayloadType,
   ActionCreators,
-  Action,
 } from '../store';
 
 interface AppContext {
@@ -24,14 +17,7 @@ interface AppContext {
   };
 }
 
-const AppContext = createContext<AppContext>({
-  state: {
-    showOverlay: false,
-  },
-  actions: {
-    showOverlay: () => {},
-  },
-});
+const AppContext = createContext<AppContext>({} as AppContext);
 
 export const useAppContext = () => useContext(AppContext);
 
@@ -47,7 +33,7 @@ const AppProvider = ({ children }: { children: ReactNode }) => {
 
   useEffect(() => {
     actions.showOverlay(false);
-  }, []);
+  }, [actions]);
 
   useEffect(() => {
     router.events.on('routeChangeStart', () => {

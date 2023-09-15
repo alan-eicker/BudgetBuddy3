@@ -1,6 +1,3 @@
-import { Expense } from '@/graphql/generated/graphql';
-import { type } from 'os';
-
 export type ActionTypes = 'SHOW_OVERLAY' | 'SHOW_EXPENSE_FORM_MODAL';
 
 export type PayloadType = boolean;
