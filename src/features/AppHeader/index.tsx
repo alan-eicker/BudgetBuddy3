@@ -11,11 +11,11 @@ import { useAppContext } from '@/providers/AppProvider';
 
 const AppHeader = () => {
   const router = useRouter();
-  const { actions } = useAppContext();
+  const { setShowOverlay } = useAppContext();
   const date = new Date().toDateString();
 
   const handleLogout = async () => {
-    actions.showOverlay(true);
+    setShowOverlay(true);
 
     const { isLoggedOut } = await queryClient.fetchQuery<LogoutUserQuery>(
       ['logoutUser'],

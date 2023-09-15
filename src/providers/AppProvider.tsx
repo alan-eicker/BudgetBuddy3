@@ -1,20 +1,10 @@
-import { useReducer } from 'react';
+import { Dispatch, SetStateAction, useState } from 'react';
 import { useContext, createContext, ReactNode, useEffect } from 'react';
 import { useRouter } from 'next/router';
-import {
-  appReducer,
-  initialState,
-  actionCreators,
-  State,
-  PayloadType,
-  ActionCreators,
-} from '../store';
 
 interface AppContext {
-  state: State;
-  actions: {
-    [key: string]: (payload: PayloadType) => void;
-  };
+  showOverlay: boolean;
+  setShowOverlay: Dispatch<SetStateAction<boolean>>;
 }
 
 const AppContext = createContext<AppContext>({} as AppContext);
@@ -22,31 +12,25 @@ const AppContext = createContext<AppContext>({} as AppContext);
 export const useAppContext = () => useContext(AppContext);
 
 const AppProvider = ({ children }: { children: ReactNode }) => {
-  const [state, dispatch] = useReducer(appReducer, initialState);
+  const [showOverlay, setShowOverlay] = useState(false);
   const { pathname, ...router } = useRouter();
 
-  const actions = Object.fromEntries(
-    Object.entries(actionCreators).map(([name, action]) => {
-      return [name, (payload: PayloadType) => dispatch(action(payload))];
-    }),
-  );
-
   useEffect(() => {
-    actions.showOverlay(false);
-  }, [actions]);
+    setShowOverlay(false);
+  }, []);
 
   useEffect(() => {
     router.events.on('routeChangeStart', () => {
-      actions.showOverlay(true);
+      setShowOverlay(true);
     });
 
     router.events.on('routeChangeComplete', () => {
-      actions.showOverlay(false);
+      setShowOverlay(false);
     });
-  }, [router, actions]);
+  }, [router]);
 
   return (
-    <AppContext.Provider value={{ state, actions }}>
+    <AppContext.Provider value={{ showOverlay, setShowOverlay }}>
       {children}
     </AppContext.Provider>
   );

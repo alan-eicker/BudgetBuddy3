@@ -16,9 +16,7 @@ const Layout = ({
   children,
   showHeader = false,
 }: LayoutProps): JSX.Element => {
-  const {
-    state: { showOverlay },
-  } = useAppContext();
+  const { showOverlay } = useAppContext();
   const hasHeader = showHeader && header;
 
   return (

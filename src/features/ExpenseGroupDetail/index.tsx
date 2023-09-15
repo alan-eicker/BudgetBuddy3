@@ -58,7 +58,7 @@ const ExpenseGroupDetail = (): JSX.Element => {
   const { actions } = useAppContext();
 
   const handleExpenseGroupDelete = async () => {
-    actions.showOverlay(true);
+    setShowOverlay(true);
 
     const { status } = await queryClient.fetchQuery<DeleteExpenseGroupQuery>(
       ['deleteExpenseGroup' + expenseGroupId],

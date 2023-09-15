@@ -8,7 +8,7 @@ export const useAuth = () => {
   const router = useRouter();
   const [loginError, setLoginError] = useState(false);
 
-  const { actions } = useAppContext();
+  const { setShowOverlay } = useAppContext();
 
   const initialValues = {
     username: '',
@@ -37,7 +37,7 @@ export const useAuth = () => {
   };
 
   const logout = () => {
-    actions.showOverlay(true);
+    setShowOverlay(true);
     setTimeout(() => {
       router.push('/');
     }, 1500);
