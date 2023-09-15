@@ -3,13 +3,12 @@ import { useRouter } from 'next/router';
 import { useFormik } from 'formik';
 import * as yup from 'yup';
 import { useAppContext } from '@/providers/AppProvider';
-import { actionCreators as actions } from '@/store';
 
 export const useAuth = () => {
   const router = useRouter();
   const [loginError, setLoginError] = useState(false);
 
-  const { dispatch } = useAppContext();
+  const { actions } = useAppContext();
 
   const initialValues = {
     username: '',
@@ -38,7 +37,7 @@ export const useAuth = () => {
   };
 
   const logout = () => {
-    dispatch(actions.showOverlay(true));
+    actions.showOverlay(true);
     setTimeout(() => {
       router.push('/');
     }, 1500);

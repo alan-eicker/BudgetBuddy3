@@ -32,7 +32,6 @@ import {
 } from '@/utils/expenses';
 import { useAppContext } from '@/providers/AppProvider';
 import { useExpenseFormModalContext } from '@/providers/ExpenseFormModalContext';
-import { actionCreators as actions } from '@/store';
 import styles from './ExpenseGroupDetail.module.scss';
 
 interface DeleteAction {
@@ -56,10 +55,10 @@ const ExpenseGroupDetail = (): JSX.Element => {
     () => getExpenseGroupById({ _id: expenseGroupId as string }),
   );
 
-  const { dispatch } = useAppContext();
+  const { actions } = useAppContext();
 
   const handleExpenseGroupDelete = async () => {
-    dispatch(actions.showOverlay(true));
+    actions.showOverlay(true);
 
     const { status } = await queryClient.fetchQuery<DeleteExpenseGroupQuery>(
       ['deleteExpenseGroup' + expenseGroupId],
