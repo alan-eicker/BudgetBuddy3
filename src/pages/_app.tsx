@@ -1,5 +1,4 @@
 import '@/styles/globals.scss';
-import { NextPage } from 'next';
 import { useRouter } from 'next/router';
 import type { AppProps } from 'next/app';
 import { ThemeProvider, createTheme } from '@mui/material/styles';
@@ -8,7 +7,7 @@ import { Hydrate, QueryClientProvider } from 'react-query';
 import Layout from '@/components/Layout';
 import AppHeader from '@/features/AppHeader';
 import AppProvider from '@/providers/AppProvider';
-import ExpenseFormModalProvider from '@/providers/ExpenseFormModalContext';
+import ExpenseFormModalProvider from '@/providers/ExpenseFormModalProvider';
 import { queryClient } from '../api';
 
 const darkTheme = createTheme({

@@ -16,7 +16,7 @@ import dayjs from 'dayjs';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 import { useAppContext } from '@/providers/AppProvider';
-import { useExpenseFormModalContext } from '@/providers/ExpenseFormModalContext';
+import { useExpenseFormModalContext } from '@/providers/ExpenseFormModalProvider';
 import { Expense } from '@/graphql/generated/graphql';
 
 const ExpenseGroupForm = (): JSX.Element => {

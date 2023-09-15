@@ -13,7 +13,7 @@ import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 import { EXPENSE_DROPDOWN_OPTIONS } from '@/constants';
-import { useExpenseFormModalContext } from '@/providers/ExpenseFormModalContext';
+import { useExpenseFormModalContext } from '@/providers/ExpenseFormModalProvider';
 import { Expense } from '@/graphql/generated/graphql';
 import styles from './ExpenseFormModal.module.scss';
 

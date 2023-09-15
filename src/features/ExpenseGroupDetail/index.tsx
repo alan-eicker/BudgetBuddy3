@@ -31,7 +31,7 @@ import {
   isOverDue,
 } from '@/utils/expenses';
 import { useAppContext } from '@/providers/AppProvider';
-import { useExpenseFormModalContext } from '@/providers/ExpenseFormModalContext';
+import { useExpenseFormModalContext } from '@/providers/ExpenseFormModalProvider';
 import styles from './ExpenseGroupDetail.module.scss';
 
 interface DeleteAction {
