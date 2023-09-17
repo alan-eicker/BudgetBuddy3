@@ -56,6 +56,7 @@ const ExpenseFormModal = ({ open = false }: ExpenseFormProps): JSX.Element => {
       validateOnMount: false,
       onSubmit: (formData: Expense) => {
         expenseFormState?.onSubmitCallback(formData);
+        setExpenseFormState(null);
       },
     });
 
@@ -67,6 +68,9 @@ const ExpenseFormModal = ({ open = false }: ExpenseFormProps): JSX.Element => {
             <Autocomplete
               freeSolo
               options={expenseOptions.map((option) => option.title)}
+              onChange={(e, value) => {
+                setFieldValue('name', value);
+              }}
               value={values.name}
               renderInput={(params) => (
                 <TextField
@@ -74,7 +78,6 @@ const ExpenseFormModal = ({ open = false }: ExpenseFormProps): JSX.Element => {
                   type="text"
                   name="name"
                   label="Expense Name"
-                  onChange={handleChange}
                   InputProps={{
                     ...params.InputProps,
                     type: 'search',

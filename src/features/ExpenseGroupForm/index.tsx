@@ -27,24 +27,7 @@ const ExpenseGroupForm = (): JSX.Element => {
     startDate: null,
     endDate: null,
     totalBuget: '',
-    expenses: [
-      {
-        _id: '1',
-        name: 'Morgage',
-        balance: 2345.04,
-        dueDate: '9/30/2023',
-        isPaid: false,
-        note: null,
-      },
-      // {
-      //   _id: '2',
-      //   name: 'ComEd',
-      //   balance: 200.04,
-      //   dueDate: '9/30/2023',
-      //   isPaid: false,
-      //   note: null,
-      // },
-    ],
+    expenses: [],
   };
 
   const validationSchema = yup.object({});
@@ -56,6 +39,15 @@ const ExpenseGroupForm = (): JSX.Element => {
     validateOnMount: false,
     onSubmit: () => {},
   });
+
+  const addExpense = (expense: Expense) => {
+    setFieldValue('expenses', [...values.expenses, expense]);
+  };
+
+  const deleteExpense = (index: number) => {
+    values.expenses.splice(index, 1);
+    setFieldValue('expenses', values.expenses);
+  };
 
   return (
     <ContentSection>
@@ -146,6 +138,7 @@ const ExpenseGroupForm = (): JSX.Element => {
                           sx={{ marginLeft: 1 }}
                           size="small"
                           color="error"
+                          onClick={() => deleteExpense(i)}
                         >
                           <ClearIcon />
                           <Typography
@@ -168,7 +161,7 @@ const ExpenseGroupForm = (): JSX.Element => {
             size="small"
             onClick={() =>
               setExpenseFormState({
-                onSubmitCallback: () => {},
+                onSubmitCallback: (formData) => addExpense(formData),
               })
             }
           >
