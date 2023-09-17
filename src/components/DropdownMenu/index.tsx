@@ -9,7 +9,7 @@ import styles from './DropdownMenu.module.scss';
 
 interface MenuItem {
   url?: string | undefined;
-  onClick?: () => void | Promise<any> | undefined;
+  onClick?: (...args: any[]) => unknown | Promise<any> | undefined;
   text: string;
   icon?: ReactNode;
 }

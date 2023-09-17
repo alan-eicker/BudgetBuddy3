@@ -1,3 +1,4 @@
+import { SyntheticEvent } from 'react';
 import { useRouter } from 'next/router';
 import Typography from '@mui/material/Typography';
 import PersonIcon from '@mui/icons-material/Person';
@@ -14,7 +15,8 @@ const AppHeader = () => {
   const { setShowOverlay } = useAppContext();
   const date = new Date().toDateString();
 
-  const handleLogout = async () => {
+  const handleLogout = async (e: SyntheticEvent) => {
+    e.preventDefault();
     setShowOverlay(true);
 
     const { isLoggedOut } = await queryClient.fetchQuery<LogoutUserQuery>(
@@ -39,7 +41,7 @@ const AppHeader = () => {
           { url: '/account/profile', text: 'My Profile', icon: <PersonIcon /> },
           {
             onClick: handleLogout,
-            url: 'javascript:void(0)',
+            //url: 'javascript:void(0)',
             text: 'Log Out',
             icon: <LogoutIcon />,
           },
