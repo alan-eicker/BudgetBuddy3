@@ -9,8 +9,6 @@ import Grid from '@mui/material/Grid';
 import Button from '@mui/material/Button';
 import Box from '@mui/material/Box';
 import Divider from '@mui/material/Divider';
-import IconButton from '@mui/material/IconButton';
-import CloseIcon from '@mui/icons-material/Close';
 import ClearIcon from '@mui/icons-material/Clear';
 import EditIcon from '@mui/icons-material/Edit';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
@@ -50,10 +48,12 @@ const ExpenseGroupForm = (): JSX.Element => {
     const alreadyExists = values.expenses.some(
       ({ name }) => name === expense.name,
     );
+
     if (alreadyExists) {
       setDuplicateExpenseError(`Expense "${expense.name}" already exists.`);
       return;
     }
+
     setFieldValue('expenses', [...values.expenses, expense]);
   };
 
@@ -117,14 +117,27 @@ const ExpenseGroupForm = (): JSX.Element => {
           <Typography component="h2" variant="h5" marginBottom={2}>
             Expenses
           </Typography>
+          <Button
+            size="small"
+            onClick={() => {
+              setDuplicateExpenseError(null);
+              setExpenseFormState({
+                onSubmitCallback: (formData) => addExpense(formData),
+              });
+            }}
+          >
+            + Add Expense
+          </Button>
           {duplicateExpenseError && (
-            <Alert
-              color="error"
-              variant="outlined"
-              onDismiss={() => setDuplicateExpenseError(null)}
-            >
-              {duplicateExpenseError}
-            </Alert>
+            <Box marginTop={1} marginBottom={1}>
+              <Alert
+                color="error"
+                variant="outlined"
+                onDismiss={() => setDuplicateExpenseError(null)}
+              >
+                {duplicateExpenseError}
+              </Alert>
+            </Box>
           )}
           {!!values.expenses.length && (
             <Box marginBottom={1}>
@@ -179,16 +192,6 @@ const ExpenseGroupForm = (): JSX.Element => {
               })}
             </Box>
           )}
-          <Button
-            size="small"
-            onClick={() =>
-              setExpenseFormState({
-                onSubmitCallback: (formData) => addExpense(formData),
-              })
-            }
-          >
-            + Add Expense
-          </Button>
         </Box>
         <Button variant="contained" size="large">
           Save
