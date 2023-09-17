@@ -7,7 +7,7 @@ import {
 import ExpenseGroupModel from '@/database/models/expenseGroup';
 
 export async function getAllExpenseGroups(): Promise<ExpenseGroup[]> {
-  return await ExpenseGroupModel.find({});
+  return await ExpenseGroupModel.find();
 }
 
 export async function getExpenseGroupById(

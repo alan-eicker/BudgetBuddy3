@@ -1,4 +1,3 @@
-import mongoose from 'mongoose';
 import {
   useState,
   Dispatch,
@@ -14,16 +13,17 @@ import Grid from '@mui/material/Grid';
 import Box from '@mui/material/Box';
 import List from '@mui/material/List';
 import ListItem from '@mui/material/ListItem';
-import Modal from '@mui/material/Modal';
 import ContentSection from '@/components/ContentSection';
 import SpendingSnapshot from '@/components/SpendingSnapshot';
 import ExpenseCard from '@/components/ExpenseCard';
 import ConfirmationModal from '@/components/ConfirmationModal';
+import DuplicateExpenseGroupModal from '@/components/DuplicateExpenseGroupModal';
 import { queryClient, getExpenseGroupById, deleteExpenseGroup } from '@/api';
 import {
   GetExpenseGroupByIdQuery,
   Expense,
   DeleteExpenseGroupQuery,
+  ExpenseGroup,
 } from '@/graphql/generated/graphql';
 import {
   formatNumber,
@@ -37,12 +37,17 @@ import styles from './ExpenseGroupDetail.module.scss';
 
 interface DeleteAction {
   _id: string;
-  onCancel: Dispatch<SetStateAction<Object | undefined>>;
+  onCancel: Dispatch<SetStateAction<undefined>>;
   onConfirm: () => Promise<void>;
   message: string | ReactNode;
 }
 
-interface DuplicateAction {}
+interface DuplicateAction {
+  onCancel: Dispatch<SetStateAction<undefined>>;
+  onSave: (formData: ExpenseGroup) => Promise<void>;
+  message?: string | ReactNode;
+  expenseGroup: ExpenseGroup;
+}
 
 const ExpenseGroupDetail = (): JSX.Element => {
   const router = useRouter();
@@ -60,6 +65,12 @@ const ExpenseGroupDetail = (): JSX.Element => {
   );
 
   const { setShowOverlay } = useAppContext();
+
+  const handleExpenseGroupDuplicate = async (
+    formData: Omit<ExpenseGroup, '_id'>,
+  ) => {
+    console.log(formData);
+  };
 
   const handleExpenseGroupDelete = async () => {
     setShowOverlay(true);
@@ -149,7 +160,13 @@ const ExpenseGroupDetail = (): JSX.Element => {
                 className="text-center"
                 variant="contained"
                 size="small"
-                onClick={() => {}}
+                onClick={() =>
+                  setDuplicateAction({
+                    onCancel: () => setDuplicateAction(undefined),
+                    onSave: (formData) => handleExpenseGroupDuplicate(formData),
+                    expenseGroup: data.expenseGroup,
+                  })
+                }
               >
                 Duplicate Group
               </Button>
@@ -253,13 +270,8 @@ const ExpenseGroupDetail = (): JSX.Element => {
           )}
         </ContentSection>
       </Box>
-      {deleteAction && (
-        <ConfirmationModal
-          message={deleteAction.message}
-          onConfirm={deleteAction.onConfirm}
-          onCancel={deleteAction.onCancel}
-        />
-      )}
+      {deleteAction && <ConfirmationModal {...deleteAction} />}
+      {duplicateAction && <DuplicateExpenseGroupModal {...duplicateAction} />}
     </Box>
   );
 };
