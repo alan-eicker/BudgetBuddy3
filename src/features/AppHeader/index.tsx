@@ -38,10 +38,13 @@ const AppHeader = () => {
         triggerButtonText={<AccountCircleOutlinedIcon />}
         ariaLabel="my account button"
         menuItems={[
-          { url: '/account/profile', text: 'My Profile', icon: <PersonIcon /> },
+          {
+            href: '/account/profile',
+            text: 'My Profile',
+            icon: <PersonIcon />,
+          },
           {
             onClick: handleLogout,
-            //url: 'javascript:void(0)',
             text: 'Log Out',
             icon: <LogoutIcon />,
           },

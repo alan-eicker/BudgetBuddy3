@@ -1,16 +1,16 @@
 import { ReactNode, useState } from 'react';
-import Link from 'next/link';
+import Link, { LinkProps } from 'next/link';
 import Popover from '@mui/material/Popover';
 import MenuList from '@mui/material/MenuList';
 import MenuItem from '@mui/material/MenuItem';
 import ListItemIcon from '@mui/material/ListItemIcon';
 import Button from '@mui/material/Button';
-import { UnknownFuntionType } from '@/types/functions';
 import styles from './DropdownMenu.module.scss';
+import { UnknownFuntionType } from '@/types/functions';
 
 interface MenuItem {
-  url?: string | undefined;
-  onClick?: UnknownFuntionType | undefined;
+  href?: string | undefined;
+  onClick?: UnknownFuntionType<any> | undefined;
   text: string;
   icon?: ReactNode;
 }
@@ -19,7 +19,7 @@ interface DropdownMenuProps {
   triggerButtonText: string | ReactNode;
   triggerButtonTextColor?: string;
   ariaLabel?: string;
-  menuItems: MenuItem[];
+  menuItems: (MenuItem & Omit<LinkProps, 'href'>)[];
 }
 
 const DropdownMenu = ({
@@ -62,9 +62,9 @@ const DropdownMenu = ({
         }}
       >
         <MenuList className={styles.menu} dense>
-          {menuItems.map(({ text, url = '', onClick, icon }) => (
+          {menuItems.map(({ text, href = '', onClick, icon }) => (
             <MenuItem key={text}>
-              <Link className={styles.link} href={url} onClick={onClick}>
+              <Link className={styles.link} href={href} onClick={onClick}>
                 {icon && <ListItemIcon>{icon}</ListItemIcon>}
                 {text}
               </Link>

@@ -1,9 +1,9 @@
 import { Dispatch, SetStateAction } from 'react';
 
-export type UnknownFuntionType = (
+export type UnknownFuntionType<T> = (
   ...args: any[]
-) => any | Promise<any> | Dispatch<SetStateAction<any>>;
+) => any | Promise<T> | Dispatch<SetStateAction<T>>;
 
-export type PromiseReturnType = Promise<any>;
+export type PromiseReturnType<T> = Promise<T>;
 
-export type SetStateActionType = Dispatch<SetStateAction<any>>;
+export type SetStateActionType<T> = Dispatch<SetStateAction<T>>;
