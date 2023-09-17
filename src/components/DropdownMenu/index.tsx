@@ -5,11 +5,12 @@ import MenuList from '@mui/material/MenuList';
 import MenuItem from '@mui/material/MenuItem';
 import ListItemIcon from '@mui/material/ListItemIcon';
 import Button from '@mui/material/Button';
+import { UnknownFuntionType } from '@/types/functions';
 import styles from './DropdownMenu.module.scss';
 
 interface MenuItem {
   url?: string | undefined;
-  onClick?: (...args: any[]) => unknown | Promise<any> | undefined;
+  onClick?: UnknownFuntionType | undefined;
   text: string;
   icon?: ReactNode;
 }
