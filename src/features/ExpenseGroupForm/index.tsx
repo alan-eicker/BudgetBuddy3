@@ -9,7 +9,6 @@ import Grid from '@mui/material/Grid';
 import Button from '@mui/material/Button';
 import Box from '@mui/material/Box';
 import Divider from '@mui/material/Divider';
-import Alert from '@mui/material/Alert';
 import IconButton from '@mui/material/IconButton';
 import CloseIcon from '@mui/icons-material/Close';
 import ClearIcon from '@mui/icons-material/Clear';
@@ -18,6 +17,7 @@ import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import dayjs from 'dayjs';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
+import Alert from '@/components/Alert';
 import { useAppContext } from '@/providers/AppProvider';
 import { useExpenseFormModalContext } from '@/providers/ExpenseFormModalProvider';
 import { Expense } from '@/graphql/generated/graphql';
@@ -121,18 +121,7 @@ const ExpenseGroupForm = (): JSX.Element => {
             <Alert
               color="error"
               variant="outlined"
-              action={
-                <IconButton
-                  aria-label="close"
-                  color="inherit"
-                  size="small"
-                  onClick={() => {
-                    setDuplicateExpenseError(null);
-                  }}
-                >
-                  <CloseIcon fontSize="inherit" />
-                </IconButton>
-              }
+              onDismiss={() => setDuplicateExpenseError(null)}
             >
               {duplicateExpenseError}
             </Alert>
