@@ -59,11 +59,6 @@ const ExpenseGroupForm = (): JSX.Element => {
     setFieldValue('expenses', [...values.expenses, expense]);
   };
 
-  const deleteExpense = (index: number) => {
-    values.expenses.splice(index, 1);
-    setFieldValue('expenses', values.expenses);
-  };
-
   const editExpense = (expense: Expense, index: number) => {
     expense.balance = +expense.balance;
 
@@ -72,6 +67,11 @@ const ExpenseGroupForm = (): JSX.Element => {
     });
 
     setFieldValue('expenses', updatedExpenses);
+  };
+
+  const deleteExpense = (index: number) => {
+    values.expenses.splice(index, 1);
+    setFieldValue('expenses', values.expenses);
   };
 
   const showAddExpenseForm = () => {
