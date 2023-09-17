@@ -108,7 +108,7 @@ const ExpenseGroupForm = (): JSX.Element => {
             <Box marginBottom={1}>
               {values.expenses.map((expense: Expense, i) => {
                 return (
-                  <React.Fragment key={expense._id}>
+                  <React.Fragment key={expense.name}>
                     <Box
                       display="flex"
                       justifyContent="space-between"
