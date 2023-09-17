@@ -64,6 +64,16 @@ const ExpenseGroupForm = (): JSX.Element => {
     setFieldValue('expenses', values.expenses);
   };
 
+  const editExpense = (expense: Expense, index: number) => {
+    expense.balance = +expense.balance;
+
+    const updatedExpenses = values.expenses.map((exp, expIndex) => {
+      return expIndex === index ? expense : exp;
+    });
+
+    setFieldValue('expenses', updatedExpenses);
+  };
+
   const showAddExpenseForm = () => {
     setDuplicateExpenseError(null);
     setExpenseFormState({
@@ -163,7 +173,8 @@ const ExpenseGroupForm = (): JSX.Element => {
                             onClick={() =>
                               setExpenseFormState({
                                 expense,
-                                onSubmitCallback: () => {},
+                                onSubmitCallback: (formData) =>
+                                  editExpense(formData, i),
                               })
                             }
                           >
