@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useRouter } from 'next/router';
 import { useFormik } from 'formik';
 import * as yup from 'yup';
@@ -9,6 +9,9 @@ import Grid from '@mui/material/Grid';
 import Button from '@mui/material/Button';
 import Box from '@mui/material/Box';
 import Divider from '@mui/material/Divider';
+import Alert from '@mui/material/Alert';
+import IconButton from '@mui/material/IconButton';
+import CloseIcon from '@mui/icons-material/Close';
 import ClearIcon from '@mui/icons-material/Clear';
 import EditIcon from '@mui/icons-material/Edit';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
@@ -22,6 +25,9 @@ import { Expense } from '@/graphql/generated/graphql';
 const ExpenseGroupForm = (): JSX.Element => {
   const router = useRouter();
   const { setExpenseFormState } = useExpenseFormModalContext();
+  const [duplicateExpenseError, setDuplicateExpenseError] = useState<
+    string | null
+  >();
 
   const initialValues = {
     startDate: null,
@@ -41,6 +47,13 @@ const ExpenseGroupForm = (): JSX.Element => {
   });
 
   const addExpense = (expense: Expense) => {
+    const alreadyExists = values.expenses.some(
+      ({ name }) => name === expense.name,
+    );
+    if (alreadyExists) {
+      setDuplicateExpenseError(`Expense "${expense.name}" already exists.`);
+      return;
+    }
     setFieldValue('expenses', [...values.expenses, expense]);
   };
 
@@ -104,6 +117,26 @@ const ExpenseGroupForm = (): JSX.Element => {
           <Typography component="h2" variant="h5" marginBottom={2}>
             Expenses
           </Typography>
+          {duplicateExpenseError && (
+            <Alert
+              color="error"
+              variant="outlined"
+              action={
+                <IconButton
+                  aria-label="close"
+                  color="inherit"
+                  size="small"
+                  onClick={() => {
+                    setDuplicateExpenseError(null);
+                  }}
+                >
+                  <CloseIcon fontSize="inherit" />
+                </IconButton>
+              }
+            >
+              {duplicateExpenseError}
+            </Alert>
+          )}
           {!!values.expenses.length && (
             <Box marginBottom={1}>
               {values.expenses.map((expense: Expense, i) => {
