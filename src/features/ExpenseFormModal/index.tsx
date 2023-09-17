@@ -55,6 +55,7 @@ const ExpenseFormModal = ({ open = false }: ExpenseFormProps): JSX.Element => {
       validateOnChange: false,
       validateOnMount: false,
       onSubmit: (formData: Expense) => {
+        console.log(formData);
         expenseFormState?.onSubmitCallback(formData);
         setExpenseFormState(null);
       },
@@ -91,8 +92,8 @@ const ExpenseFormModal = ({ open = false }: ExpenseFormProps): JSX.Element => {
               label="Balance"
               name="balance"
               onChange={handleChange}
-              value={values.balance}
               fullWidth
+              {...(values.balance && { value: values.balance })}
             />
           </Grid>
           <Grid item xs={12} sm={3} md={4}>

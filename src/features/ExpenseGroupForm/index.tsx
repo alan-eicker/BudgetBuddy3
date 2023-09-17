@@ -62,6 +62,13 @@ const ExpenseGroupForm = (): JSX.Element => {
     setFieldValue('expenses', values.expenses);
   };
 
+  const showAddExpenseForm = () => {
+    setDuplicateExpenseError(null);
+    setExpenseFormState({
+      onSubmitCallback: (formData) => addExpense(formData),
+    });
+  };
+
   return (
     <ContentSection>
       <form onSubmit={handleSubmit} noValidate>
@@ -117,15 +124,7 @@ const ExpenseGroupForm = (): JSX.Element => {
           <Typography component="h2" variant="h5" marginBottom={2}>
             Expenses
           </Typography>
-          <Button
-            size="small"
-            onClick={() => {
-              setDuplicateExpenseError(null);
-              setExpenseFormState({
-                onSubmitCallback: (formData) => addExpense(formData),
-              });
-            }}
-          >
+          <Button size="small" onClick={showAddExpenseForm}>
             + Add Expense
           </Button>
           {duplicateExpenseError && (
@@ -140,7 +139,7 @@ const ExpenseGroupForm = (): JSX.Element => {
             </Box>
           )}
           {!!values.expenses.length && (
-            <Box marginBottom={1}>
+            <Box marginBottom={1} marginTop={1}>
               {values.expenses.map((expense: Expense, i) => {
                 return (
                   <React.Fragment key={expense.name}>
