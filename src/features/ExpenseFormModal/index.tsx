@@ -55,7 +55,6 @@ const ExpenseFormModal = ({ open = false }: ExpenseFormProps): JSX.Element => {
       validateOnChange: false,
       validateOnMount: false,
       onSubmit: (formData: Expense) => {
-        console.log(formData);
         expenseFormState?.onSubmitCallback(formData);
         setExpenseFormState(null);
       },

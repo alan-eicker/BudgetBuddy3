@@ -45,6 +45,8 @@ const ExpenseGroupForm = (): JSX.Element => {
   });
 
   const addExpense = (expense: Expense) => {
+    expense.balance = +expense.balance;
+
     const alreadyExists = values.expenses.some(
       ({ name }) => name === expense.name,
     );
