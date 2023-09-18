@@ -49,7 +49,6 @@ const ExpenseFormModal = ({ open = false }: ExpenseFormProps): JSX.Element => {
   const validationSchema = yup.object({
     name: yup.string().required('Expense name is required'),
     balance: yup.number().min(1, 'Balance is required'),
-    dueDate: yup.string().required('Due date is required'),
   });
 
   const { values, errors, touched, handleChange, handleSubmit, setFieldValue } =
@@ -65,7 +64,7 @@ const ExpenseFormModal = ({ open = false }: ExpenseFormProps): JSX.Element => {
   return (
     <Modal open={open}>
       <form className={styles.modal} onSubmit={handleSubmit}>
-        <Grid alignItems="center" marginBottom={2} container spacing={2}>
+        <Grid marginBottom={2} container spacing={2}>
           <Grid item xs={12} sm={12} md={12}>
             <Autocomplete
               freeSolo
@@ -118,10 +117,6 @@ const ExpenseFormModal = ({ open = false }: ExpenseFormProps): JSX.Element => {
                   textField: {
                     name: 'dueDate',
                     fullWidth: true,
-                    ...(!!(errors.dueDate && touched.dueDate) && {
-                      error: true,
-                      helperText: errors.dueDate,
-                    }),
                   },
                 }}
                 {...(values.dueDate && { defaultValue: dayjs(values.dueDate) })}
