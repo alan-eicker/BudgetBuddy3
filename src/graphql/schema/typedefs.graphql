@@ -36,7 +36,7 @@ type Expense {
 input NewExpenseGroupInput {
   startDate: String
   endDate: String
-  totalBudget: Int
+  totalBudget: Float
   expenses: [NewExpenseInput]
 }
 

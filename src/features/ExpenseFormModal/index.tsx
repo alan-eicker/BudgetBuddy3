@@ -93,7 +93,7 @@ const ExpenseFormModal = ({ open = false }: ExpenseFormProps): JSX.Element => {
               onChange={handleChange}
               fullWidth
               autoComplete="off"
-              {...(values.balance && { value: values.balance })}
+              {...(values.balance && { defaultValue: values.balance })}
             />
           </Grid>
           <Grid item xs={12} sm={3} md={4}>
@@ -110,7 +110,7 @@ const ExpenseFormModal = ({ open = false }: ExpenseFormProps): JSX.Element => {
                     fullWidth: true,
                   },
                 }}
-                {...(values.dueDate && { value: dayjs(values.dueDate) })}
+                {...(values.dueDate && { defaultValue: dayjs(values.dueDate) })}
               />
             </LocalizationProvider>
           </Grid>
@@ -133,7 +133,7 @@ const ExpenseFormModal = ({ open = false }: ExpenseFormProps): JSX.Element => {
           </Grid>
         </Grid>
         <Button variant="contained" size="large" type="submit">
-          Add
+          Save
         </Button>
         <Button
           variant="outlined"

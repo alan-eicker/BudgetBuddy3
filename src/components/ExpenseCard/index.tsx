@@ -1,3 +1,4 @@
+import { ReactElement } from 'react';
 import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
 import Switch from '@mui/material/Switch';
@@ -5,7 +6,7 @@ import ErrorOutlineIcon from '@mui/icons-material/ErrorOutline';
 import InfoOutlinedIcon from '@mui/icons-material/InfoOutlined';
 import Card from '@/components/Card';
 import { Expense } from '@/graphql/generated/graphql';
-import { ReactElement } from 'react';
+import { formatNumber } from '@/utils/expenses';
 
 interface ExpenseCardProps extends Expense {
   isDarkTheme?: boolean;
@@ -52,7 +53,7 @@ const ExpenseCard = ({
   >
     <Box display="flex" alignItems="center" justifyContent="space-between">
       <Box>
-        <Box>Balance: ${balance}</Box>
+        <Box>Balance: ${formatNumber(balance)}</Box>
         <Box>Due Date: {dueDate}</Box>
       </Box>
       <Box>

@@ -188,7 +188,7 @@ const ExpenseGroupForm = (): JSX.Element => {
                   fullWidth
                   onChange={handleChange}
                   {...(values.totalBudget !== 0 && {
-                    value: values.totalBudget,
+                    defaultValue: values.totalBudget,
                   })}
                   {...(!!(errors.totalBudget && touched.totalBudget) && {
                     error: true,
