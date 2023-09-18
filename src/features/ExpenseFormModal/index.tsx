@@ -92,6 +92,7 @@ const ExpenseFormModal = ({ open = false }: ExpenseFormProps): JSX.Element => {
               name="balance"
               onChange={handleChange}
               fullWidth
+              autoComplete="off"
               {...(values.balance && { value: values.balance })}
             />
           </Grid>
@@ -132,7 +133,7 @@ const ExpenseFormModal = ({ open = false }: ExpenseFormProps): JSX.Element => {
           </Grid>
         </Grid>
         <Button variant="contained" size="large" type="submit">
-          Save
+          Add
         </Button>
         <Button
           variant="outlined"

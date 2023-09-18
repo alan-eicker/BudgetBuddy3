@@ -7,6 +7,7 @@ import ContentSection from '@/components/ContentSection';
 import TextField from '@mui/material/TextField';
 import Grid from '@mui/material/Grid';
 import Button from '@mui/material/Button';
+import LoadingButton from '@mui/lab/LoadingButton';
 import Box from '@mui/material/Box';
 import Divider from '@mui/material/Divider';
 import ClearIcon from '@mui/icons-material/Clear';
@@ -16,9 +17,12 @@ import dayjs from 'dayjs';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 import Alert from '@/components/Alert';
+import PipeList from '@/components/PipeList';
 import { useAppContext } from '@/providers/AppProvider';
 import { useExpenseFormModalContext } from '@/providers/ExpenseFormModalProvider';
-import { Expense } from '@/graphql/generated/graphql';
+import { Expense, ExpenseGroup } from '@/graphql/generated/graphql';
+import { formatNumber } from '@/utils/expenses';
+import styles from './ExpenseGroupForm.module.scss';
 
 const ExpenseGroupForm = (): JSX.Element => {
   const router = useRouter();
@@ -34,14 +38,27 @@ const ExpenseGroupForm = (): JSX.Element => {
     expenses: [],
   };
 
-  const validationSchema = yup.object({});
+  const validationSchema = yup.object({
+    startDate: yup.string().required('Start date is required'),
+    endDate: yup.string().required('Start date is required'),
+    totalBuget: yup.string().required('Total budget is required'),
+    expenses: yup.array().min(1).required('At least one expense is required'),
+  });
 
-  const { values, handleChange, handleSubmit, setFieldValue } = useFormik({
+  const {
+    values,
+    errors,
+    touched,
+    handleChange,
+    handleSubmit,
+    setFieldValue,
+    isSubmitting,
+  } = useFormik({
     initialValues,
     validationSchema,
-    validateOnChange: false,
-    validateOnMount: false,
-    onSubmit: () => {},
+    onSubmit: (formData) => {
+      console.log(formData);
+    },
   });
 
   const addExpense = (expense: Expense) => {
@@ -95,7 +112,14 @@ const ExpenseGroupForm = (): JSX.Element => {
                   label="Start Date"
                   format="MM/DD/YYYY"
                   slotProps={{
-                    textField: { name: 'startDate', fullWidth: true },
+                    textField: {
+                      name: 'startDate',
+                      fullWidth: true,
+                      ...(!!(errors.startDate && touched.startDate) && {
+                        error: true,
+                        helperText: errors.startDate,
+                      }),
+                    },
                   }}
                   onChange={(date) => {
                     setFieldValue(
@@ -111,7 +135,14 @@ const ExpenseGroupForm = (): JSX.Element => {
                   label="End Date"
                   format="MM/DD/YYYY"
                   slotProps={{
-                    textField: { name: 'endDate', fullWidth: true },
+                    textField: {
+                      name: 'endDate',
+                      fullWidth: true,
+                      ...(!!(errors.endDate && touched.endDate) && {
+                        error: true,
+                        helperText: errors.endDate,
+                      }),
+                    },
                   }}
                   onChange={(date) => {
                     setFieldValue('endDate', dayjs(date).format('MM/DD/YYYY'));
@@ -127,6 +158,10 @@ const ExpenseGroupForm = (): JSX.Element => {
                   fullWidth
                   onChange={handleChange}
                   value={values.totalBuget}
+                  {...(!!(errors.totalBuget && touched.totalBuget) && {
+                    error: true,
+                    helperText: errors.totalBuget,
+                  })}
                 />
               </Grid>
             </Grid>
@@ -150,6 +185,11 @@ const ExpenseGroupForm = (): JSX.Element => {
               </Alert>
             </Box>
           )}
+          {!!(errors.expenses && touched.expenses) && (
+            <Typography color="error" fontSize={13}>
+              {errors.expenses}
+            </Typography>
+          )}
           {!!values.expenses.length && (
             <Box marginBottom={1} marginTop={1}>
               {values.expenses.map((expense: Expense, i) => {
@@ -159,11 +199,20 @@ const ExpenseGroupForm = (): JSX.Element => {
                       display="flex"
                       justifyContent="space-between"
                       alignItems="center"
-                      paddingTop={1}
-                      paddingBottom={1}
+                      padding={1}
                     >
-                      <Box>{expense.name}</Box>
                       <Box>
+                        <Box>{expense.name}</Box>
+                        <PipeList
+                          className={styles.expenseList}
+                          items={[
+                            `Balance: $${formatNumber(expense.balance)}`,
+                            `Due Date: ${expense.dueDate}`,
+                            `Paid: ${JSON.stringify(expense.isPaid)}`,
+                          ]}
+                        />
+                      </Box>
+                      <Box minWidth={175} marginLeft={2}>
                         <Button size="small">
                           <EditIcon />
                           <Typography
@@ -205,9 +254,14 @@ const ExpenseGroupForm = (): JSX.Element => {
             </Box>
           )}
         </Box>
-        <Button variant="contained" size="large">
+        <LoadingButton
+          type="submit"
+          variant="contained"
+          size="large"
+          loading={isSubmitting}
+        >
           Save
-        </Button>
+        </LoadingButton>
         <Button
           onClick={() => router.push('/account/dashboard')}
           variant="outlined"
