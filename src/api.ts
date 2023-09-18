@@ -10,6 +10,7 @@ export const {
   getAllExpenseGroups,
   getExpenseGroupById,
   deleteExpenseGroup,
+  addExpenseGroup,
 } = getSdk(gqlClient);
 
 export const queryClient = new QueryClient({

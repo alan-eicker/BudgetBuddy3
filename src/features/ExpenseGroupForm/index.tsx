@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { useRouter } from 'next/router';
 import { useFormik } from 'formik';
 import * as yup from 'yup';
+import { useMutation } from 'react-query';
 import Typography from '@mui/material/Typography';
 import ContentSection from '@/components/ContentSection';
 import TextField from '@mui/material/TextField';
@@ -18,30 +19,44 @@ import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 import Alert from '@/components/Alert';
 import PipeList from '@/components/PipeList';
-import { useAppContext } from '@/providers/AppProvider';
 import { useExpenseFormModalContext } from '@/providers/ExpenseFormModalProvider';
-import { Expense, ExpenseGroup } from '@/graphql/generated/graphql';
+import { Expense, AddExpenseGroupMutation } from '@/graphql/generated/graphql';
 import { formatNumber } from '@/utils/expenses';
+import { addExpenseGroup } from '@/api';
 import styles from './ExpenseGroupForm.module.scss';
 
 const ExpenseGroupForm = (): JSX.Element => {
   const router = useRouter();
+
   const { setExpenseFormState } = useExpenseFormModalContext();
+
   const [duplicateExpenseError, setDuplicateExpenseError] = useState<
     string | null
   >();
 
+  const [apiError, setApiError] = useState<string>();
+
+  const createExpenseGroup = useMutation({
+    mutationFn: addExpenseGroup,
+    onSuccess: () => {
+      router.push('/account/dashboard');
+    },
+    onError: (error) => {
+      setApiError('An error occurred. Could not create expense group.');
+    },
+  });
+
   const initialValues = {
     startDate: null,
     endDate: null,
-    totalBuget: '',
+    totalBudget: 0,
     expenses: [],
   };
 
   const validationSchema = yup.object({
     startDate: yup.string().required('Start date is required'),
     endDate: yup.string().required('Start date is required'),
-    totalBuget: yup.string().required('Total budget is required'),
+    totalBudget: yup.string().required('Total budget is required'),
     expenses: yup.array().min(1).required('At least one expense is required'),
   });
 
@@ -57,7 +72,7 @@ const ExpenseGroupForm = (): JSX.Element => {
     initialValues,
     validationSchema,
     onSubmit: (formData) => {
-      // Call mutation to add expense group...
+      createExpenseGroup.mutate({ input: formData });
     },
   });
 
@@ -104,6 +119,15 @@ const ExpenseGroupForm = (): JSX.Element => {
         <Typography component="h1" variant="h4" marginBottom={3}>
           Add Expense Group
         </Typography>
+        {apiError && (
+          <Alert
+            color="error"
+            variant="outlined"
+            onDismiss={() => setApiError(null)}
+          >
+            {apiError}
+          </Alert>
+        )}
         <Box marginBottom={3}>
           <LocalizationProvider dateAdapter={AdapterDayjs}>
             <Grid container spacing={2}>
@@ -153,14 +177,14 @@ const ExpenseGroupForm = (): JSX.Element => {
               <Grid item xs={12} sm={4} md={4}>
                 <TextField
                   type="number"
-                  name="totalBuget"
+                  name="totalBudget"
                   label="Total Budget"
                   fullWidth
                   onChange={handleChange}
-                  value={values.totalBuget}
-                  {...(!!(errors.totalBuget && touched.totalBuget) && {
+                  value={values.totalBudget}
+                  {...(!!(errors.totalBudget && touched.totalBudget) && {
                     error: true,
-                    helperText: errors.totalBuget,
+                    helperText: errors.totalBudget,
                   })}
                 />
               </Grid>
