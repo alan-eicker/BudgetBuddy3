@@ -20,9 +20,13 @@ import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 import Alert from '@/components/Alert';
 import PipeList from '@/components/PipeList';
 import { useExpenseFormModalContext } from '@/providers/ExpenseFormModalProvider';
-import { Expense, AddExpenseGroupMutation } from '@/graphql/generated/graphql';
+import {
+  Expense,
+  AddExpenseGroupMutation,
+  ExpenseGroup,
+} from '@/graphql/generated/graphql';
 import { formatNumber } from '@/utils/expenses';
-import { addExpenseGroup } from '@/api';
+import { addExpenseGroup, queryClient } from '@/api';
 import styles from './ExpenseGroupForm.module.scss';
 
 const ExpenseGroupForm = (): JSX.Element => {
@@ -34,14 +38,15 @@ const ExpenseGroupForm = (): JSX.Element => {
     string | null
   >();
 
-  const [apiError, setApiError] = useState<string>();
+  const [apiError, setApiError] = useState<string | null>();
 
   const createExpenseGroup = useMutation({
     mutationFn: addExpenseGroup,
     onSuccess: () => {
+      queryClient.removeQueries('expenseGroups');
       router.push('/account/dashboard');
     },
-    onError: (error) => {
+    onError: () => {
       setApiError('An error occurred. Could not create expense group.');
     },
   });
@@ -179,9 +184,12 @@ const ExpenseGroupForm = (): JSX.Element => {
                   type="number"
                   name="totalBudget"
                   label="Total Budget"
+                  autoComplete="off"
                   fullWidth
                   onChange={handleChange}
-                  value={values.totalBudget}
+                  {...(values.totalBudget !== 0 && {
+                    value: values.totalBudget,
+                  })}
                   {...(!!(errors.totalBudget && touched.totalBudget) && {
                     error: true,
                     helperText: errors.totalBudget,
