@@ -79,14 +79,14 @@ const ExpenseFormModal = ({ open = false }: ExpenseFormProps): JSX.Element => {
                   type="text"
                   name="name"
                   label="Expense Name"
-                  {...(!!(errors.name && touched.name) && {
-                    error: true,
-                    helperText: errors.name,
-                  })}
                   InputProps={{
                     ...params.InputProps,
                     type: 'search',
                   }}
+                  {...(!!(errors.name && touched.name) && {
+                    error: true,
+                    helperText: errors.name,
+                  })}
                 />
               )}
             />

@@ -239,7 +239,10 @@ const ExpenseGroupForm = (): JSX.Element => {
                           className={styles.expenseList}
                           items={[
                             `Balance: $${formatNumber(expense.balance)}`,
-                            `Due Date: ${expense.dueDate}`,
+                            ...(expense.dueDate
+                              ? [`Due Date: ${expense.dueDate}`]
+                              : []),
+                            ,
                             `Paid: ${JSON.stringify(expense.isPaid)}`,
                           ]}
                         />
