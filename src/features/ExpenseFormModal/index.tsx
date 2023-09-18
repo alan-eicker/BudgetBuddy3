@@ -46,14 +46,16 @@ const ExpenseFormModal = ({ open = false }: ExpenseFormProps): JSX.Element => {
     };
   }
 
-  const validationSchema = yup.object({});
+  const validationSchema = yup.object({
+    name: yup.string().required('Expense name is required'),
+    balance: yup.number().min(1, 'Balance is required'),
+    dueDate: yup.string().required('Due date is required'),
+  });
 
   const { values, errors, touched, handleChange, handleSubmit, setFieldValue } =
     useFormik({
       initialValues,
       validationSchema,
-      validateOnChange: false,
-      validateOnMount: false,
       onSubmit: (formData: Expense) => {
         expenseFormState?.onSubmitCallback(formData);
         setExpenseFormState(null);
@@ -78,6 +80,10 @@ const ExpenseFormModal = ({ open = false }: ExpenseFormProps): JSX.Element => {
                   type="text"
                   name="name"
                   label="Expense Name"
+                  {...(!!(errors.name && touched.name) && {
+                    error: true,
+                    helperText: errors.name,
+                  })}
                   InputProps={{
                     ...params.InputProps,
                     type: 'search',
@@ -94,6 +100,10 @@ const ExpenseFormModal = ({ open = false }: ExpenseFormProps): JSX.Element => {
               fullWidth
               autoComplete="off"
               {...(values.balance && { defaultValue: values.balance })}
+              {...(!!(errors.balance && touched.balance) && {
+                error: true,
+                helperText: errors.balance,
+              })}
             />
           </Grid>
           <Grid item xs={12} sm={3} md={4}>
@@ -108,6 +118,10 @@ const ExpenseFormModal = ({ open = false }: ExpenseFormProps): JSX.Element => {
                   textField: {
                     name: 'dueDate',
                     fullWidth: true,
+                    ...(!!(errors.dueDate && touched.dueDate) && {
+                      error: true,
+                      helperText: errors.dueDate,
+                    }),
                   },
                 }}
                 {...(values.dueDate && { defaultValue: dayjs(values.dueDate) })}
@@ -133,7 +147,7 @@ const ExpenseFormModal = ({ open = false }: ExpenseFormProps): JSX.Element => {
           </Grid>
         </Grid>
         <Button variant="contained" size="large" type="submit">
-          Save
+          {expenseId ? 'Update' : 'Add'}
         </Button>
         <Button
           variant="outlined"
