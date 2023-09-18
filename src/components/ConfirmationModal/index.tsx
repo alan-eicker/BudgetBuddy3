@@ -22,15 +22,15 @@ const ConfirmationModal = ({
       </Box>
       <Box className={styles.modalButtons} textAlign="center" padding={2.5}>
         <Button
-          variant="contained"
           color="error"
+          variant="contained"
           size="small"
-          onClick={() => onCancel()}
+          onClick={() => onConfirm()}
         >
-          Cancel
-        </Button>
-        <Button variant="contained" size="small" onClick={() => onConfirm()}>
           Delete
+        </Button>
+        <Button variant="outlined" size="small" onClick={() => onCancel()}>
+          Cancel
         </Button>
       </Box>
     </Box>
