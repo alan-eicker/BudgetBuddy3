@@ -57,7 +57,7 @@ const ExpenseGroupForm = (): JSX.Element => {
     initialValues,
     validationSchema,
     onSubmit: (formData) => {
-      console.log(formData);
+      // Call mutation to add expense group...
     },
   });
 

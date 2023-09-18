@@ -29,7 +29,7 @@ export type Expense = {
 
 export type ExpenseGroup = {
   __typename?: 'ExpenseGroup';
-  _id: Scalars['ID']['output'];
+  _id?: Maybe<Scalars['ID']['output']>;
   endDate: Scalars['String']['output'];
   expenses: Array<Expense>;
   startDate: Scalars['String']['output'];
@@ -38,15 +38,26 @@ export type ExpenseGroup = {
 
 export type Mutation = {
   __typename?: 'Mutation';
-  addExpense: Expense;
+  addExpenseGroup: ExpenseGroup;
 };
 
 
-export type MutationAddExpenseArgs = {
-  balance: Scalars['Float']['input'];
-  dueDate: Scalars['String']['input'];
-  isPaid: Scalars['Boolean']['input'];
-  name: Scalars['String']['input'];
+export type MutationAddExpenseGroupArgs = {
+  input: NewExpenseGroupInput;
+};
+
+export type NewExpenseGroupInput = {
+  endDate?: InputMaybe<Scalars['String']['input']>;
+  expenses?: InputMaybe<Array<InputMaybe<NewExpenseInput>>>;
+  startDate?: InputMaybe<Scalars['String']['input']>;
+  totalBudget?: InputMaybe<Scalars['Int']['input']>;
+};
+
+export type NewExpenseInput = {
+  balance?: InputMaybe<Scalars['Float']['input']>;
+  dueDate?: InputMaybe<Scalars['String']['input']>;
+  isPaid?: InputMaybe<Scalars['Boolean']['input']>;
+  name?: InputMaybe<Scalars['String']['input']>;
   note?: InputMaybe<Scalars['String']['input']>;
 };
 
@@ -87,28 +98,24 @@ export type StatusResponse = {
   message?: Maybe<Scalars['String']['output']>;
 };
 
-export type AddExpenseMutationVariables = Exact<{
-  name: Scalars['String']['input'];
-  balance: Scalars['Float']['input'];
-  dueDate: Scalars['String']['input'];
-  isPaid: Scalars['Boolean']['input'];
-  note?: InputMaybe<Scalars['String']['input']>;
+export type AddExpenseGroupMutationVariables = Exact<{
+  input: NewExpenseGroupInput;
 }>;
 
 
-export type AddExpenseMutation = { __typename?: 'Mutation', addExpense: { __typename?: 'Expense', _id?: string | null, name: string, balance: number, dueDate: string, isPaid: boolean, note?: string | null } };
+export type AddExpenseGroupMutation = { __typename?: 'Mutation', expenseGroup: { __typename?: 'ExpenseGroup', startDate: string, endDate: string, totalBudget: number, expenses: Array<{ __typename?: 'Expense', name: string, balance: number, dueDate: string, isPaid: boolean, note?: string | null }> } };
 
 export type GetAllExpenseGroupsQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type GetAllExpenseGroupsQuery = { __typename?: 'Query', expenseGroups: Array<{ __typename?: 'ExpenseGroup', _id: string, startDate: string, endDate: string, totalBudget: number, expenses: Array<{ __typename?: 'Expense', _id?: string | null, name: string, balance: number, dueDate: string, isPaid: boolean, note?: string | null }> } | null> };
+export type GetAllExpenseGroupsQuery = { __typename?: 'Query', expenseGroups: Array<{ __typename?: 'ExpenseGroup', _id?: string | null, startDate: string, endDate: string, totalBudget: number, expenses: Array<{ __typename?: 'Expense', _id?: string | null, name: string, balance: number, dueDate: string, isPaid: boolean, note?: string | null }> } | null> };
 
 export type GetExpenseGroupByIdQueryVariables = Exact<{
   _id: Scalars['String']['input'];
 }>;
 
 
-export type GetExpenseGroupByIdQuery = { __typename?: 'Query', expenseGroup: { __typename?: 'ExpenseGroup', _id: string, startDate: string, endDate: string, totalBudget: number, expenses: Array<{ __typename?: 'Expense', _id?: string | null, name: string, balance: number, dueDate: string, isPaid: boolean, note?: string | null }> } };
+export type GetExpenseGroupByIdQuery = { __typename?: 'Query', expenseGroup: { __typename?: 'ExpenseGroup', _id?: string | null, startDate: string, endDate: string, totalBudget: number, expenses: Array<{ __typename?: 'Expense', _id?: string | null, name: string, balance: number, dueDate: string, isPaid: boolean, note?: string | null }> } };
 
 export type DeleteExpenseGroupQueryVariables = Exact<{
   _id: Scalars['String']['input'];
@@ -131,21 +138,19 @@ export type LogoutUserQueryVariables = Exact<{ [key: string]: never; }>;
 export type LogoutUserQuery = { __typename?: 'Query', isLoggedOut: boolean };
 
 
-export const AddExpenseDocument = gql`
-    mutation addExpense($name: String!, $balance: Float!, $dueDate: String!, $isPaid: Boolean!, $note: String) {
-  addExpense(
-    name: $name
-    balance: $balance
-    dueDate: $dueDate
-    isPaid: $isPaid
-    note: $note
-  ) {
-    _id
-    name
-    balance
-    dueDate
-    isPaid
-    note
+export const AddExpenseGroupDocument = gql`
+    mutation addExpenseGroup($input: NewExpenseGroupInput!) {
+  expenseGroup: addExpenseGroup(input: $input) {
+    startDate
+    endDate
+    totalBudget
+    expenses {
+      name
+      balance
+      dueDate
+      isPaid
+      note
+    }
   }
 }
     `;
@@ -214,8 +219,8 @@ const defaultWrapper: SdkFunctionWrapper = (action, _operationName, _operationTy
 
 export function getSdk(client: GraphQLClient, withWrapper: SdkFunctionWrapper = defaultWrapper) {
   return {
-    addExpense(variables: AddExpenseMutationVariables, requestHeaders?: GraphQLClientRequestHeaders): Promise<AddExpenseMutation> {
-      return withWrapper((wrappedRequestHeaders) => client.request<AddExpenseMutation>(AddExpenseDocument, variables, {...requestHeaders, ...wrappedRequestHeaders}), 'addExpense', 'mutation');
+    addExpenseGroup(variables: AddExpenseGroupMutationVariables, requestHeaders?: GraphQLClientRequestHeaders): Promise<AddExpenseGroupMutation> {
+      return withWrapper((wrappedRequestHeaders) => client.request<AddExpenseGroupMutation>(AddExpenseGroupDocument, variables, {...requestHeaders, ...wrappedRequestHeaders}), 'addExpenseGroup', 'mutation');
     },
     getAllExpenseGroups(variables?: GetAllExpenseGroupsQueryVariables, requestHeaders?: GraphQLClientRequestHeaders): Promise<GetAllExpenseGroupsQuery> {
       return withWrapper((wrappedRequestHeaders) => client.request<GetAllExpenseGroupsQuery>(GetAllExpenseGroupsDocument, variables, {...requestHeaders, ...wrappedRequestHeaders}), 'getAllExpenseGroups', 'query');
