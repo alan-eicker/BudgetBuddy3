@@ -1,6 +1,7 @@
 import Box from '@mui/material/Box';
 import TrendingDownIcon from '@mui/icons-material/TrendingDown';
 import TrendingUpIcon from '@mui/icons-material/TrendingUp';
+import { COLORS } from '@/constants';
 
 interface TrendingSnapshotProps {
   value: number;
@@ -11,12 +12,12 @@ interface TrendingSnapshotProps {
 const propValues = {
   up: {
     Icon: TrendingUpIcon,
-    color: '#f44336',
+    color: COLORS.error,
     text: 'higher',
   },
   down: {
     Icon: TrendingDownIcon,
-    color: '#8bc34a',
+    color: COLORS.success,
     text: 'lower',
   },
 };

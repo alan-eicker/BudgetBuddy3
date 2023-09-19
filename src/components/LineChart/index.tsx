@@ -17,6 +17,7 @@ import {
 import Box, { BoxProps } from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import { COLOR_PALETTE } from './colors';
+import { COLORS } from '@/constants';
 import styles from './LineChart.module.scss';
 
 interface LineChartProps extends BoxProps {
@@ -38,8 +39,8 @@ const LineChart = ({
   titleElement: TitleElement = 'div',
   height,
   linecolors,
-  axisColor = '#000',
-  gridColor = '#000',
+  axisColor = COLORS.black,
+  gridColor = COLORS.black,
   legendHeight = 40,
   data,
   ...boxProps

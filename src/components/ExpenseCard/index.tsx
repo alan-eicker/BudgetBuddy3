@@ -7,6 +7,7 @@ import InfoOutlinedIcon from '@mui/icons-material/InfoOutlined';
 import Card from '@/components/Card';
 import { Expense } from '@/graphql/generated/graphql';
 import { formatNumber } from '@/utils/expenses';
+import { COLORS } from '@/constants';
 
 interface ExpenseCardProps extends Expense {
   isDarkTheme?: boolean;
@@ -39,7 +40,7 @@ const ExpenseCard = ({
               <Typography
                 component="span"
                 marginLeft={0.5}
-                color="#f44336"
+                color={COLORS.error}
                 fontSize={12}
               >
                 Overdue

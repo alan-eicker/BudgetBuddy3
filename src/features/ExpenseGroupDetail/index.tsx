@@ -32,6 +32,7 @@ import {
 } from '@/utils/expenses';
 import { useAppContext } from '@/providers/AppProvider';
 import { useExpenseFormModalContext } from '@/providers/ExpenseFormModalProvider';
+import { COLORS } from '@/constants';
 import styles from './ExpenseGroupDetail.module.scss';
 
 interface DeleteAction {
@@ -188,7 +189,7 @@ const ExpenseGroupDetail = (): JSX.Element => {
             </Grid>
           </Grid>
         </ContentSection>
-        <Box style={{ backgroundColor: '#212a3b' }}>
+        <Box style={{ backgroundColor: COLORS.brand }}>
           <ContentSection compressed>
             <Grid container spacing={5}>
               <Grid item xs={12} sm={12} md={8} textAlign="right">

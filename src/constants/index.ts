@@ -15,3 +15,12 @@ export const EXPENSE_DROPDOWN_OPTIONS = [
   'Therapist',
   'Medical Payment',
 ];
+
+export const COLORS = {
+  black: '#000000',
+  white: '#ffffff',
+  error: '#f44336',
+  success: '#96de49',
+  info: '#03B2AF',
+  brand: '#212a3b',
+};

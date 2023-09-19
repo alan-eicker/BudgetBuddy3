@@ -14,6 +14,7 @@ import ContentSection from '@/components/ContentSection';
 import NoData from '@/components/NoData';
 import { getAllExpenseGroups } from '@/api';
 import { getTotalBalance, getTotalOverdueBalances } from '@/utils/expenses';
+import { COLORS } from '@/constants';
 
 const chartData = [
   {
@@ -104,8 +105,8 @@ const Dashboard = (): JSX.Element => {
             title="12 Month Spending Snapshot"
             titleElement="h2"
             height={250}
-            linecolors={['#03B2AF', '#96de49']}
-            axisColor="#fff"
+            linecolors={[COLORS.info, COLORS.success]}
+            axisColor={COLORS.white}
             gridColor="rgba(255,255,255,0.15)"
             data={chartData}
           />
@@ -155,7 +156,7 @@ const Dashboard = (): JSX.Element => {
                                 />
                                 <Typography
                                   fontSize={11}
-                                  color="#f44336"
+                                  color={COLORS.error}
                                   marginTop={-0.5}
                                 >
                                   {numOverdueBalances} overdue expenses
