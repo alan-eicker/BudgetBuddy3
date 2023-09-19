@@ -12,3 +12,13 @@ mutation addExpenseGroup($input: NewExpenseGroupInput!) {
     }
   }
 }
+
+mutation updateExpense($input: UpdateExpenseInput!) {
+  expense: updateExpense(input: $input) {
+    name
+    balance
+    dueDate
+    isPaid
+    note
+  }
+}

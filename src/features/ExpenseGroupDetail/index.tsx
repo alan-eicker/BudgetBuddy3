@@ -89,8 +89,8 @@ const ExpenseGroupDetail = (): JSX.Element => {
     console.log(newExpense);
   };
 
-  const updateExpense = (newExpense: Expense) => {
-    console.log(newExpense);
+  const updateExpense = (updatedExpense: Expense) => {
+    console.log({ expenseGroupId, ...updatedExpense });
   };
 
   const mapOverdueStatustoExpenses = (expenses: Expense[]) => {
