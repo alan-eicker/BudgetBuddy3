@@ -6,7 +6,7 @@ import {
   useEffect,
 } from 'react';
 import { useRouter } from 'next/router';
-import { useQuery } from 'react-query';
+import { useQuery, useMutation } from 'react-query';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import Grid from '@mui/material/Grid';
@@ -18,10 +18,15 @@ import SpendingSnapshot from '@/components/SpendingSnapshot';
 import ExpenseCard from '@/components/ExpenseCard';
 import ConfirmationModal from '@/components/ConfirmationModal';
 import DuplicateExpenseGroupModal from '@/components/DuplicateExpenseGroupModal';
-import { queryClient, getExpenseGroupById, deleteExpenseGroup } from '@/api';
+import {
+  queryClient,
+  getExpenseGroupById,
+  deleteExpenseGroup,
+  updateExpense,
+} from '@/api';
 import {
   Expense,
-  DeleteExpenseGroupQuery,
+  UpdateExpenseInput,
   ExpenseGroup,
 } from '@/graphql/generated/graphql';
 import {
@@ -56,6 +61,7 @@ const ExpenseGroupDetail = (): JSX.Element => {
   const {
     query: { expenseGroupId },
   } = router;
+  const { setShowOverlay } = useAppContext();
   const [deleteAction, setDeleteAction] = useState<DeleteAction>();
   const [duplicateAction, setDuplicateAction] = useState<DuplicateAction>();
 
@@ -63,7 +69,15 @@ const ExpenseGroupDetail = (): JSX.Element => {
     getExpenseGroupById({ _id: expenseGroupId as string }),
   );
 
-  const { setShowOverlay } = useAppContext();
+  const updateExpenseMutation = useMutation({
+    mutationFn: updateExpense,
+    onSuccess: () => {
+      queryClient.invalidateQueries('expenseGroup' + expenseGroupId);
+    },
+    onError: () => {
+      // handle error...
+    },
+  });
 
   const handleExpenseGroupDuplicate = async (
     formData: Omit<ExpenseGroup, '_id'>,
@@ -74,7 +88,7 @@ const ExpenseGroupDetail = (): JSX.Element => {
   const handleExpenseGroupDelete = async () => {
     setShowOverlay(true);
 
-    const { status } = await queryClient.fetchQuery<DeleteExpenseGroupQuery>(
+    const { status } = await queryClient.fetchQuery(
       ['deleteExpenseGroup' + expenseGroupId],
       () => deleteExpenseGroup({ _id: expenseGroupId as string }),
     );
@@ -85,12 +99,18 @@ const ExpenseGroupDetail = (): JSX.Element => {
     }
   };
 
-  const addNewExpense = (newExpense: Expense) => {
+  const handleAddExpense = (newExpense: Expense) => {
     console.log(newExpense);
   };
 
-  const updateExpense = (updatedExpense: Expense) => {
-    console.log({ expenseGroupId, ...updatedExpense });
+  const handleUpdateExpense = (updatedExpense: any) => {
+    console.log({
+      expenseGroupId: expenseGroupId as string,
+      ...updatedExpense,
+    });
+    updateExpenseMutation.mutate({
+      input: { expenseGroupId: expenseGroupId as string, ...updatedExpense },
+    });
   };
 
   const mapOverdueStatustoExpenses = (expenses: Expense[]) => {
@@ -196,7 +216,7 @@ const ExpenseGroupDetail = (): JSX.Element => {
                 <Button
                   onClick={() =>
                     setExpenseFormState({
-                      onSubmitCallback: addNewExpense,
+                      onSubmitCallback: handleAddExpense,
                     })
                   }
                 >
@@ -228,7 +248,7 @@ const ExpenseGroupDetail = (): JSX.Element => {
                             onClick={() =>
                               setExpenseFormState({
                                 expense,
-                                onSubmitCallback: updateExpense,
+                                onSubmitCallback: handleUpdateExpense,
                               })
                             }
                           >

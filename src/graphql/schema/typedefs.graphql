@@ -41,6 +41,7 @@ input UpdateExpenseInput {
   balance: Float!
   dueDate: String!
   isPaid: Boolean!
+  isOverdue: Boolean
   note: String
 }
 

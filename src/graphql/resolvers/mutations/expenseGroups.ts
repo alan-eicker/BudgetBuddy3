@@ -36,5 +36,5 @@ export async function updateExpense(
     },
   );
 
-  return updatedExpense;
+  return { _id: expenseId, ...updatedExpense };
 }

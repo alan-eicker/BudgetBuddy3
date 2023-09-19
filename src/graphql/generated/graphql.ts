@@ -109,6 +109,7 @@ export type UpdateExpenseInput = {
   dueDate: Scalars['String']['input'];
   expenseGroupId: Scalars['ID']['input'];
   expenseId: Scalars['ID']['input'];
+  isOverdue?: InputMaybe<Scalars['Boolean']['input']>;
   isPaid: Scalars['Boolean']['input'];
   name: Scalars['String']['input'];
   note?: InputMaybe<Scalars['String']['input']>;
