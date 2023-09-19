@@ -56,7 +56,10 @@ const ExpenseFormModal = ({ open = false }: ExpenseFormProps): JSX.Element => {
       initialValues,
       validationSchema,
       onSubmit: (formData: Expense) => {
-        expenseFormState?.onSubmitCallback(formData);
+        expenseFormState?.onSubmitCallback({
+          ...(expenseId && { _id: expenseId }),
+          ...formData,
+        });
         setExpenseFormState(null);
       },
     });
