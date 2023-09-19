@@ -10,7 +10,6 @@ import Button from '@mui/material/Button';
 import Alert from '@mui/material/Alert';
 import LoadingButton from '@mui/lab/LoadingButton';
 import BrandLogo from '@/components/BrandLogo';
-import { AuthenticateUserQuery } from '@/graphql/generated/graphql';
 import { authenticateUser } from '@/api';
 
 const LoginForm = (): JSX.Element => {
@@ -34,7 +33,7 @@ const LoginForm = (): JSX.Element => {
       onSubmit: () => {},
     });
 
-  const { data } = useQuery<AuthenticateUserQuery>(
+  const { data } = useQuery(
     ['authenticateUser'],
     () => authenticateUser(values),
     {

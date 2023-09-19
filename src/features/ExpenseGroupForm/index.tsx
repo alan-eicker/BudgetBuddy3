@@ -20,11 +20,7 @@ import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 import Alert from '@/components/Alert';
 import PipeList from '@/components/PipeList';
 import { useExpenseFormModalContext } from '@/providers/ExpenseFormModalProvider';
-import {
-  Expense,
-  AddExpenseGroupMutation,
-  ExpenseGroup,
-} from '@/graphql/generated/graphql';
+import { Expense } from '@/graphql/generated/graphql';
 import { formatNumber } from '@/utils/expenses';
 import { addExpenseGroup, queryClient } from '@/api';
 import styles from './ExpenseGroupForm.module.scss';

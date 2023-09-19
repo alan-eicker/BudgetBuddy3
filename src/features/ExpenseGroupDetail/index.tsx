@@ -20,7 +20,6 @@ import ConfirmationModal from '@/components/ConfirmationModal';
 import DuplicateExpenseGroupModal from '@/components/DuplicateExpenseGroupModal';
 import { queryClient, getExpenseGroupById, deleteExpenseGroup } from '@/api';
 import {
-  GetExpenseGroupByIdQuery,
   Expense,
   DeleteExpenseGroupQuery,
   ExpenseGroup,
@@ -59,9 +58,8 @@ const ExpenseGroupDetail = (): JSX.Element => {
   const [deleteAction, setDeleteAction] = useState<DeleteAction>();
   const [duplicateAction, setDuplicateAction] = useState<DuplicateAction>();
 
-  const { data } = useQuery<GetExpenseGroupByIdQuery>(
-    ['expenseGroup' + expenseGroupId],
-    () => getExpenseGroupById({ _id: expenseGroupId as string }),
+  const { data } = useQuery(['expenseGroup' + expenseGroupId], () =>
+    getExpenseGroupById({ _id: expenseGroupId as string }),
   );
 
   const { setShowOverlay } = useAppContext();
