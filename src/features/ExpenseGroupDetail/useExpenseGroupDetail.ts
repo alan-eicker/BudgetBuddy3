@@ -5,6 +5,7 @@ import {
   getExpenseGroupById,
   addExpense,
   updateExpense,
+  addExpenseGroup,
   deleteExpenseGroup,
   queryClient,
 } from '@/api';
@@ -56,8 +57,19 @@ function useExpenseGroupDetail() {
     },
   });
 
+  const createExpenseGroup = useMutation({
+    mutationFn: addExpenseGroup,
+    onSuccess: () => {
+      router.push('/account/dashboard');
+      queryClient.removeQueries('expenseGroups');
+    },
+    onError: () => {
+      // handle error
+    },
+  });
+
   async function handleExpenseGroupDuplicate(formData: ExpenseGroup) {
-    console.log(formData);
+    createExpenseGroup.mutate({ input: formData });
   }
 
   async function handleExpenseGroupDelete() {

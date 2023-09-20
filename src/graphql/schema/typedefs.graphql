@@ -30,7 +30,7 @@ type Expense {
   _id: ID
   name: String!
   balance: Float!
-  dueDate: String!
+  dueDate: String
   isPaid: Boolean!
   note: String
 }

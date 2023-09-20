@@ -56,7 +56,7 @@ export default function ExpenseCard({
       <Box display="flex" alignItems="center" justifyContent="space-between">
         <Box>
           <Box>Balance: ${formatNumber(balance)}</Box>
-          <Box>Due Date: {dueDate}</Box>
+          {dueDate && <Box>Due Date: {dueDate}</Box>}
         </Box>
         <Box>
           Paid

@@ -23,7 +23,7 @@ export function getTotalUnpaidExpenses(
 ): number {
   return expenses.reduce(
     (accumulatedValue: number, nextExpense: Expense) =>
-      nextExpense.isPaid
+      !nextExpense.isPaid
         ? accumulatedValue + (nextExpense[key] as number)
         : accumulatedValue,
     0,
@@ -43,7 +43,7 @@ export const getTotalOverdueBalances = (expenses: Expense[]): number => {
   const unpaidExpenses = expenses.filter((expense) => !expense.isPaid);
 
   unpaidExpenses.forEach((unpaidExpense) => {
-    if (new Date() > new Date(unpaidExpense.dueDate)) {
+    if (new Date() > new Date(unpaidExpense.dueDate as string)) {
       overdueExpenses += 1;
     }
   });
@@ -52,5 +52,8 @@ export const getTotalOverdueBalances = (expenses: Expense[]): number => {
 };
 
 export const isOverDue = (expense: Expense) => {
-  return new Date() > new Date(expense.dueDate) && !expense.isPaid;
+  if (expense.dueDate) {
+    return new Date() > new Date(expense.dueDate) && !expense.isPaid;
+  }
+  return false;
 };

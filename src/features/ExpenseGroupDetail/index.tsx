@@ -190,7 +190,7 @@ export default function ExpenseGroupDetail() {
                   disablePadding
                 >
                   {mapOverdueStatustoExpenses(expenses).map((expense) => (
-                    <ListItem disablePadding key={expense._id}>
+                    <ListItem disablePadding key={expense._id || expense.name}>
                       <ExpenseCard
                         {...expense}
                         actions={[
@@ -230,9 +230,12 @@ export default function ExpenseGroupDetail() {
                   {/* TODO: get trending status */}
                   <SpendingSnapshot
                     items={[
-                      ['Total Balance', formatNumber(totalBalance)],
-                      ['Unpaid Balance', formatNumber(unpaidExpenses)],
-                      ['Left Over Balance', formatNumber(getLeftOverBalance)],
+                      ['Total Balance', `$${formatNumber(totalBalance)}`],
+                      ['Unpaid Balance', `$${formatNumber(unpaidExpenses)}`],
+                      [
+                        'Left Over Balance',
+                        `$${formatNumber(getLeftOverBalance)}`,
+                      ],
                     ]}
                   />
                 </Box>
