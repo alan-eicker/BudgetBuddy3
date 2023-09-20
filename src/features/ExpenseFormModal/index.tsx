@@ -30,12 +30,9 @@ const ExpenseFormModal = ({ open = false }: ExpenseFormProps): JSX.Element => {
     useExpenseFormModalContext();
 
   let initialValues: Expense;
-  let expenseId: Maybe<string>;
 
   if (expenseFormState?.expense) {
-    const { _id, ...expenseData } = expenseFormState.expense;
-    expenseId = _id;
-    initialValues = expenseData;
+    initialValues = expenseFormState.expense;
   } else {
     initialValues = {
       name: '',
@@ -57,10 +54,7 @@ const ExpenseFormModal = ({ open = false }: ExpenseFormProps): JSX.Element => {
       validationSchema,
       onSubmit: (formData: Expense) => {
         formData.balance = +formData.balance;
-        expenseFormState?.onSubmitCallback({
-          ...(expenseId && { expenseId }),
-          ...formData,
-        });
+        expenseFormState?.onSubmitCallback(formData);
         setExpenseFormState(null);
       },
     });
@@ -146,7 +140,7 @@ const ExpenseFormModal = ({ open = false }: ExpenseFormProps): JSX.Element => {
           </Grid>
         </Grid>
         <Button variant="contained" size="large" type="submit">
-          {expenseId ? 'Update' : 'Add'}
+          {expenseFormState?.expense ? 'Update' : 'Add'}
         </Button>
         <Button
           variant="outlined"

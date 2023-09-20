@@ -21,10 +21,10 @@ export async function updateExpense(
 ): Promise<Expense> {
   const { expenseGroupId, ...updatedExpense } = args.input;
 
-  const { expenseId, name, balance, dueDate, isPaid, note } = updatedExpense;
+  const { _id, name, balance, dueDate, isPaid, note } = updatedExpense;
 
   await ExpenseGroupModel.findOneAndUpdate(
-    { _id: expenseGroupId, 'expenses._id': expenseId },
+    { _id: expenseGroupId, 'expenses._id': _id },
     {
       $set: {
         'expenses.$.name': name,
@@ -36,5 +36,5 @@ export async function updateExpense(
     },
   );
 
-  return { _id: expenseId, ...updatedExpense };
+  return updatedExpense;
 }

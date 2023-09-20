@@ -105,10 +105,10 @@ export type StatusResponse = {
 };
 
 export type UpdateExpenseInput = {
+  _id: Scalars['ID']['input'];
   balance: Scalars['Float']['input'];
   dueDate: Scalars['String']['input'];
   expenseGroupId: Scalars['ID']['input'];
-  expenseId: Scalars['ID']['input'];
   isOverdue?: InputMaybe<Scalars['Boolean']['input']>;
   isPaid: Scalars['Boolean']['input'];
   name: Scalars['String']['input'];

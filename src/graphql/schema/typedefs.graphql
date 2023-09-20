@@ -35,7 +35,7 @@ type Expense {
 }
 
 input UpdateExpenseInput {
-  expenseId: ID!
+  _id: ID!
   expenseGroupId: ID!
   name: String!
   balance: Float!
