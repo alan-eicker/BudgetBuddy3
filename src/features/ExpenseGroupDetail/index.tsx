@@ -103,7 +103,7 @@ const ExpenseGroupDetail = (): JSX.Element => {
     console.log(newExpense);
   };
 
-  const handleUpdateExpense = (updatedExpense: any) => {
+  const handleUpdateExpense = (updatedExpense: Expense) => {
     updateExpenseMutation.mutate({
       input: { expenseGroupId: expenseGroupId as string, ...updatedExpense },
     });

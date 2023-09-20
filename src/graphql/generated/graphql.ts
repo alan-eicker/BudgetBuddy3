@@ -105,7 +105,7 @@ export type StatusResponse = {
 };
 
 export type UpdateExpenseInput = {
-  _id: Scalars['ID']['input'];
+  _id?: InputMaybe<Scalars['ID']['input']>;
   balance: Scalars['Float']['input'];
   dueDate: Scalars['String']['input'];
   expenseGroupId: Scalars['ID']['input'];
