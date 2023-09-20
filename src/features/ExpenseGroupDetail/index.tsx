@@ -6,7 +6,6 @@ import {
   useEffect,
 } from 'react';
 import { useRouter } from 'next/router';
-import { useQuery, useMutation } from 'react-query';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import Grid from '@mui/material/Grid';
@@ -18,24 +17,13 @@ import SpendingSnapshot from '@/components/SpendingSnapshot';
 import ExpenseCard from '@/components/ExpenseCard';
 import ConfirmationModal from '@/components/ConfirmationModal';
 import DuplicateExpenseGroupModal from '@/components/DuplicateExpenseGroupModal';
-import {
-  queryClient,
-  getExpenseGroupById,
-  deleteExpenseGroup,
-  updateExpense,
-} from '@/api';
-import {
-  Expense,
-  UpdateExpenseInput,
-  ExpenseGroup,
-} from '@/graphql/generated/graphql';
+import useExpenseGroupDetail from './useExpenseGroupDetail';
+import { ExpenseGroup } from '@/graphql/generated/graphql';
 import {
   formatNumber,
   getTotalBalanceOfAllExpenses,
   getTotalUnpaidExpenses,
-  isOverDue,
 } from '@/utils/expenses';
-import { useAppContext } from '@/providers/AppProvider';
 import { useExpenseFormModalContext } from '@/providers/ExpenseFormModalProvider';
 import { COLORS } from '@/constants';
 import styles from './ExpenseGroupDetail.module.scss';
@@ -57,68 +45,22 @@ interface DuplicateAction {
 const ExpenseGroupDetail = (): JSX.Element => {
   const router = useRouter();
   const { setExpenseFormState } = useExpenseFormModalContext();
+  const {
+    data,
+    handleExpenseGroupDuplicate,
+    handleExpenseGroupDelete,
+    handleAddExpense,
+    handleUpdateExpense,
+    handleDeleteExpense,
+    mapOverdueStatustoExpenses,
+  } = useExpenseGroupDetail();
 
   const {
     query: { expenseGroupId },
   } = router;
-  const { setShowOverlay } = useAppContext();
+
   const [deleteAction, setDeleteAction] = useState<DeleteAction>();
   const [duplicateAction, setDuplicateAction] = useState<DuplicateAction>();
-
-  const { data } = useQuery(['expenseGroup' + expenseGroupId], () =>
-    getExpenseGroupById({ _id: expenseGroupId as string }),
-  );
-
-  const updateExpenseMutation = useMutation({
-    mutationFn: updateExpense,
-    onSuccess: () => {
-      queryClient.invalidateQueries('expenseGroup' + expenseGroupId);
-    },
-    onError: () => {
-      // handle error...
-    },
-  });
-
-  const handleExpenseGroupDuplicate = async (
-    formData: Omit<ExpenseGroup, '_id'>,
-  ) => {
-    console.log(formData);
-  };
-
-  const handleExpenseGroupDelete = async () => {
-    setShowOverlay(true);
-
-    const { status } = await queryClient.fetchQuery(
-      ['deleteExpenseGroup' + expenseGroupId],
-      () => deleteExpenseGroup({ _id: expenseGroupId as string }),
-    );
-
-    if (status.code === 200) {
-      queryClient.removeQueries('expenseGroups');
-      router.push('/account/dashboard');
-    }
-  };
-
-  const handleAddExpense = (newExpense: Expense) => {
-    console.log(newExpense);
-  };
-
-  const handleUpdateExpense = (updatedExpense: Expense) => {
-    updateExpenseMutation.mutate({
-      input: { expenseGroupId: expenseGroupId as string, ...updatedExpense },
-    });
-  };
-
-  const handleDeleteExpense = (expenseId: string) => {
-    console.log(expenseId);
-  };
-
-  const mapOverdueStatustoExpenses = (expenses: Expense[]) => {
-    return expenses.map((expense) => ({
-      ...expense,
-      isOverdue: isOverDue(expense),
-    }));
-  };
 
   useEffect(() => {
     if (!data) {
