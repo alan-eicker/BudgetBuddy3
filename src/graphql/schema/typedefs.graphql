@@ -10,6 +10,7 @@ type Query {
 type Mutation {
   addExpenseGroup(input: NewExpenseGroupInput!): ExpenseGroup!
   updateExpense(input: UpdateExpenseInput!): Expense!
+  addExpense(input: NewExpenseInput): Expense!
 }
 
 type StatusResponse {
@@ -53,6 +54,7 @@ input NewExpenseGroupInput {
 }
 
 input NewExpenseInput {
+  expenseGroupId: ID
   name: String
   balance: Float
   dueDate: String

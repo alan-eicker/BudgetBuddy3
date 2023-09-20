@@ -38,8 +38,14 @@ export type ExpenseGroup = {
 
 export type Mutation = {
   __typename?: 'Mutation';
+  addExpense: Expense;
   addExpenseGroup: ExpenseGroup;
   updateExpense: Expense;
+};
+
+
+export type MutationAddExpenseArgs = {
+  input?: InputMaybe<NewExpenseInput>;
 };
 
 
@@ -62,6 +68,7 @@ export type NewExpenseGroupInput = {
 export type NewExpenseInput = {
   balance?: InputMaybe<Scalars['Float']['input']>;
   dueDate?: InputMaybe<Scalars['String']['input']>;
+  expenseGroupId?: InputMaybe<Scalars['ID']['input']>;
   isPaid?: InputMaybe<Scalars['Boolean']['input']>;
   name?: InputMaybe<Scalars['String']['input']>;
   note?: InputMaybe<Scalars['String']['input']>;
@@ -129,6 +136,13 @@ export type UpdateExpenseMutationVariables = Exact<{
 
 export type UpdateExpenseMutation = { __typename?: 'Mutation', expense: { __typename?: 'Expense', name: string, balance: number, dueDate: string, isPaid: boolean, note?: string | null } };
 
+export type AddExpenseMutationVariables = Exact<{
+  input: NewExpenseInput;
+}>;
+
+
+export type AddExpenseMutation = { __typename?: 'Mutation', expense: { __typename?: 'Expense', _id?: string | null, name: string, balance: number, dueDate: string, isPaid: boolean, note?: string | null } };
+
 export type GetAllExpenseGroupsQueryVariables = Exact<{ [key: string]: never; }>;
 
 
@@ -181,6 +195,18 @@ export const AddExpenseGroupDocument = gql`
 export const UpdateExpenseDocument = gql`
     mutation updateExpense($input: UpdateExpenseInput!) {
   expense: updateExpense(input: $input) {
+    name
+    balance
+    dueDate
+    isPaid
+    note
+  }
+}
+    `;
+export const AddExpenseDocument = gql`
+    mutation addExpense($input: NewExpenseInput!) {
+  expense: addExpense(input: $input) {
+    _id
     name
     balance
     dueDate
@@ -259,6 +285,9 @@ export function getSdk(client: GraphQLClient, withWrapper: SdkFunctionWrapper = 
     },
     updateExpense(variables: UpdateExpenseMutationVariables, requestHeaders?: GraphQLClientRequestHeaders): Promise<UpdateExpenseMutation> {
       return withWrapper((wrappedRequestHeaders) => client.request<UpdateExpenseMutation>(UpdateExpenseDocument, variables, {...requestHeaders, ...wrappedRequestHeaders}), 'updateExpense', 'mutation');
+    },
+    addExpense(variables: AddExpenseMutationVariables, requestHeaders?: GraphQLClientRequestHeaders): Promise<AddExpenseMutation> {
+      return withWrapper((wrappedRequestHeaders) => client.request<AddExpenseMutation>(AddExpenseDocument, variables, {...requestHeaders, ...wrappedRequestHeaders}), 'addExpense', 'mutation');
     },
     getAllExpenseGroups(variables?: GetAllExpenseGroupsQueryVariables, requestHeaders?: GraphQLClientRequestHeaders): Promise<GetAllExpenseGroupsQuery> {
       return withWrapper((wrappedRequestHeaders) => client.request<GetAllExpenseGroupsQuery>(GetAllExpenseGroupsDocument, variables, {...requestHeaders, ...wrappedRequestHeaders}), 'getAllExpenseGroups', 'query');

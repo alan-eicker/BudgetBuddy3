@@ -12,6 +12,7 @@ export const {
   deleteExpenseGroup,
   addExpenseGroup,
   updateExpense,
+  addExpense,
 } = getSdk(gqlClient);
 
 export const queryClient = new QueryClient({

@@ -22,3 +22,14 @@ mutation updateExpense($input: UpdateExpenseInput!) {
     note
   }
 }
+
+mutation addExpense($input: NewExpenseInput!) {
+  expense: addExpense(input: $input) {
+    _id
+    name
+    balance
+    dueDate
+    isPaid
+    note
+  }
+}

@@ -3,6 +3,7 @@ import {
   ExpenseGroup,
   AddExpenseGroupMutationVariables,
   UpdateExpenseMutationVariables,
+  AddExpenseMutationVariables,
 } from '../../generated/graphql';
 import ExpenseGroupModel from '@/database/models/expenseGroup';
 
@@ -13,6 +14,19 @@ export async function addExpenseGroup(
   const expenseGroup = new ExpenseGroupModel(args.input);
   await expenseGroup.save();
   return expenseGroup;
+}
+
+export async function addExpense(
+  parent: unknown,
+  args: AddExpenseMutationVariables,
+) {
+  const { expenseGroupId, ...newExpense } = args.input;
+
+  const expenseGroup = await ExpenseGroupModel.findById(expenseGroupId);
+  expenseGroup.expenses.push(newExpense);
+  expenseGroup.save();
+
+  return args.input;
 }
 
 export async function updateExpense(

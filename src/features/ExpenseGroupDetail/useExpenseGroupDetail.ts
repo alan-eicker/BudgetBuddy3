@@ -3,6 +3,7 @@ import { useRouter } from 'next/router';
 import { useQuery, useMutation } from 'react-query';
 import {
   getExpenseGroupById,
+  addExpense,
   updateExpense,
   deleteExpenseGroup,
   queryClient,
@@ -34,6 +35,16 @@ function useExpenseGroupDetail() {
     },
   });
 
+  const addExpenseMutation = useMutation({
+    mutationFn: addExpense,
+    onSuccess: () => {
+      queryClient.invalidateQueries('expenseGroup' + expenseGroupId);
+    },
+    onError: () => {
+      setError('Could not add new expense');
+    },
+  });
+
   async function handleExpenseGroupDuplicate(
     formData: Omit<ExpenseGroup, '_id'>,
   ) {
@@ -55,7 +66,9 @@ function useExpenseGroupDetail() {
   }
 
   function handleAddExpense(newExpense: Expense) {
-    console.log(newExpense);
+    addExpenseMutation.mutate({
+      input: { expenseGroupId: expenseGroupId as string, ...newExpense },
+    });
   }
 
   function handleUpdateExpense(updatedExpense: Expense) {
