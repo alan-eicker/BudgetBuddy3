@@ -78,8 +78,6 @@ export default function ExpenseGroupForm() {
   });
 
   const addExpense = (expense: Expense) => {
-    expense.balance = +expense.balance;
-
     const alreadyExists = values.expenses.some(
       ({ name }) => name === expense.name,
     );
@@ -93,8 +91,6 @@ export default function ExpenseGroupForm() {
   };
 
   const editExpense = (expense: Expense, index: number) => {
-    expense.balance = +expense.balance;
-
     const updatedExpenses = values.expenses.map((exp, expIndex) => {
       return expIndex === index ? expense : exp;
     });
@@ -117,190 +113,195 @@ export default function ExpenseGroupForm() {
   return (
     <ContentSection>
       <form onSubmit={handleSubmit} noValidate>
-        <Typography component="h1" variant="h4" marginBottom={3}>
-          Add Expense Group
-        </Typography>
-        {apiError && (
-          <Alert
-            color="error"
-            variant="outlined"
-            onDismiss={() => setApiError(null)}
-          >
-            {apiError}
-          </Alert>
-        )}
-        <Box marginBottom={3}>
-          <LocalizationProvider dateAdapter={AdapterDayjs}>
-            <Grid container spacing={2}>
-              <Grid item xs={12} sm={4} md={4}>
-                <DatePicker
-                  label="Start Date"
-                  format="MM/DD/YYYY"
-                  slotProps={{
-                    textField: {
-                      name: 'startDate',
-                      fullWidth: true,
-                      ...(!!(errors.startDate && touched.startDate) && {
-                        error: true,
-                        helperText: errors.startDate,
-                      }),
-                    },
-                  }}
-                  onChange={(date) => {
-                    setFieldValue(
-                      'startDate',
-                      dayjs(date).format('MM/DD/YYYY'),
-                    );
-                  }}
-                  value={values.startDate}
-                />
-              </Grid>
-              <Grid item xs={12} sm={4} md={4}>
-                <DatePicker
-                  label="End Date"
-                  format="MM/DD/YYYY"
-                  slotProps={{
-                    textField: {
-                      name: 'endDate',
-                      fullWidth: true,
-                      ...(!!(errors.endDate && touched.endDate) && {
-                        error: true,
-                        helperText: errors.endDate,
-                      }),
-                    },
-                  }}
-                  onChange={(date) => {
-                    setFieldValue('endDate', dayjs(date).format('MM/DD/YYYY'));
-                  }}
-                  value={values.endDate}
-                />
-              </Grid>
-              <Grid item xs={12} sm={4} md={4}>
-                <TextField
-                  type="number"
-                  name="totalBudget"
-                  label="Total Budget"
-                  autoComplete="off"
-                  fullWidth
-                  onChange={handleChange}
-                  {...(values.totalBudget !== 0 && {
-                    defaultValue: values.totalBudget,
-                  })}
-                  {...(!!(errors.totalBudget && touched.totalBudget) && {
-                    error: true,
-                    helperText: errors.totalBudget,
-                  })}
-                />
-              </Grid>
-            </Grid>
-          </LocalizationProvider>
-        </Box>
-        <Box marginBottom={3}>
-          <Typography component="h2" variant="h5" marginBottom={2}>
-            Expenses
+        <Box padding={2.5}>
+          <Typography component="h1" variant="h4" marginBottom={3}>
+            Add Expense Group
           </Typography>
-          <Button size="small" onClick={showAddExpenseForm}>
-            + Add Expense
-          </Button>
-          {duplicateExpenseError && (
-            <Box marginTop={1} marginBottom={1}>
-              <Alert
-                color="error"
-                variant="outlined"
-                onDismiss={() => setDuplicateExpenseError(null)}
-              >
-                {duplicateExpenseError}
-              </Alert>
-            </Box>
+          {apiError && (
+            <Alert
+              color="error"
+              variant="outlined"
+              onDismiss={() => setApiError(null)}
+            >
+              {apiError}
+            </Alert>
           )}
-          {!!(errors.expenses && touched.expenses) && (
-            <Typography color="error" fontSize={13}>
-              {errors.expenses}
+          <Box marginBottom={3}>
+            <LocalizationProvider dateAdapter={AdapterDayjs}>
+              <Grid container spacing={2}>
+                <Grid item xs={12} sm={4} md={4}>
+                  <DatePicker
+                    label="Start Date"
+                    format="MM/DD/YYYY"
+                    slotProps={{
+                      textField: {
+                        name: 'startDate',
+                        fullWidth: true,
+                        ...(!!(errors.startDate && touched.startDate) && {
+                          error: true,
+                          helperText: errors.startDate,
+                        }),
+                      },
+                    }}
+                    onChange={(date) => {
+                      setFieldValue(
+                        'startDate',
+                        dayjs(date).format('MM/DD/YYYY'),
+                      );
+                    }}
+                    value={values.startDate}
+                  />
+                </Grid>
+                <Grid item xs={12} sm={4} md={4}>
+                  <DatePicker
+                    label="End Date"
+                    format="MM/DD/YYYY"
+                    slotProps={{
+                      textField: {
+                        name: 'endDate',
+                        fullWidth: true,
+                        ...(!!(errors.endDate && touched.endDate) && {
+                          error: true,
+                          helperText: errors.endDate,
+                        }),
+                      },
+                    }}
+                    onChange={(date) => {
+                      setFieldValue(
+                        'endDate',
+                        dayjs(date).format('MM/DD/YYYY'),
+                      );
+                    }}
+                    value={values.endDate}
+                  />
+                </Grid>
+                <Grid item xs={12} sm={4} md={4}>
+                  <TextField
+                    type="number"
+                    name="totalBudget"
+                    label="Total Budget"
+                    autoComplete="off"
+                    fullWidth
+                    onChange={handleChange}
+                    {...(values.totalBudget !== 0 && {
+                      defaultValue: values.totalBudget,
+                    })}
+                    {...(!!(errors.totalBudget && touched.totalBudget) && {
+                      error: true,
+                      helperText: errors.totalBudget,
+                    })}
+                  />
+                </Grid>
+              </Grid>
+            </LocalizationProvider>
+          </Box>
+          <Box marginBottom={3}>
+            <Typography component="h2" variant="h5" marginBottom={2}>
+              Expenses
             </Typography>
-          )}
-          {!!values.expenses.length && (
-            <Box marginBottom={1} marginTop={1}>
-              {values.expenses.map((expense: Expense, i) => {
-                return (
-                  <React.Fragment key={expense.name}>
-                    <Box
-                      display="flex"
-                      justifyContent="space-between"
-                      alignItems="center"
-                      padding={1}
-                    >
-                      <Box>
-                        <Box>{expense.name}</Box>
-                        <PipeList
-                          className={styles.expenseList}
-                          items={[
-                            `Balance: $${formatNumber(expense.balance)}`,
-                            ...(expense.dueDate
-                              ? [`Due Date: ${expense.dueDate}`]
-                              : []),
-                            ,
-                            `Paid: ${JSON.stringify(expense.isPaid)}`,
-                          ]}
-                        />
-                      </Box>
-                      <Box minWidth={175} marginLeft={2}>
-                        <Button size="small">
-                          <EditIcon />
-                          <Typography
-                            marginLeft={0.5}
-                            component="span"
-                            fontSize={14}
-                            onClick={() =>
-                              setExpenseFormState({
-                                expense,
-                                onSubmitCallback: (formData) =>
-                                  editExpense(formData, i),
-                              })
-                            }
+            <Button size="small" onClick={showAddExpenseForm}>
+              + Add Expense
+            </Button>
+            {duplicateExpenseError && (
+              <Box marginTop={1} marginBottom={1}>
+                <Alert
+                  color="error"
+                  variant="outlined"
+                  onDismiss={() => setDuplicateExpenseError(null)}
+                >
+                  {duplicateExpenseError}
+                </Alert>
+              </Box>
+            )}
+            {!!(errors.expenses && touched.expenses) && (
+              <Typography color="error" fontSize={13}>
+                {errors.expenses}
+              </Typography>
+            )}
+            {!!values.expenses.length && (
+              <Box marginBottom={1} marginTop={1}>
+                {values.expenses.map((expense: Expense, i) => {
+                  return (
+                    <React.Fragment key={expense.name}>
+                      <Box
+                        display="flex"
+                        justifyContent="space-between"
+                        alignItems="center"
+                        padding={1}
+                      >
+                        <Box>
+                          <Box>{expense.name}</Box>
+                          <PipeList
+                            className={styles.expenseList}
+                            items={[
+                              `Balance: $${formatNumber(expense.balance)}`,
+                              ...(expense.dueDate
+                                ? [`Due Date: ${expense.dueDate}`]
+                                : []),
+                              ,
+                              `Paid: ${JSON.stringify(expense.isPaid)}`,
+                            ]}
+                          />
+                        </Box>
+                        <Box minWidth={175} marginLeft={2}>
+                          <Button size="small">
+                            <EditIcon />
+                            <Typography
+                              marginLeft={0.5}
+                              component="span"
+                              fontSize={14}
+                              onClick={() =>
+                                setExpenseFormState({
+                                  expense,
+                                  onSubmitCallback: (formData) =>
+                                    editExpense(formData, i),
+                                })
+                              }
+                            >
+                              Edit
+                            </Typography>
+                          </Button>
+                          <Button
+                            sx={{ marginLeft: 1 }}
+                            size="small"
+                            color="error"
+                            onClick={() => deleteExpense(i)}
                           >
-                            Edit
-                          </Typography>
-                        </Button>
-                        <Button
-                          sx={{ marginLeft: 1 }}
-                          size="small"
-                          color="error"
-                          onClick={() => deleteExpense(i)}
-                        >
-                          <ClearIcon />
-                          <Typography
-                            marginLeft={0.5}
-                            component="span"
-                            fontSize={14}
-                          >
-                            Delete
-                          </Typography>
-                        </Button>
+                            <ClearIcon />
+                            <Typography
+                              marginLeft={0.5}
+                              component="span"
+                              fontSize={14}
+                            >
+                              Delete
+                            </Typography>
+                          </Button>
+                        </Box>
                       </Box>
-                    </Box>
-                    {i + 1 !== values.expenses.length && <Divider />}
-                  </React.Fragment>
-                );
-              })}
-            </Box>
-          )}
+                      {i + 1 !== values.expenses.length && <Divider />}
+                    </React.Fragment>
+                  );
+                })}
+              </Box>
+            )}
+          </Box>
+          <LoadingButton
+            type="submit"
+            variant="contained"
+            size="large"
+            loading={isSubmitting}
+          >
+            Save
+          </LoadingButton>
+          <Button
+            onClick={() => router.push('/account/dashboard')}
+            variant="outlined"
+            size="large"
+            sx={{ marginLeft: 2 }}
+          >
+            Cancel
+          </Button>
         </Box>
-        <LoadingButton
-          type="submit"
-          variant="contained"
-          size="large"
-          loading={isSubmitting}
-        >
-          Save
-        </LoadingButton>
-        <Button
-          onClick={() => router.push('/account/dashboard')}
-          variant="outlined"
-          size="large"
-          sx={{ marginLeft: 2 }}
-        >
-          Cancel
-        </Button>
       </form>
     </ContentSection>
   );

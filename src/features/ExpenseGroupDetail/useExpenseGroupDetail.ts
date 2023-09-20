@@ -56,9 +56,7 @@ function useExpenseGroupDetail() {
     },
   });
 
-  async function handleExpenseGroupDuplicate(
-    formData: Omit<ExpenseGroup, '_id'>,
-  ) {
+  async function handleExpenseGroupDuplicate(formData: ExpenseGroup) {
     console.log(formData);
   }
 

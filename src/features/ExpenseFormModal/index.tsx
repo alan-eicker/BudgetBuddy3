@@ -70,6 +70,7 @@ export default function ExpenseFormModal({ open = false }: ExpenseFormProps) {
             </Grid>
             <Grid item xs={12} sm={3} md={4}>
               <TextField
+                type="number"
                 label="Balance"
                 name="balance"
                 onChange={handleChange}

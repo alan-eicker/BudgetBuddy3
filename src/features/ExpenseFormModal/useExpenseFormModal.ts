@@ -33,10 +33,7 @@ function useExpenseFormModal({
   const form = useFormik({
     initialValues,
     validationSchema,
-    onSubmit: (formData: Expense) => {
-      formData.balance = +formData.balance;
-      onSubmit(formData);
-    },
+    onSubmit: (formData: Expense) => onSubmit(formData),
   });
 
   return form;
