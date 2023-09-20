@@ -1,6 +1,3 @@
-import { Maybe } from 'graphql-yoga';
-import { useFormik } from 'formik';
-import * as yup from 'yup';
 import Grid from '@mui/material/Grid';
 import TextField from '@mui/material/TextField';
 import Autocomplete from '@mui/material/Autocomplete';
@@ -15,6 +12,7 @@ import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 import { EXPENSE_DROPDOWN_OPTIONS } from '@/constants';
 import { useExpenseFormModalContext } from '@/providers/ExpenseFormModalProvider';
 import { Expense } from '@/graphql/generated/graphql';
+import useExpenseFormModal from './useExpenseFormModal';
 import styles from './ExpenseFormModal.module.scss';
 
 interface ExpenseFormProps {
@@ -29,31 +27,10 @@ const ExpenseFormModal = ({ open = false }: ExpenseFormProps): JSX.Element => {
   const { expenseFormState, setExpenseFormState } =
     useExpenseFormModalContext();
 
-  let initialValues: Expense;
-
-  if (expenseFormState?.expense) {
-    initialValues = expenseFormState.expense;
-  } else {
-    initialValues = {
-      name: '',
-      balance: 0,
-      dueDate: '',
-      isPaid: false,
-      note: '',
-    };
-  }
-
-  const validationSchema = yup.object({
-    name: yup.string().required('Expense name is required'),
-    balance: yup.number().min(1, 'Balance is required'),
-  });
-
   const { values, errors, touched, handleChange, handleSubmit, setFieldValue } =
-    useFormik({
-      initialValues,
-      validationSchema,
-      onSubmit: (formData: Expense) => {
-        formData.balance = +formData.balance;
+    useExpenseFormModal({
+      expense: expenseFormState?.expense as Expense,
+      onSubmit: (formData) => {
         expenseFormState?.onSubmitCallback(formData);
         setExpenseFormState(null);
       },
