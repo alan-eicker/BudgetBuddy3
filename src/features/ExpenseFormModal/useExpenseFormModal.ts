@@ -7,7 +7,7 @@ interface UseExpenseFormModal {
   onSubmit?: (formData: Expense) => any;
 }
 
-function useExpenseFormModal({
+export default function useExpenseFormModal({
   expense,
   onSubmit = () => {},
 }: UseExpenseFormModal) {
@@ -38,5 +38,3 @@ function useExpenseFormModal({
 
   return form;
 }
-
-export default useExpenseFormModal;

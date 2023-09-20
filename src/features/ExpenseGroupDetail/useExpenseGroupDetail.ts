@@ -13,7 +13,7 @@ import { ExpenseGroup, Expense } from '@/graphql/generated/graphql';
 import { useAppContext } from '@/providers/AppProvider';
 import { isOverDue } from '@/utils/expenses';
 
-function useExpenseGroupDetail() {
+export default function useExpenseGroupDetail() {
   const router = useRouter();
   const { setShowOverlay } = useAppContext();
   const [error, setError] = useState<string>();
@@ -65,7 +65,7 @@ function useExpenseGroupDetail() {
       queryClient.removeQueries('expenseGroups');
     },
     onError: () => {
-      // handle error
+      setError('Could not duplicate expense group');
     },
   });
 
@@ -112,5 +112,3 @@ function useExpenseGroupDetail() {
     mapOverdueStatustoExpenses,
   };
 }
-
-export default useExpenseGroupDetail;

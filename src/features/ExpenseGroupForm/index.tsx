@@ -1,8 +1,5 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { useRouter } from 'next/router';
-import { useFormik } from 'formik';
-import * as yup from 'yup';
-import { useMutation } from 'react-query';
 import Typography from '@mui/material/Typography';
 import ContentSection from '@/components/ContentSection';
 import TextField from '@mui/material/TextField';
@@ -22,44 +19,22 @@ import PipeList from '@/components/PipeList';
 import { useExpenseFormModalContext } from '@/providers/ExpenseFormModalProvider';
 import { Expense } from '@/graphql/generated/graphql';
 import { formatNumber } from '@/utils/expenses';
-import { addExpenseGroup, queryClient } from '@/api';
+import useExpenseGroupForm from './useExpenseGroupForm';
 import styles from './ExpenseGroupForm.module.scss';
 
 export default function ExpenseGroupForm() {
   const router = useRouter();
-
   const { setExpenseFormState } = useExpenseFormModalContext();
 
-  const [duplicateExpenseError, setDuplicateExpenseError] = useState<
-    string | null
-  >();
-
-  const [apiError, setApiError] = useState<string | null>();
-
-  const createExpenseGroup = useMutation({
-    mutationFn: addExpenseGroup,
-    onSuccess: () => {
-      queryClient.removeQueries('expenseGroups');
-      router.push('/account/dashboard');
-    },
-    onError: () => {
-      setApiError('An error occurred. Could not create expense group.');
-    },
-  });
-
-  const initialValues = {
-    startDate: null,
-    endDate: null,
-    totalBudget: 0,
-    expenses: [],
-  };
-
-  const validationSchema = yup.object({
-    startDate: yup.string().required('Start date is required'),
-    endDate: yup.string().required('Start date is required'),
-    totalBudget: yup.string().required('Total budget is required'),
-    expenses: yup.array().min(1).required('At least one expense is required'),
-  });
+  const {
+    form,
+    createError,
+    addExpense,
+    editExpense,
+    deleteExpense,
+    duplicateError,
+    dismissErrors,
+  } = useExpenseGroupForm();
 
   const {
     values,
@@ -69,42 +44,10 @@ export default function ExpenseGroupForm() {
     handleSubmit,
     setFieldValue,
     isSubmitting,
-  } = useFormik({
-    initialValues,
-    validationSchema,
-    onSubmit: (formData) => {
-      createExpenseGroup.mutate({ input: formData });
-    },
-  });
-
-  const addExpense = (expense: Expense) => {
-    const alreadyExists = values.expenses.some(
-      ({ name }) => name === expense.name,
-    );
-
-    if (alreadyExists) {
-      setDuplicateExpenseError(`Expense "${expense.name}" already exists.`);
-      return;
-    }
-
-    setFieldValue('expenses', [...values.expenses, expense]);
-  };
-
-  const editExpense = (expense: Expense, index: number) => {
-    const updatedExpenses = values.expenses.map((exp, expIndex) => {
-      return expIndex === index ? expense : exp;
-    });
-
-    setFieldValue('expenses', updatedExpenses);
-  };
-
-  const deleteExpense = (index: number) => {
-    values.expenses.splice(index, 1);
-    setFieldValue('expenses', values.expenses);
-  };
+  } = form;
 
   const showAddExpenseForm = () => {
-    setDuplicateExpenseError(null);
+    dismissErrors();
     setExpenseFormState({
       onSubmitCallback: (formData) => addExpense(formData),
     });
@@ -117,14 +60,16 @@ export default function ExpenseGroupForm() {
           <Typography component="h1" variant="h4" marginBottom={3}>
             Add Expense Group
           </Typography>
-          {apiError && (
-            <Alert
-              color="error"
-              variant="outlined"
-              onDismiss={() => setApiError(null)}
-            >
-              {apiError}
-            </Alert>
+          {createError && (
+            <Box marginBottom={2}>
+              <Alert
+                color="error"
+                variant="outlined"
+                onDismiss={() => dismissErrors()}
+              >
+                {createError}
+              </Alert>
+            </Box>
           )}
           <Box marginBottom={3}>
             <LocalizationProvider dateAdapter={AdapterDayjs}>
@@ -202,14 +147,14 @@ export default function ExpenseGroupForm() {
             <Button size="small" onClick={showAddExpenseForm}>
               + Add Expense
             </Button>
-            {duplicateExpenseError && (
+            {duplicateError && (
               <Box marginTop={1} marginBottom={1}>
                 <Alert
                   color="error"
                   variant="outlined"
-                  onDismiss={() => setDuplicateExpenseError(null)}
+                  onDismiss={() => dismissErrors()}
                 >
-                  {duplicateExpenseError}
+                  {duplicateError}
                 </Alert>
               </Box>
             )}
