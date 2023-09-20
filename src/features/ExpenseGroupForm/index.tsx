@@ -25,7 +25,7 @@ import { formatNumber } from '@/utils/expenses';
 import { addExpenseGroup, queryClient } from '@/api';
 import styles from './ExpenseGroupForm.module.scss';
 
-const ExpenseGroupForm = (): JSX.Element => {
+export default function ExpenseGroupForm() {
   const router = useRouter();
 
   const { setExpenseFormState } = useExpenseFormModalContext();
@@ -304,6 +304,4 @@ const ExpenseGroupForm = (): JSX.Element => {
       </form>
     </ContentSection>
   );
-};
-
-export default ExpenseGroupForm;
+}

@@ -12,7 +12,7 @@ import LoadingButton from '@mui/lab/LoadingButton';
 import BrandLogo from '@/components/BrandLogo';
 import { authenticateUser } from '@/api';
 
-const LoginForm = (): JSX.Element => {
+export default function LoginForm() {
   const router = useRouter();
 
   const initialValues = {
@@ -114,6 +114,4 @@ const LoginForm = (): JSX.Element => {
       </Box>
     </form>
   );
-};
-
-export default LoginForm;
+}

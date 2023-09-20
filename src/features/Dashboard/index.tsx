@@ -79,7 +79,7 @@ const chartData = [
   },
 ];
 
-const Dashboard = (): JSX.Element => {
+export default function Dashboard() {
   const router = useRouter();
 
   const { data } = useQuery(['expenseGroups'], () => getAllExpenseGroups());
@@ -176,6 +176,4 @@ const Dashboard = (): JSX.Element => {
       </ContentSection>
     </>
   );
-};
-
-export default Dashboard;
+}

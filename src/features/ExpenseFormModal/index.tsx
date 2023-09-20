@@ -23,7 +23,7 @@ const expenseOptions = EXPENSE_DROPDOWN_OPTIONS.sort().map((title) => ({
   title,
 }));
 
-const ExpenseFormModal = ({ open = false }: ExpenseFormProps): JSX.Element => {
+export default function ExpenseFormModal({ open = false }: ExpenseFormProps) {
   const { expenseFormState, setExpenseFormState } =
     useExpenseFormModalContext();
 
@@ -130,6 +130,4 @@ const ExpenseFormModal = ({ open = false }: ExpenseFormProps): JSX.Element => {
       </form>
     </Modal>
   );
-};
-
-export default ExpenseFormModal;
+}

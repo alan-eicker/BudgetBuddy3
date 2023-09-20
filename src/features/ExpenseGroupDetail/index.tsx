@@ -43,7 +43,7 @@ interface DuplicateAction {
   expenseGroup: ExpenseGroup;
 }
 
-const ExpenseGroupDetail = (): JSX.Element => {
+export default function ExpenseGroupDetail() {
   const router = useRouter();
   const { setExpenseFormState } = useExpenseFormModalContext();
   const {
@@ -245,6 +245,4 @@ const ExpenseGroupDetail = (): JSX.Element => {
       {duplicateAction && <DuplicateExpenseGroupModal {...duplicateAction} />}
     </Box>
   );
-};
-
-export default ExpenseGroupDetail;
+}

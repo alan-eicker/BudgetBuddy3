@@ -3,7 +3,7 @@ import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
 import BrandLogo from '@/components/BrandLogo';
 
-const RegisterUserForm = () => {
+export default function RegisterUserForm() {
   return (
     <form>
       <Typography
@@ -24,6 +24,4 @@ const RegisterUserForm = () => {
       </Button>
     </form>
   );
-};
-
-export default RegisterUserForm;
+}

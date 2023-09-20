@@ -34,13 +34,13 @@ function useExpenseGroupDetail() {
     },
   });
 
-  const handleExpenseGroupDuplicate = async (
+  async function handleExpenseGroupDuplicate(
     formData: Omit<ExpenseGroup, '_id'>,
-  ) => {
+  ) {
     console.log(formData);
-  };
+  }
 
-  const handleExpenseGroupDelete = async () => {
+  async function handleExpenseGroupDelete() {
     setShowOverlay(true);
 
     const { status } = await queryClient.fetchQuery(
@@ -52,28 +52,28 @@ function useExpenseGroupDetail() {
       queryClient.removeQueries('expenseGroups');
       router.push('/account/dashboard');
     }
-  };
+  }
 
-  const handleAddExpense = (newExpense: Expense) => {
+  function handleAddExpense(newExpense: Expense) {
     console.log(newExpense);
-  };
+  }
 
-  const handleUpdateExpense = (updatedExpense: Expense) => {
+  function handleUpdateExpense(updatedExpense: Expense) {
     updateExpenseMutation.mutate({
       input: { expenseGroupId: expenseGroupId as string, ...updatedExpense },
     });
-  };
+  }
 
-  const handleDeleteExpense = (expenseId: string) => {
+  function handleDeleteExpense(expenseId: string) {
     console.log(expenseId);
-  };
+  }
 
-  const mapOverdueStatustoExpenses = (expenses: Expense[]) => {
+  function mapOverdueStatustoExpenses(expenses: Expense[]) {
     return expenses.map((expense) => ({
       ...expense,
       isOverdue: isOverDue(expense),
     }));
-  };
+  }
 
   return {
     data,

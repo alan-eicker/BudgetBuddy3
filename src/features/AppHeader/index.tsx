@@ -10,12 +10,12 @@ import { queryClient, logoutUser } from '@/api';
 import { LogoutUserQuery } from '@/graphql/generated/graphql';
 import { useAppContext } from '@/providers/AppProvider';
 
-const AppHeader = () => {
+export default function AppHeader() {
   const router = useRouter();
   const { setShowOverlay } = useAppContext();
   const date = new Date().toDateString();
 
-  const handleLogout = async (e: SyntheticEvent) => {
+  async function handleLogout(e: SyntheticEvent) {
     e.preventDefault();
     setShowOverlay(true);
 
@@ -27,7 +27,7 @@ const AppHeader = () => {
     if (isLoggedOut) {
       router.push('/');
     }
-  };
+  }
 
   return (
     <Header title="BudgetBuddy">
@@ -52,6 +52,4 @@ const AppHeader = () => {
       />
     </Header>
   );
-};
-
-export default AppHeader;
+}
