@@ -16,7 +16,7 @@ import ContentSection from '@/components/ContentSection';
 import SpendingSnapshot from '@/components/SpendingSnapshot';
 import ExpenseCard from '@/components/ExpenseCard';
 import ConfirmationModal from '@/components/ConfirmationModal';
-import DuplicateExpenseGroupModal from '@/components/DuplicateExpenseGroupModal';
+import DuplicateExpenseGroupModal from '@/features/DuplicateExpenseGroupModal';
 import Alert from '@/components/Alert';
 import useExpenseGroupDetail from './useExpenseGroupDetail';
 import { ExpenseGroup } from '@/graphql/generated/graphql';

@@ -25,12 +25,12 @@ export default function ConfirmationModal({
           <Button
             color="error"
             variant="contained"
-            size="small"
+            size="large"
             onClick={() => onConfirm()}
           >
             Delete
           </Button>
-          <Button variant="outlined" size="small" onClick={() => onCancel()}>
+          <Button variant="outlined" size="large" onClick={() => onCancel()}>
             Cancel
           </Button>
         </Box>
