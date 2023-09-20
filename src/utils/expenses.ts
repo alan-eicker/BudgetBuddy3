@@ -40,7 +40,9 @@ export const getTotalBalance = (expenses: Expense[]): string => {
 
 export const getTotalOverdueBalances = (expenses: Expense[]): number => {
   let overdueExpenses = 0;
-  const unpaidExpenses = expenses.filter((expense) => !expense.isPaid);
+  const unpaidExpenses = expenses.filter(
+    (expense) => !expense.isPaid && expense.dueDate,
+  );
 
   unpaidExpenses.forEach((unpaidExpense) => {
     if (new Date() > new Date(unpaidExpense.dueDate as string)) {

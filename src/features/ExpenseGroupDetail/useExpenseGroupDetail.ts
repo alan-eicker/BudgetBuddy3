@@ -30,6 +30,7 @@ function useExpenseGroupDetail() {
     mutationFn: updateExpense,
     onSuccess: () => {
       queryClient.invalidateQueries('expenseGroup' + expenseGroupId);
+      queryClient.removeQueries('expenseGroups');
     },
     onError: () => {
       setError('Could not update expense');
