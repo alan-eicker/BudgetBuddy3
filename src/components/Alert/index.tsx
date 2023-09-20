@@ -7,18 +7,20 @@ const Alert = ({
   children,
   onDismiss,
   ...props
-}: AlertProps & { onDismiss: UnknownFuntionType<any> }) => (
+}: AlertProps & { onDismiss?: UnknownFuntionType<any> }) => (
   <MuiAlert
-    action={
-      <IconButton
-        aria-label="close"
-        color="inherit"
-        size="small"
-        onClick={onDismiss}
-      >
-        <CloseIcon fontSize="inherit" />
-      </IconButton>
-    }
+    {...(onDismiss && {
+      action: (
+        <IconButton
+          aria-label="close"
+          color="inherit"
+          size="small"
+          onClick={onDismiss}
+        >
+          <CloseIcon fontSize="inherit" />
+        </IconButton>
+      ),
+    })}
     {...props}
   >
     {children}

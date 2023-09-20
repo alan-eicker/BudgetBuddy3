@@ -17,6 +17,7 @@ import SpendingSnapshot from '@/components/SpendingSnapshot';
 import ExpenseCard from '@/components/ExpenseCard';
 import ConfirmationModal from '@/components/ConfirmationModal';
 import DuplicateExpenseGroupModal from '@/components/DuplicateExpenseGroupModal';
+import Alert from '@/components/Alert';
 import useExpenseGroupDetail from './useExpenseGroupDetail';
 import { ExpenseGroup } from '@/graphql/generated/graphql';
 import {
@@ -47,6 +48,7 @@ const ExpenseGroupDetail = (): JSX.Element => {
   const { setExpenseFormState } = useExpenseFormModalContext();
   const {
     data,
+    error,
     handleExpenseGroupDuplicate,
     handleExpenseGroupDelete,
     handleAddExpense,
@@ -175,6 +177,13 @@ const ExpenseGroupDetail = (): JSX.Element => {
           {expenses && (
             <Grid container spacing={5}>
               <Grid item xs={12} sm={12} md={8}>
+                {error && (
+                  <Box marginBottom={2}>
+                    <Alert variant="outlined" color="error">
+                      {error}
+                    </Alert>
+                  </Box>
+                )}
                 <List
                   className={styles.expenseGroupList}
                   style={{ marginTop: 1 }}

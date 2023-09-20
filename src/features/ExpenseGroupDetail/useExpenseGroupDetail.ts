@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import { useRouter } from 'next/router';
 import { useQuery, useMutation } from 'react-query';
 import {
@@ -13,6 +14,7 @@ import { isOverDue } from '@/utils/expenses';
 function useExpenseGroupDetail() {
   const router = useRouter();
   const { setShowOverlay } = useAppContext();
+  const [error, setError] = useState<string>();
 
   const {
     query: { expenseGroupId },
@@ -28,7 +30,7 @@ function useExpenseGroupDetail() {
       queryClient.invalidateQueries('expenseGroup' + expenseGroupId);
     },
     onError: () => {
-      // handle error...
+      setError('Could not update expense');
     },
   });
 
@@ -75,6 +77,7 @@ function useExpenseGroupDetail() {
 
   return {
     data,
+    error,
     handleExpenseGroupDuplicate,
     handleExpenseGroupDelete,
     handleAddExpense,
