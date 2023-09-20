@@ -43,13 +43,13 @@ import styles from './ExpenseGroupDetail.module.scss';
 interface DeleteAction {
   _id: string;
   onCancel: Dispatch<SetStateAction<undefined>>;
-  onConfirm: () => Promise<void>;
+  onConfirm: () => void;
   message: string | ReactNode;
 }
 
 interface DuplicateAction {
   onCancel: Dispatch<SetStateAction<undefined>>;
-  onSave: (formData: ExpenseGroup) => Promise<void>;
+  onSave: (formData: ExpenseGroup) => void;
   message?: string | ReactNode;
   expenseGroup: ExpenseGroup;
 }
@@ -104,13 +104,13 @@ const ExpenseGroupDetail = (): JSX.Element => {
   };
 
   const handleUpdateExpense = (updatedExpense: any) => {
-    console.log({
-      expenseGroupId: expenseGroupId as string,
-      ...updatedExpense,
-    });
     updateExpenseMutation.mutate({
       input: { expenseGroupId: expenseGroupId as string, ...updatedExpense },
     });
+  };
+
+  const handleDeleteExpense = (expenseId: string) => {
+    console.log(expenseId);
   };
 
   const mapOverdueStatustoExpenses = (expenses: Expense[]) => {
@@ -260,7 +260,8 @@ const ExpenseGroupDetail = (): JSX.Element => {
                               setDeleteAction({
                                 _id: expenseGroupId as string,
                                 onCancel: () => setDeleteAction(undefined),
-                                onConfirm: () => {},
+                                onConfirm: () =>
+                                  handleDeleteExpense(expense._id as string),
                                 message: `Are you sure you want to delete ${expense.name}?`,
                               })
                             }
