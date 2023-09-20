@@ -40,7 +40,7 @@ input UpdateExpenseInput {
   expenseGroupId: ID!
   name: String!
   balance: Float!
-  dueDate: String!
+  dueDate: String
   isPaid: Boolean!
   isOverdue: Boolean
   note: String

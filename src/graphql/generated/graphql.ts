@@ -114,7 +114,7 @@ export type StatusResponse = {
 export type UpdateExpenseInput = {
   _id?: InputMaybe<Scalars['ID']['input']>;
   balance: Scalars['Float']['input'];
-  dueDate: Scalars['String']['input'];
+  dueDate?: InputMaybe<Scalars['String']['input']>;
   expenseGroupId: Scalars['ID']['input'];
   isOverdue?: InputMaybe<Scalars['Boolean']['input']>;
   isPaid: Scalars['Boolean']['input'];
