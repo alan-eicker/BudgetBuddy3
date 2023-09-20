@@ -2,7 +2,7 @@ import Head from 'next/head';
 import LoginForm from '@/features/LoginForm';
 import ContentSection from '@/components/ContentSection';
 
-const HomePage = (): JSX.Element => {
+export default function HomePage() {
   return (
     <>
       <Head>
@@ -15,6 +15,4 @@ const HomePage = (): JSX.Element => {
       </ContentSection>
     </>
   );
-};
-
-export default HomePage;
+}

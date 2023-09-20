@@ -1,7 +1,7 @@
 import Head from 'next/head';
 import ContentSection from '@/components/ContentSection';
 
-const ResetPassword = () => {
+export default function ResetPassword() {
   return (
     <>
       <Head>
@@ -12,6 +12,4 @@ const ResetPassword = () => {
       <ContentSection>Reset password</ContentSection>
     </>
   );
-};
-
-export default ResetPassword;
+}

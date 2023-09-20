@@ -2,7 +2,7 @@ import Head from 'next/head';
 import RegisterUserForm from '@/features/RegisterUserForm';
 import ContentSection from '@/components/ContentSection';
 
-const RegisterUserPage = () => {
+export default function RegisterUserPage() {
   return (
     <>
       <Head>
@@ -15,6 +15,4 @@ const RegisterUserPage = () => {
       </ContentSection>
     </>
   );
-};
-
-export default RegisterUserPage;
+}
