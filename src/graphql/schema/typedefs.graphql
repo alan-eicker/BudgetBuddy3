@@ -3,7 +3,6 @@ type Query {
   getExpenseGroupById(_id: String!): ExpenseGroup!
   getExpense(_id: String!): Expense!
   authenticateUser(username: String!, password: String!): StatusResponse!
-  deleteExpenseGroup(_id: String!): StatusResponse!
   logoutUser: Boolean!
 }
 
@@ -11,6 +10,7 @@ type Mutation {
   addExpenseGroup(input: NewExpenseGroupInput!): ExpenseGroup!
   updateExpense(input: UpdateExpenseInput!): Expense!
   addExpense(input: NewExpenseInput): Expense!
+  deleteExpenseGroup(_id: String!): StatusResponse!
 }
 
 type StatusResponse {

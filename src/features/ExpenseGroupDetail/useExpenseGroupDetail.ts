@@ -45,6 +45,17 @@ function useExpenseGroupDetail() {
     },
   });
 
+  const deleteExpenseGroupMutation = useMutation({
+    mutationFn: deleteExpenseGroup,
+    onSuccess: () => {
+      queryClient.removeQueries('expenseGroups');
+      router.push('/account/dashboard');
+    },
+    onError: () => {
+      setError('Could not delete expense group');
+    },
+  });
+
   async function handleExpenseGroupDuplicate(
     formData: Omit<ExpenseGroup, '_id'>,
   ) {
@@ -53,16 +64,7 @@ function useExpenseGroupDetail() {
 
   async function handleExpenseGroupDelete() {
     setShowOverlay(true);
-
-    const { status } = await queryClient.fetchQuery(
-      ['deleteExpenseGroup' + expenseGroupId],
-      () => deleteExpenseGroup({ _id: expenseGroupId as string }),
-    );
-
-    if (status.code === 200) {
-      queryClient.removeQueries('expenseGroups');
-      router.push('/account/dashboard');
-    }
+    deleteExpenseGroupMutation.mutate({ _id: expenseGroupId as string });
   }
 
   function handleAddExpense(newExpense: Expense) {

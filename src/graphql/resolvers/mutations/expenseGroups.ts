@@ -4,6 +4,8 @@ import {
   AddExpenseGroupMutationVariables,
   UpdateExpenseMutationVariables,
   AddExpenseMutationVariables,
+  StatusResponse,
+  QueryDeleteExpenseGroupArgs,
 } from '../../generated/graphql';
 import ExpenseGroupModel from '@/database/models/expenseGroup';
 
@@ -14,6 +16,21 @@ export async function addExpenseGroup(
   const expenseGroup = new ExpenseGroupModel(args.input);
   await expenseGroup.save();
   return expenseGroup;
+}
+
+export async function deleteExpenseGroup(
+  _: any,
+  args: QueryDeleteExpenseGroupArgs,
+): Promise<StatusResponse> {
+  try {
+    await ExpenseGroupModel.deleteOne({ _id: args._id });
+    return { code: 200 };
+  } catch {
+    return {
+      code: 500,
+      message: `Could not delete expense group [${args._id}].`,
+    };
+  }
 }
 
 export async function addExpense(

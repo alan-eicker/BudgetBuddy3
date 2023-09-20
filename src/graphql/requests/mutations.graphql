@@ -13,6 +13,13 @@ mutation addExpenseGroup($input: NewExpenseGroupInput!) {
   }
 }
 
+mutation deleteExpenseGroup($_id: String!) {
+  status: deleteExpenseGroup(_id: $_id) {
+    code
+    message
+  }
+}
+
 mutation updateExpense($input: UpdateExpenseInput!) {
   expense: updateExpense(input: $input) {
     name

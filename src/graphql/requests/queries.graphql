@@ -32,13 +32,6 @@ query getExpenseGroupById($_id: String!) {
   }
 }
 
-query deleteExpenseGroup($_id: String!) {
-  status: deleteExpenseGroup(_id: $_id) {
-    code
-    message
-  }
-}
-
 query authenticateUser($username: String!, $password: String!) {
   status: authenticateUser(username: $username, password: $password) {
     code
