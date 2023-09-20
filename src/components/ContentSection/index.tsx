@@ -12,7 +12,7 @@ interface ContentSectionProp extends BoxProps {
   noPadding?: boolean;
 }
 
-const ContentSection = ({
+function ContentSection({
   children,
   maxWidth,
   compressed,
@@ -20,20 +20,22 @@ const ContentSection = ({
   noPaddingBottom,
   noPadding,
   ...boxProps
-}: ContentSectionProp): JSX.Element => (
-  <Box
-    {...boxProps}
-    className={classnames(styles.container, {
-      [styles.isCompressed]: compressed,
-      [styles.noPaddingTop]: noPaddingTop,
-      [styles.noPaddingBottom]: noPaddingBottom,
-      [styles.noPadding]: noPadding,
-    })}
-  >
-    <Box className={styles.body} style={{ maxWidth }}>
-      {children}
+}: ContentSectionProp) {
+  return (
+    <Box
+      {...boxProps}
+      className={classnames(styles.container, {
+        [styles.isCompressed]: compressed,
+        [styles.noPaddingTop]: noPaddingTop,
+        [styles.noPaddingBottom]: noPaddingBottom,
+        [styles.noPadding]: noPadding,
+      })}
+    >
+      <Box className={styles.body} style={{ maxWidth }}>
+        {children}
+      </Box>
     </Box>
-  </Box>
-);
+  );
+}
 
 export default ContentSection;

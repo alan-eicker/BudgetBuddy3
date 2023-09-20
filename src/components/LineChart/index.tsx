@@ -34,7 +34,7 @@ interface LineChartProps extends BoxProps {
   }[];
 }
 
-const LineChart = ({
+function LineChart({
   title,
   titleElement: TitleElement = 'div',
   height,
@@ -44,12 +44,12 @@ const LineChart = ({
   legendHeight = 40,
   data,
   ...boxProps
-}: LineChartProps) => {
+}: LineChartProps): JSX.Element | null {
   if (!data.length) {
     return null;
   }
 
-  const createLines = () => {
+  function createLines() {
     const [chartItem] = data;
     delete chartItem.name;
 
@@ -66,13 +66,13 @@ const LineChart = ({
         }
       />
     ));
-  };
+  }
 
-  const ChartTooltip = ({
+  function ChartTooltip({
     active,
     payload,
     ...boxProps
-  }: TooltipProps<ValueType, NameType>) => {
+  }: TooltipProps<ValueType, NameType>) {
     if (active && payload && payload.length) {
       return (
         <Box className={styles.tooltip}>
@@ -91,7 +91,7 @@ const LineChart = ({
     }
 
     return null;
-  };
+  }
 
   return (
     <Box className={styles.container} {...boxProps}>
@@ -110,6 +110,6 @@ const LineChart = ({
       </Box>
     </Box>
   );
-};
+}
 
 export default LineChart;

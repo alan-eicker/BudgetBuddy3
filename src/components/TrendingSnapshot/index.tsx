@@ -22,11 +22,11 @@ const propValues = {
   },
 };
 
-const TrendingSnapshot = ({
+function TrendingSnapshot({
   value,
   direction,
   prevPeriod,
-}: TrendingSnapshotProps): JSX.Element => {
+}: TrendingSnapshotProps) {
   const { Icon, color, text } = propValues[direction];
 
   return (
@@ -38,6 +38,6 @@ const TrendingSnapshot = ({
       </Box>
     </Box>
   );
-};
+}
 
 export default TrendingSnapshot;

@@ -11,26 +11,28 @@ interface CardProps extends BoxProps {
   hasError?: boolean;
 }
 
-const Card = ({
+function Card({
   head,
   children,
   height,
   hasError,
   isDarkTheme = false,
   ...boxProps
-}: CardProps) => (
-  <Box
-    className={classnames(styles.container, {
-      [styles.hasError]: hasError,
-      [styles.darkTheme]: isDarkTheme,
-    })}
-    height={height}
-    width="100%"
-    {...boxProps}
-  >
-    {head && <Box className={styles.head}>{head}</Box>}
-    <Box className={styles.body}>{children}</Box>
-  </Box>
-);
+}: CardProps) {
+  return (
+    <Box
+      className={classnames(styles.container, {
+        [styles.hasError]: hasError,
+        [styles.darkTheme]: isDarkTheme,
+      })}
+      height={height}
+      width="100%"
+      {...boxProps}
+    >
+      {head && <Box className={styles.head}>{head}</Box>}
+      <Box className={styles.body}>{children}</Box>
+    </Box>
+  );
+}
 
 export default Card;

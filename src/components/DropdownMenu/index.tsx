@@ -22,21 +22,21 @@ interface DropdownMenuProps {
   menuItems: (MenuItem & Omit<LinkProps, 'href'>)[];
 }
 
-const DropdownMenu = ({
+function DropdownMenu({
   triggerButtonText,
   triggerButtonTextColor = 'inherit',
   ariaLabel,
   menuItems,
-}: DropdownMenuProps) => {
+}: DropdownMenuProps) {
   const [anchorEl, setAnchorEl] = useState<HTMLButtonElement | null>(null);
 
-  const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
+  function handleClick(event: React.MouseEvent<HTMLButtonElement>) {
     setAnchorEl(event.currentTarget);
-  };
+  }
 
-  const handleClose = () => {
+  function handleClose() {
     setAnchorEl(null);
-  };
+  }
 
   const open = Boolean(anchorEl);
   const id = open ? 'simple-popover' : undefined;
@@ -74,6 +74,6 @@ const DropdownMenu = ({
       </Popover>
     </>
   );
-};
+}
 
 export default DropdownMenu;

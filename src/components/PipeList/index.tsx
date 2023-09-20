@@ -6,14 +6,16 @@ interface PipeListProps<T> {
   items: T[];
 }
 
-const PipeList = <T,>({ items, className }: PipeListProps<T>) => (
-  <ul className={classnames(styles.list, className)}>
-    {items.map((item: T) => (
-      <li key={Math.random()}>
-        <>{item}</>
-      </li>
-    ))}
-  </ul>
-);
+function PipeList<T>({ items, className }: PipeListProps<T>) {
+  return (
+    <ul className={classnames(styles.list, className)}>
+      {items.map((item: T) => (
+        <li key={Math.random()}>
+          <>{item}</>
+        </li>
+      ))}
+    </ul>
+  );
+}
 
 export default PipeList;

@@ -6,12 +6,12 @@ export interface JumbotronProps extends BoxProps {
   children: ReactNode;
 }
 
-const Jumbotron = ({ children, ...boxProps }: JumbotronProps): JSX.Element => {
+function Jumbotron({ children, ...boxProps }: JumbotronProps) {
   return (
     <Box className={styles.container} {...boxProps}>
       {children}
     </Box>
   );
-};
+}
 
 export default Jumbotron;

@@ -10,31 +10,33 @@ interface ConfirmationModalProps {
   onCancel: Function;
 }
 
-const ConfirmationModal = ({
+function ConfirmationModal({
   message,
   onCancel,
   onConfirm,
-}: ConfirmationModalProps) => (
-  <Modal open={true}>
-    <Box className={styles.modal}>
-      <Box padding={2.5} fontSize={18} component="h2">
-        {message}
+}: ConfirmationModalProps) {
+  return (
+    <Modal open={true}>
+      <Box className={styles.modal}>
+        <Box padding={2.5} fontSize={18} component="h2">
+          {message}
+        </Box>
+        <Box className={styles.modalButtons} textAlign="center" padding={2.5}>
+          <Button
+            color="error"
+            variant="contained"
+            size="small"
+            onClick={() => onConfirm()}
+          >
+            Delete
+          </Button>
+          <Button variant="outlined" size="small" onClick={() => onCancel()}>
+            Cancel
+          </Button>
+        </Box>
       </Box>
-      <Box className={styles.modalButtons} textAlign="center" padding={2.5}>
-        <Button
-          color="error"
-          variant="contained"
-          size="small"
-          onClick={() => onConfirm()}
-        >
-          Delete
-        </Button>
-        <Button variant="outlined" size="small" onClick={() => onCancel()}>
-          Cancel
-        </Button>
-      </Box>
-    </Box>
-  </Modal>
-);
+    </Modal>
+  );
+}
 
 export default ConfirmationModal;

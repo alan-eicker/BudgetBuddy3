@@ -13,40 +13,42 @@ interface SpendingSnapshotProps {
   trending?: 'up' | 'down';
 }
 
-const SpendingSnapshot = ({
+function SpendingSnapshot({
   title = 'Spending Snapshot',
   trending = 'down',
   items = [],
-}: SpendingSnapshotProps): JSX.Element => (
-  <Card
-    head={
-      <Typography component="h3" fontSize={20} textAlign="center">
-        {title}
-      </Typography>
-    }
-  >
-    {/* TODO: need to get get the previous data range and % difference */}
-    <TrendingSnapshot
-      value={7}
-      direction={trending}
-      prevPeriod="09/01/2023 - 09/15/2023"
-    />
-    <Box marginTop={2.5} marginBottom={2.5}>
-      <Divider />
-    </Box>
-    <List disablePadding dense>
-      {items.map(([label, value]) => (
-        <ListItem key={label} className="text-center" disablePadding>
-          <ListItemText>
-            <Typography component="h4">{label}</Typography>
-            <Typography fontSize={26} fontWeight="bold">
-              {value}
-            </Typography>
-          </ListItemText>
-        </ListItem>
-      ))}
-    </List>
-  </Card>
-);
+}: SpendingSnapshotProps) {
+  return (
+    <Card
+      head={
+        <Typography component="h3" fontSize={20} textAlign="center">
+          {title}
+        </Typography>
+      }
+    >
+      {/* TODO: need to get get the previous data range and % difference */}
+      <TrendingSnapshot
+        value={7}
+        direction={trending}
+        prevPeriod="09/01/2023 - 09/15/2023"
+      />
+      <Box marginTop={2.5} marginBottom={2.5}>
+        <Divider />
+      </Box>
+      <List disablePadding dense>
+        {items.map(([label, value]) => (
+          <ListItem key={label} className="text-center" disablePadding>
+            <ListItemText>
+              <Typography component="h4">{label}</Typography>
+              <Typography fontSize={26} fontWeight="bold">
+                {value}
+              </Typography>
+            </ListItemText>
+          </ListItem>
+        ))}
+      </List>
+    </Card>
+  );
+}
 
 export default SpendingSnapshot;

@@ -12,27 +12,29 @@ export interface HeaderProps extends BoxProps {
   children?: ReactNode;
 }
 
-const Header = ({ children, title, ...boxProps }: HeaderProps): JSX.Element => (
-  <Box className={styles.header} {...boxProps}>
-    <AppBar position="static">
-      <Toolbar>
-        <Typography
-          display="flex"
-          alignItems="center"
-          flexGrow={1}
-          component="div"
-        >
-          <Link href="/" className={styles.link}>
-            <BrandLogo size={30} />
-            <Typography component="span" variant="h6">
-              {title}
-            </Typography>
-          </Link>
-        </Typography>
-        <Box className={styles.nav}>{children}</Box>
-      </Toolbar>
-    </AppBar>
-  </Box>
-);
+function Header({ children, title, ...boxProps }: HeaderProps) {
+  return (
+    <Box className={styles.header} {...boxProps}>
+      <AppBar position="static">
+        <Toolbar>
+          <Typography
+            display="flex"
+            alignItems="center"
+            flexGrow={1}
+            component="div"
+          >
+            <Link href="/" className={styles.link}>
+              <BrandLogo size={30} />
+              <Typography component="span" variant="h6">
+                {title}
+              </Typography>
+            </Link>
+          </Typography>
+          <Box className={styles.nav}>{children}</Box>
+        </Toolbar>
+      </AppBar>
+    </Box>
+  );
+}
 
 export default Header;

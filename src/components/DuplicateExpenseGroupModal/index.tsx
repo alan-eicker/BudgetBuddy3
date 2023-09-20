@@ -13,38 +13,40 @@ interface DuplicateExpenseGroupModalProp {
   expenseGroup: ExpenseGroup;
 }
 
-const DuplicateExpenseGroupModal = ({
+function DuplicateExpenseGroupModal({
   message,
   onCancel,
   onSave,
   expenseGroup,
-}: DuplicateExpenseGroupModalProp) => (
-  <Modal open={true}>
-    <Box className={styles.modal}>
-      <Typography padding={2.5} variant="h5" component="h2">
-        Duplicate Expense Group
-      </Typography>
-      <Typography>{message}</Typography>
-      <form>{JSON.stringify(expenseGroup)}</form>
-      <Box className={styles.modalButtons} textAlign="center" padding={2.5}>
-        <Button
-          variant="contained"
-          color="error"
-          size="small"
-          onClick={() => onCancel()}
-        >
-          Cancel
-        </Button>
-        <Button
-          variant="contained"
-          size="small"
-          onClick={() => onSave(expenseGroup)}
-        >
-          Save
-        </Button>
+}: DuplicateExpenseGroupModalProp) {
+  return (
+    <Modal open={true}>
+      <Box className={styles.modal}>
+        <Typography padding={2.5} variant="h5" component="h2">
+          Duplicate Expense Group
+        </Typography>
+        <Typography>{message}</Typography>
+        <form>{JSON.stringify(expenseGroup)}</form>
+        <Box className={styles.modalButtons} textAlign="center" padding={2.5}>
+          <Button
+            variant="contained"
+            color="error"
+            size="small"
+            onClick={() => onCancel()}
+          >
+            Cancel
+          </Button>
+          <Button
+            variant="contained"
+            size="small"
+            onClick={() => onSave(expenseGroup)}
+          >
+            Save
+          </Button>
+        </Box>
       </Box>
-    </Box>
-  </Modal>
-);
+    </Modal>
+  );
+}
 
 export default DuplicateExpenseGroupModal;

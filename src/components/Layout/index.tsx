@@ -12,11 +12,7 @@ export interface LayoutProps {
   showHeader?: boolean;
 }
 
-const Layout = ({
-  header,
-  children,
-  showHeader = false,
-}: LayoutProps): JSX.Element => {
+function Layout({ header, children, showHeader = false }: LayoutProps) {
   const { showOverlay } = useAppContext();
   const hasHeader = showHeader && header;
 
@@ -41,6 +37,6 @@ const Layout = ({
       </Box>
     </>
   );
-};
+}
 
 export default Layout;
