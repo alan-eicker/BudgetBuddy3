@@ -12,6 +12,7 @@ export const {
   deleteExpenseGroup,
   addExpenseGroup,
   updateExpense,
+  updateExpensePaidStatus,
   addExpense,
 } = getSdk(gqlClient);
 

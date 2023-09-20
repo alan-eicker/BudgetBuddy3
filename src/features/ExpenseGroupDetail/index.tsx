@@ -53,6 +53,7 @@ export default function ExpenseGroupDetail() {
     handleExpenseGroupDelete,
     handleAddExpense,
     handleUpdateExpense,
+    handleUpdateExpensePaidStatus,
     handleDeleteExpense,
     mapOverdueStatustoExpenses,
   } = useExpenseGroupDetail();
@@ -193,6 +194,13 @@ export default function ExpenseGroupDetail() {
                     <ListItem disablePadding key={expense._id || expense.name}>
                       <ExpenseCard
                         {...expense}
+                        onPaidChange={(isPaid) =>
+                          handleUpdateExpensePaidStatus(
+                            isPaid,
+                            expenseGroupId as string,
+                            expense._id as string,
+                          )
+                        }
                         actions={[
                           <Button
                             key="edit-button"

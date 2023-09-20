@@ -9,8 +9,17 @@ type Query {
 type Mutation {
   addExpenseGroup(input: NewExpenseGroupInput!): ExpenseGroup!
   updateExpense(input: UpdateExpenseInput!): Expense!
+  updateExpensePaidStatus(
+    isPaid: Boolean!
+    expenseGroupId: String!
+    expenseId: String!
+  ): PaidStatus!
   addExpense(input: NewExpenseInput): Expense!
   deleteExpenseGroup(_id: String!): StatusResponse!
+}
+
+type PaidStatus {
+  isPaid: Boolean!
 }
 
 type StatusResponse {

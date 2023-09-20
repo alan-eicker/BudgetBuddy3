@@ -1,4 +1,4 @@
-import { ReactElement } from 'react';
+import { ReactElement, SyntheticEvent } from 'react';
 import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
 import Switch from '@mui/material/Switch';
@@ -13,14 +13,16 @@ interface ExpenseCardProps extends Expense {
   isDarkTheme?: boolean;
   isOverdue?: boolean;
   actions?: ReactElement<HTMLButtonElement>[];
+  onPaidChange?: (isPaid: boolean) => void;
 }
 
 export default function ExpenseCard({
   isDarkTheme = false,
   isOverdue = false,
   isPaid = false,
-  name,
+  onPaidChange = () => {},
   balance = 0,
+  name,
   dueDate,
   note,
   actions,
@@ -59,8 +61,11 @@ export default function ExpenseCard({
           {dueDate && <Box>Due Date: {dueDate}</Box>}
         </Box>
         <Box>
-          Paid
-          <Switch checked={isPaid} />
+          {isPaid ? 'Paid' : 'Not Paid'}
+          <Switch
+            checked={isPaid}
+            onChange={(e) => onPaidChange(e.target.checked)}
+          />
         </Box>
       </Box>
       {note && (

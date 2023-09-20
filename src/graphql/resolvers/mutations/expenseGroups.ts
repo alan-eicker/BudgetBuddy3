@@ -2,10 +2,11 @@ import {
   Expense,
   ExpenseGroup,
   AddExpenseGroupMutationVariables,
+  MutationDeleteExpenseGroupArgs,
   UpdateExpenseMutationVariables,
+  UpdateExpensePaidStatusMutationVariables,
   AddExpenseMutationVariables,
   StatusResponse,
-  QueryDeleteExpenseGroupArgs,
 } from '../../generated/graphql';
 import ExpenseGroupModel from '@/database/models/expenseGroup';
 
@@ -20,7 +21,7 @@ export async function addExpenseGroup(
 
 export async function deleteExpenseGroup(
   _: any,
-  args: QueryDeleteExpenseGroupArgs,
+  args: MutationDeleteExpenseGroupArgs,
 ): Promise<StatusResponse> {
   try {
     await ExpenseGroupModel.deleteOne({ _id: args._id });
@@ -68,4 +69,22 @@ export async function updateExpense(
   );
 
   return updatedExpense;
+}
+
+export async function updateExpensePaidStatus(
+  parent: unknown,
+  args: UpdateExpensePaidStatusMutationVariables,
+) {
+  const { expenseGroupId, expenseId, isPaid } = args;
+
+  await ExpenseGroupModel.findOneAndUpdate(
+    { _id: expenseGroupId, 'expenses._id': expenseId },
+    {
+      $set: {
+        'expenses.$.isPaid': isPaid,
+      },
+    },
+  );
+
+  return { isPaid };
 }

@@ -1,17 +1,18 @@
 import { useState } from 'react';
 import { useRouter } from 'next/router';
 import { useQuery, useMutation } from 'react-query';
+import { ExpenseGroup, Expense } from '@/graphql/generated/graphql';
+import { useAppContext } from '@/providers/AppProvider';
+import { isOverDue } from '@/utils/expenses';
 import {
   getExpenseGroupById,
   addExpense,
   updateExpense,
+  updateExpensePaidStatus,
   addExpenseGroup,
   deleteExpenseGroup,
   queryClient,
 } from '@/api';
-import { ExpenseGroup, Expense } from '@/graphql/generated/graphql';
-import { useAppContext } from '@/providers/AppProvider';
-import { isOverDue } from '@/utils/expenses';
 
 export default function useExpenseGroupDetail() {
   const router = useRouter();
@@ -33,7 +34,15 @@ export default function useExpenseGroupDetail() {
       queryClient.removeQueries('expenseGroups');
     },
     onError: () => {
-      setError('Could not update expense');
+      setError('Could not update expense paid status');
+    },
+  });
+
+  const handleUpdateExpensePaidStatusMutation = useMutation({
+    mutationFn: updateExpensePaidStatus,
+    onSuccess: () => {
+      queryClient.invalidateQueries('expenseGroup' + expenseGroupId);
+      queryClient.removeQueries('expenseGroups');
     },
   });
 
@@ -90,6 +99,18 @@ export default function useExpenseGroupDetail() {
     });
   }
 
+  function handleUpdateExpensePaidStatus(
+    isPaid: boolean,
+    expenseGroupId: string,
+    expenseId: string,
+  ) {
+    handleUpdateExpensePaidStatusMutation.mutate({
+      isPaid,
+      expenseGroupId,
+      expenseId,
+    });
+  }
+
   function handleDeleteExpense(expenseId: string) {
     console.log(expenseId);
   }
@@ -108,6 +129,7 @@ export default function useExpenseGroupDetail() {
     handleExpenseGroupDelete,
     handleAddExpense,
     handleUpdateExpense,
+    handleUpdateExpensePaidStatus,
     handleDeleteExpense,
     mapOverdueStatustoExpenses,
   };

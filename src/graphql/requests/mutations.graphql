@@ -30,6 +30,20 @@ mutation updateExpense($input: UpdateExpenseInput!) {
   }
 }
 
+mutation updateExpensePaidStatus(
+  $isPaid: Boolean!
+  $expenseGroupId: String!
+  $expenseId: String!
+) {
+  expense: updateExpensePaidStatus(
+    isPaid: $isPaid
+    expenseGroupId: $expenseGroupId
+    expenseId: $expenseId
+  ) {
+    isPaid
+  }
+}
+
 mutation addExpense($input: NewExpenseInput!) {
   expense: addExpense(input: $input) {
     _id

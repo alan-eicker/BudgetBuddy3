@@ -42,6 +42,7 @@ export type Mutation = {
   addExpenseGroup: ExpenseGroup;
   deleteExpenseGroup: StatusResponse;
   updateExpense: Expense;
+  updateExpensePaidStatus: PaidStatus;
 };
 
 
@@ -64,6 +65,13 @@ export type MutationUpdateExpenseArgs = {
   input: UpdateExpenseInput;
 };
 
+
+export type MutationUpdateExpensePaidStatusArgs = {
+  expenseGroupId: Scalars['String']['input'];
+  expenseId: Scalars['String']['input'];
+  isPaid: Scalars['Boolean']['input'];
+};
+
 export type NewExpenseGroupInput = {
   endDate?: InputMaybe<Scalars['String']['input']>;
   expenses?: InputMaybe<Array<InputMaybe<NewExpenseInput>>>;
@@ -78,6 +86,11 @@ export type NewExpenseInput = {
   isPaid?: InputMaybe<Scalars['Boolean']['input']>;
   name?: InputMaybe<Scalars['String']['input']>;
   note?: InputMaybe<Scalars['String']['input']>;
+};
+
+export type PaidStatus = {
+  __typename?: 'PaidStatus';
+  isPaid: Scalars['Boolean']['output'];
 };
 
 export type Query = {
@@ -142,6 +155,15 @@ export type UpdateExpenseMutationVariables = Exact<{
 
 
 export type UpdateExpenseMutation = { __typename?: 'Mutation', expense: { __typename?: 'Expense', name: string, balance: number, dueDate?: string | null, isPaid: boolean, note?: string | null } };
+
+export type UpdateExpensePaidStatusMutationVariables = Exact<{
+  isPaid: Scalars['Boolean']['input'];
+  expenseGroupId: Scalars['String']['input'];
+  expenseId: Scalars['String']['input'];
+}>;
+
+
+export type UpdateExpensePaidStatusMutation = { __typename?: 'Mutation', expense: { __typename?: 'PaidStatus', isPaid: boolean } };
 
 export type AddExpenseMutationVariables = Exact<{
   input: NewExpenseInput;
@@ -208,6 +230,17 @@ export const UpdateExpenseDocument = gql`
     dueDate
     isPaid
     note
+  }
+}
+    `;
+export const UpdateExpensePaidStatusDocument = gql`
+    mutation updateExpensePaidStatus($isPaid: Boolean!, $expenseGroupId: String!, $expenseId: String!) {
+  expense: updateExpensePaidStatus(
+    isPaid: $isPaid
+    expenseGroupId: $expenseGroupId
+    expenseId: $expenseId
+  ) {
+    isPaid
   }
 }
     `;
@@ -288,6 +321,9 @@ export function getSdk(client: GraphQLClient, withWrapper: SdkFunctionWrapper = 
     },
     updateExpense(variables: UpdateExpenseMutationVariables, requestHeaders?: GraphQLClientRequestHeaders): Promise<UpdateExpenseMutation> {
       return withWrapper((wrappedRequestHeaders) => client.request<UpdateExpenseMutation>(UpdateExpenseDocument, variables, {...requestHeaders, ...wrappedRequestHeaders}), 'updateExpense', 'mutation');
+    },
+    updateExpensePaidStatus(variables: UpdateExpensePaidStatusMutationVariables, requestHeaders?: GraphQLClientRequestHeaders): Promise<UpdateExpensePaidStatusMutation> {
+      return withWrapper((wrappedRequestHeaders) => client.request<UpdateExpensePaidStatusMutation>(UpdateExpensePaidStatusDocument, variables, {...requestHeaders, ...wrappedRequestHeaders}), 'updateExpensePaidStatus', 'mutation');
     },
     addExpense(variables: AddExpenseMutationVariables, requestHeaders?: GraphQLClientRequestHeaders): Promise<AddExpenseMutation> {
       return withWrapper((wrappedRequestHeaders) => client.request<AddExpenseMutation>(AddExpenseDocument, variables, {...requestHeaders, ...wrappedRequestHeaders}), 'addExpense', 'mutation');
