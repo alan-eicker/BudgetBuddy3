@@ -11,7 +11,7 @@ interface CardProps extends BoxProps {
   hasError?: boolean;
 }
 
-function Card({
+export default function Card({
   head,
   children,
   height,
@@ -34,5 +34,3 @@ function Card({
     </Box>
   );
 }
-
-export default Card;

@@ -15,7 +15,7 @@ interface ExpenseCardProps extends Expense {
   actions?: ReactElement<HTMLButtonElement>[];
 }
 
-function ExpenseCard({
+export default function ExpenseCard({
   isDarkTheme = false,
   isOverdue = false,
   isPaid = false,
@@ -78,5 +78,3 @@ function ExpenseCard({
     </Card>
   );
 }
-
-export default ExpenseCard;

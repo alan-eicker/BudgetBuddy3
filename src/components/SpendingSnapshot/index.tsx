@@ -13,7 +13,7 @@ interface SpendingSnapshotProps {
   trending?: 'up' | 'down';
 }
 
-function SpendingSnapshot({
+export default function SpendingSnapshot({
   title = 'Spending Snapshot',
   trending = 'down',
   items = [],
@@ -50,5 +50,3 @@ function SpendingSnapshot({
     </Card>
   );
 }
-
-export default SpendingSnapshot;

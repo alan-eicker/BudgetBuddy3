@@ -12,7 +12,7 @@ export interface HeaderProps extends BoxProps {
   children?: ReactNode;
 }
 
-function Header({ children, title, ...boxProps }: HeaderProps) {
+export default function Header({ children, title, ...boxProps }: HeaderProps) {
   return (
     <Box className={styles.header} {...boxProps}>
       <AppBar position="static">
@@ -36,5 +36,3 @@ function Header({ children, title, ...boxProps }: HeaderProps) {
     </Box>
   );
 }
-
-export default Header;

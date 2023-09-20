@@ -2,7 +2,7 @@ interface BrandLogoProps {
   size?: number;
 }
 
-function BrandLogo({ size = 36 }: BrandLogoProps) {
+export default function BrandLogo({ size = 36 }: BrandLogoProps) {
   return (
     <svg
       version="1.0"
@@ -51,5 +51,3 @@ function BrandLogo({ size = 36 }: BrandLogoProps) {
     </svg>
   );
 }
-
-export default BrandLogo;

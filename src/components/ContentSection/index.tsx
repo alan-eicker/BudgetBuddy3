@@ -12,7 +12,7 @@ interface ContentSectionProp extends BoxProps {
   noPadding?: boolean;
 }
 
-function ContentSection({
+export default function ContentSection({
   children,
   maxWidth,
   compressed,
@@ -37,5 +37,3 @@ function ContentSection({
     </Box>
   );
 }
-
-export default ContentSection;

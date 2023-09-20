@@ -12,7 +12,11 @@ export interface LayoutProps {
   showHeader?: boolean;
 }
 
-function Layout({ header, children, showHeader = false }: LayoutProps) {
+export default function Layout({
+  header,
+  children,
+  showHeader = false,
+}: LayoutProps) {
   const { showOverlay } = useAppContext();
   const hasHeader = showHeader && header;
 
@@ -38,5 +42,3 @@ function Layout({ header, children, showHeader = false }: LayoutProps) {
     </>
   );
 }
-
-export default Layout;

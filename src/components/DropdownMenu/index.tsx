@@ -22,7 +22,7 @@ interface DropdownMenuProps {
   menuItems: (MenuItem & Omit<LinkProps, 'href'>)[];
 }
 
-function DropdownMenu({
+export default function DropdownMenu({
   triggerButtonText,
   triggerButtonTextColor = 'inherit',
   ariaLabel,
@@ -75,5 +75,3 @@ function DropdownMenu({
     </>
   );
 }
-
-export default DropdownMenu;

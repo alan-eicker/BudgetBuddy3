@@ -34,7 +34,7 @@ interface LineChartProps extends BoxProps {
   }[];
 }
 
-function LineChart({
+export default function LineChart({
   title,
   titleElement: TitleElement = 'div',
   height,
@@ -111,5 +111,3 @@ function LineChart({
     </Box>
   );
 }
-
-export default LineChart;

@@ -8,7 +8,7 @@ interface NoDataProps {
   btn?: ButtonProps;
 }
 
-function NoData({ text, btn }: NoDataProps) {
+export default function NoData({ text, btn }: NoDataProps) {
   return (
     <ContentSection textAlign="center">
       <Typography>{text}</Typography>
@@ -22,5 +22,3 @@ function NoData({ text, btn }: NoDataProps) {
     </ContentSection>
   );
 }
-
-export default NoData;

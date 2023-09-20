@@ -6,7 +6,7 @@ interface PipeListProps<T> {
   items: T[];
 }
 
-function PipeList<T>({ items, className }: PipeListProps<T>) {
+export default function PipeList<T>({ items, className }: PipeListProps<T>) {
   return (
     <ul className={classnames(styles.list, className)}>
       {items.map((item: T) => (
@@ -17,5 +17,3 @@ function PipeList<T>({ items, className }: PipeListProps<T>) {
     </ul>
   );
 }
-
-export default PipeList;

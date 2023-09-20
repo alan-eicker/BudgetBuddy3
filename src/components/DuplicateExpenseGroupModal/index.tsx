@@ -13,7 +13,7 @@ interface DuplicateExpenseGroupModalProp {
   expenseGroup: ExpenseGroup;
 }
 
-function DuplicateExpenseGroupModal({
+export default function DuplicateExpenseGroupModal({
   message,
   onCancel,
   onSave,
@@ -48,5 +48,3 @@ function DuplicateExpenseGroupModal({
     </Modal>
   );
 }
-
-export default DuplicateExpenseGroupModal;

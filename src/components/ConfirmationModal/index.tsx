@@ -10,7 +10,7 @@ interface ConfirmationModalProps {
   onCancel: Function;
 }
 
-function ConfirmationModal({
+export default function ConfirmationModal({
   message,
   onCancel,
   onConfirm,
@@ -38,5 +38,3 @@ function ConfirmationModal({
     </Modal>
   );
 }
-
-export default ConfirmationModal;

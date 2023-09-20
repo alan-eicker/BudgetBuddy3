@@ -22,7 +22,7 @@ const propValues = {
   },
 };
 
-function TrendingSnapshot({
+export default function TrendingSnapshot({
   value,
   direction,
   prevPeriod,
@@ -39,5 +39,3 @@ function TrendingSnapshot({
     </Box>
   );
 }
-
-export default TrendingSnapshot;

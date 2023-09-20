@@ -3,7 +3,7 @@ import IconButton from '@mui/material/IconButton';
 import CloseIcon from '@mui/icons-material/Close';
 import { UnknownFuntionType } from '@/types/functions';
 
-function Alert({
+export default function Alert({
   children,
   onDismiss,
   ...props
@@ -28,5 +28,3 @@ function Alert({
     </MuiAlert>
   );
 }
-
-export default Alert;
