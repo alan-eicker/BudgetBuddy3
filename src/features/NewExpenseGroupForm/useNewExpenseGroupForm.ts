@@ -6,7 +6,7 @@ import * as yup from 'yup';
 import { addExpenseGroup, queryClient } from '@/api';
 import { Expense } from '@/graphql/generated/graphql';
 
-export default function useExpenseGroupForm() {
+export default function useNewExpenseGroupForm() {
   const router = useRouter();
   const [duplicateError, setDuplicateError] = useState<string | null>();
   const [createError, setCreateError] = useState<string | null>();

@@ -1,5 +1,5 @@
 import Head from 'next/head';
-import ExpenseGroupForm from '@/features/ExpenseGroupForm';
+import NewExpenseGroupForm from '@/features/NewExpenseGroupForm';
 
 const AddExpenseGroup = () => (
   <>
@@ -8,7 +8,7 @@ const AddExpenseGroup = () => (
       <meta name="description" content="BudgetBuddy add expense group page" />
       <meta name="viewport" content="width=device-width, initial-scale=1" />
     </Head>
-    <ExpenseGroupForm />
+    <NewExpenseGroupForm />
   </>
 );
 

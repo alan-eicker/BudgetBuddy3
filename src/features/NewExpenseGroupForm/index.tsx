@@ -19,10 +19,10 @@ import PipeList from '@/components/PipeList';
 import { useExpenseFormModalContext } from '@/providers/ExpenseFormModalProvider';
 import { Expense } from '@/graphql/generated/graphql';
 import { formatNumber } from '@/utils/expenses';
-import useExpenseGroupForm from './useExpenseGroupForm';
-import styles from './ExpenseGroupForm.module.scss';
+import useNewExpenseGroupForm from './useNewExpenseGroupForm';
+import styles from './NewExpenseGroupForm.module.scss';
 
-export default function ExpenseGroupForm() {
+export default function NewExpenseGroupForm() {
   const router = useRouter();
   const { setExpenseFormState } = useExpenseFormModalContext();
 
@@ -34,7 +34,7 @@ export default function ExpenseGroupForm() {
     deleteExpense,
     duplicateError,
     dismissErrors,
-  } = useExpenseGroupForm();
+  } = useNewExpenseGroupForm();
 
   const {
     values,
