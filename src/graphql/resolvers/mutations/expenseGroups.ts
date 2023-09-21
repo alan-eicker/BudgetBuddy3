@@ -52,7 +52,7 @@ export async function updateExpense(
   parent: unknown,
   args: UpdateExpenseMutationVariables,
 ): Promise<Expense> {
-  const { expenseGroupId, ...updatedExpense } = args.input;
+  const { expenseGroupId, ...updatedExpense } = args;
 
   const { _id, name, balance, dueDate, isPaid, note } = updatedExpense;
 

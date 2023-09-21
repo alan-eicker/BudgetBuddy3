@@ -8,7 +8,16 @@ type Query {
 
 type Mutation {
   addExpenseGroup(input: NewExpenseGroupInput!): ExpenseGroup!
-  updateExpense(input: UpdateExpenseInput!): Expense!
+  updateExpense(
+    _id: ID
+    expenseGroupId: ID!
+    name: String!
+    balance: Float!
+    dueDate: String
+    isPaid: Boolean!
+    isOverdue: Boolean
+    note: String
+  ): Expense!
   updateExpensePaidStatus(
     isPaid: Boolean!
     expenseGroupId: String!
@@ -18,13 +27,13 @@ type Mutation {
     expenseGroupId: ID!
     name: String!
     balance: Float!
-    dueDate: String!
+    dueDate: String
     isPaid: Boolean!
     note: String
   ): Expense!
   deleteExpenseGroup(expenseGroupId: String!): StatusResponse!
   updateExpenseGroup(
-    expenseGroupId: ID!
+    expenseGroupId: ID
     startDate: String!
     endDate: String!
     totalBudget: Float!
@@ -61,17 +70,6 @@ type Expense {
   balance: Float!
   dueDate: String
   isPaid: Boolean!
-  note: String
-}
-
-input UpdateExpenseInput {
-  _id: ID
-  expenseGroupId: ID!
-  name: String!
-  balance: Float!
-  dueDate: String
-  isPaid: Boolean!
-  isOverdue: Boolean
   note: String
 }
 
