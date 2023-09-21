@@ -11,22 +11,22 @@ import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 import dayjs from 'dayjs';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
-import styles from './DuplicateExpenseGroupModal.module.scss';
 import { ExpenseGroup } from '@/graphql/generated/graphql';
+import styles from './ExpenseGroupDetailsFormModal.module.scss';
 
-interface DuplicateExpenseGroupModalProp {
+interface ExpenseGroupDetailsFormModalProps {
   message?: string | ReactNode;
   onSave: Function;
   onCancel: Function;
   expenseGroup: ExpenseGroup;
 }
 
-export default function DuplicateExpenseGroupModal({
+export default function ExpenseGroupDetailsFormModal({
   message,
   onCancel,
   onSave,
   expenseGroup,
-}: DuplicateExpenseGroupModalProp) {
+}: ExpenseGroupDetailsFormModalProps) {
   const { expenses } = expenseGroup;
   const initialValues = { startDate: '', endDate: '', totalBudget: 0 };
 

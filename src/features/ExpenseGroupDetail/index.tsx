@@ -16,7 +16,7 @@ import ContentSection from '@/components/ContentSection';
 import SpendingSnapshot from '@/components/SpendingSnapshot';
 import ExpenseCard from '@/components/ExpenseCard';
 import ConfirmationModal from '@/components/ConfirmationModal';
-import DuplicateExpenseGroupModal from '@/features/DuplicateExpenseGroupModal';
+import ExpenseGroupDetailsFormModal from '@/features/ExpenseGroupDetailsFormModal';
 import Alert from '@/components/Alert';
 import useExpenseGroupDetail from './useExpenseGroupDetail';
 import { ExpenseGroup } from '@/graphql/generated/graphql';
@@ -253,7 +253,7 @@ export default function ExpenseGroupDetail() {
         </ContentSection>
       </Box>
       {deleteAction && <ConfirmationModal {...deleteAction} />}
-      {duplicateAction && <DuplicateExpenseGroupModal {...duplicateAction} />}
+      {duplicateAction && <ExpenseGroupDetailsFormModal {...duplicateAction} />}
     </Box>
   );
 }
