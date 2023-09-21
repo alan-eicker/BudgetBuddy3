@@ -40,7 +40,8 @@ interface EditAction {
   onCancel: Dispatch<SetStateAction<undefined>>;
   onSave: (formData: ExpenseGroup) => void;
   message?: string | ReactNode;
-  expenseGroup?: ExpenseGroup;
+  expenseGroup: ExpenseGroup;
+  formType: 'Update' | 'Duplicate';
 }
 
 export default function ExpenseGroupDetail() {
@@ -120,6 +121,8 @@ export default function ExpenseGroupDetail() {
                   setEditAction({
                     onCancel: () => setEditAction(undefined),
                     onSave: (formData) => console.log(formData),
+                    expenseGroup: data.expenseGroup,
+                    formType: 'Update',
                   })
                 }
               >
@@ -134,6 +137,7 @@ export default function ExpenseGroupDetail() {
                     onCancel: () => setEditAction(undefined),
                     onSave: (formData) => handleExpenseGroupDuplicate(formData),
                     expenseGroup: data.expenseGroup,
+                    formType: 'Duplicate',
                   })
                 }
               >

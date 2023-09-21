@@ -18,7 +18,8 @@ interface ExpenseGroupInfoFormModalProps {
   message?: string | ReactNode;
   onSave: Function;
   onCancel: Function;
-  expenseGroup?: ExpenseGroup;
+  expenseGroup: ExpenseGroup;
+  formType: 'Update' | 'Duplicate';
 }
 
 export default function ExpenseGroupInfoFormModal({
@@ -26,6 +27,7 @@ export default function ExpenseGroupInfoFormModal({
   onCancel,
   onSave,
   expenseGroup,
+  formType = 'Update',
 }: ExpenseGroupInfoFormModalProps) {
   let expenses: Expense[] = [];
 
@@ -33,9 +35,21 @@ export default function ExpenseGroupInfoFormModal({
     expenses = expenseGroup.expenses;
   }
 
-  const formType = expenseGroup ? 'Duplicate' : 'Edit';
+  let initialValues: Omit<ExpenseGroup, 'expenses'>;
 
-  const initialValues = { startDate: '', endDate: '', totalBudget: 0 };
+  if (formType === 'Update') {
+    initialValues = {
+      startDate: expenseGroup.startDate,
+      endDate: expenseGroup.endDate,
+      totalBudget: expenseGroup.totalBudget,
+    };
+  } else {
+    initialValues = {
+      startDate: '',
+      endDate: '',
+      totalBudget: 0,
+    };
+  }
 
   const validationSchema = yup.object({
     startDate: yup.string().required('Start date is required'),
