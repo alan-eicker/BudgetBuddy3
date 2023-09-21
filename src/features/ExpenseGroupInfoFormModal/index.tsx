@@ -12,9 +12,9 @@ import dayjs from 'dayjs';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { ExpenseGroup } from '@/graphql/generated/graphql';
-import styles from './ExpenseGroupDetailsFormModal.module.scss';
+import styles from './ExpenseGroupInfoFormModal.module.scss';
 
-interface ExpenseGroupDetailsFormModalProps {
+interface ExpenseGroupInfoFormModalProps {
   message?: string | ReactNode;
   onSave: Function;
   onCancel: Function;
@@ -26,7 +26,7 @@ export default function ExpenseGroupDetailsFormModal({
   onCancel,
   onSave,
   expenseGroup,
-}: ExpenseGroupDetailsFormModalProps) {
+}: ExpenseGroupInfoFormModalProps) {
   const { expenses } = expenseGroup;
   const initialValues = { startDate: '', endDate: '', totalBudget: 0 };
 
