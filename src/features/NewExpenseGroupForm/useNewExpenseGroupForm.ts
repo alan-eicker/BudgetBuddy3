@@ -4,7 +4,7 @@ import { useMutation } from 'react-query';
 import { useFormik } from 'formik';
 import * as yup from 'yup';
 import { addExpenseGroup, queryClient } from '@/api';
-import { Expense } from '@/graphql/generated/graphql';
+import { Expense, ExpenseGroup } from '@/graphql/generated/graphql';
 
 export default function useNewExpenseGroupForm() {
   const router = useRouter();
@@ -23,8 +23,8 @@ export default function useNewExpenseGroupForm() {
   });
 
   const initialValues = {
-    startDate: null,
-    endDate: null,
+    startDate: '',
+    endDate: '',
     totalBudget: 0,
     expenses: [],
   };
@@ -32,15 +32,15 @@ export default function useNewExpenseGroupForm() {
   const validationSchema = yup.object({
     startDate: yup.string().required('Start date is required'),
     endDate: yup.string().required('Start date is required'),
-    totalBudget: yup.string().required('Total budget is required'),
+    totalBudget: yup.number().min(1, 'Total budget is required'),
     expenses: yup.array().min(1).required('At least one expense is required'),
   });
 
   const form = useFormik({
     initialValues,
     validationSchema,
-    onSubmit: (formData) => {
-      createExpenseGroup.mutate({ input: formData });
+    onSubmit: (formData: ExpenseGroup) => {
+      createExpenseGroup.mutate(formData);
     },
   });
 

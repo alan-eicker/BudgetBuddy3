@@ -15,7 +15,7 @@ export async function addExpenseGroup(
   parent: unknown,
   args: AddExpenseGroupMutationVariables,
 ): Promise<ExpenseGroup> {
-  const expenseGroup = new ExpenseGroupModel(args.input);
+  const expenseGroup = new ExpenseGroupModel(args);
   await expenseGroup.save();
   return expenseGroup;
 }

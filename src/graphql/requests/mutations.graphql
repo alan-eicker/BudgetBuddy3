@@ -1,9 +1,21 @@
-mutation addExpenseGroup($input: NewExpenseGroupInput!) {
-  expenseGroup: addExpenseGroup(input: $input) {
+mutation addExpenseGroup(
+  $startDate: String!
+  $endDate: String!
+  $totalBudget: Float!
+  $expenses: [NewExpenseInput!]!
+) {
+  expenseGroup: addExpenseGroup(
+    startDate: $startDate
+    endDate: $endDate
+    totalBudget: $totalBudget
+    expenses: $expenses
+  ) {
+    _id
     startDate
     endDate
     totalBudget
     expenses {
+      _id
       name
       balance
       dueDate

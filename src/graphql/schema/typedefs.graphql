@@ -7,7 +7,12 @@ type Query {
 }
 
 type Mutation {
-  addExpenseGroup(input: NewExpenseGroupInput!): ExpenseGroup!
+  addExpenseGroup(
+    startDate: String!
+    endDate: String!
+    totalBudget: Float!
+    expenses: [NewExpenseInput!]!
+  ): ExpenseGroup!
   updateExpense(
     _id: ID
     expenseGroupId: ID!
@@ -71,13 +76,6 @@ type Expense {
   dueDate: String
   isPaid: Boolean!
   note: String
-}
-
-input NewExpenseGroupInput {
-  startDate: String
-  endDate: String
-  totalBudget: Float
-  expenses: [NewExpenseInput]
 }
 
 input NewExpenseInput {

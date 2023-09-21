@@ -66,7 +66,10 @@ export type MutationAddExpenseArgs = {
 
 
 export type MutationAddExpenseGroupArgs = {
-  input: NewExpenseGroupInput;
+  endDate: Scalars['String']['input'];
+  expenses: Array<NewExpenseInput>;
+  startDate: Scalars['String']['input'];
+  totalBudget: Scalars['Float']['input'];
 };
 
 
@@ -99,13 +102,6 @@ export type MutationUpdateExpensePaidStatusArgs = {
   expenseGroupId: Scalars['String']['input'];
   expenseId: Scalars['String']['input'];
   isPaid: Scalars['Boolean']['input'];
-};
-
-export type NewExpenseGroupInput = {
-  endDate?: InputMaybe<Scalars['String']['input']>;
-  expenses?: InputMaybe<Array<InputMaybe<NewExpenseInput>>>;
-  startDate?: InputMaybe<Scalars['String']['input']>;
-  totalBudget?: InputMaybe<Scalars['Float']['input']>;
 };
 
 export type NewExpenseInput = {
@@ -154,11 +150,14 @@ export type StatusResponse = {
 };
 
 export type AddExpenseGroupMutationVariables = Exact<{
-  input: NewExpenseGroupInput;
+  startDate: Scalars['String']['input'];
+  endDate: Scalars['String']['input'];
+  totalBudget: Scalars['Float']['input'];
+  expenses: Array<NewExpenseInput> | NewExpenseInput;
 }>;
 
 
-export type AddExpenseGroupMutation = { __typename?: 'Mutation', expenseGroup: { __typename?: 'ExpenseGroup', startDate: string, endDate: string, totalBudget: number, expenses: Array<{ __typename?: 'Expense', name: string, balance: number, dueDate?: string | null, isPaid: boolean, note?: string | null }> } };
+export type AddExpenseGroupMutation = { __typename?: 'Mutation', expenseGroup: { __typename?: 'ExpenseGroup', _id?: string | null, startDate: string, endDate: string, totalBudget: number, expenses: Array<{ __typename?: 'Expense', _id?: string | null, name: string, balance: number, dueDate?: string | null, isPaid: boolean, note?: string | null }> } };
 
 export type DeleteExpenseGroupMutationVariables = Exact<{
   expenseGroupId: Scalars['String']['input'];
@@ -239,12 +238,19 @@ export type LogoutUserQuery = { __typename?: 'Query', isLoggedOut: boolean };
 
 
 export const AddExpenseGroupDocument = gql`
-    mutation addExpenseGroup($input: NewExpenseGroupInput!) {
-  expenseGroup: addExpenseGroup(input: $input) {
+    mutation addExpenseGroup($startDate: String!, $endDate: String!, $totalBudget: Float!, $expenses: [NewExpenseInput!]!) {
+  expenseGroup: addExpenseGroup(
+    startDate: $startDate
+    endDate: $endDate
+    totalBudget: $totalBudget
+    expenses: $expenses
+  ) {
+    _id
     startDate
     endDate
     totalBudget
     expenses {
+      _id
       name
       balance
       dueDate

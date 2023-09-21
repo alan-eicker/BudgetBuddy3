@@ -94,7 +94,7 @@ export default function NewExpenseGroupForm() {
                         dayjs(date).format('MM/DD/YYYY'),
                       );
                     }}
-                    value={values.startDate}
+                    {...(values.startDate && { value: values.startDate })}
                   />
                 </Grid>
                 <Grid item xs={12} sm={4} md={4}>
@@ -117,7 +117,7 @@ export default function NewExpenseGroupForm() {
                         dayjs(date).format('MM/DD/YYYY'),
                       );
                     }}
-                    value={values.endDate}
+                    {...(values.endDate && { value: values.endDate })}
                   />
                 </Grid>
                 <Grid item xs={12} sm={4} md={4}>
@@ -160,7 +160,7 @@ export default function NewExpenseGroupForm() {
             )}
             {!!(errors.expenses && touched.expenses) && (
               <Typography color="error" fontSize={13}>
-                {errors.expenses}
+                {errors.expenses as string}
               </Typography>
             )}
             {!!values.expenses.length && (
