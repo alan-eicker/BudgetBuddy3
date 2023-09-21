@@ -36,12 +36,21 @@ export type ExpenseGroup = {
   totalBudget: Scalars['Float']['output'];
 };
 
+export type ExpenseGroupInfo = {
+  __typename?: 'ExpenseGroupInfo';
+  endDate: Scalars['String']['output'];
+  expenseGroupId: Scalars['ID']['output'];
+  startDate: Scalars['String']['output'];
+  totalBudget: Scalars['Float']['output'];
+};
+
 export type Mutation = {
   __typename?: 'Mutation';
   addExpense: Expense;
   addExpenseGroup: ExpenseGroup;
   deleteExpenseGroup: StatusResponse;
   updateExpense: Expense;
+  updateExpenseGroup?: Maybe<ExpenseGroupInfo>;
   updateExpensePaidStatus: PaidStatus;
 };
 
@@ -63,6 +72,14 @@ export type MutationDeleteExpenseGroupArgs = {
 
 export type MutationUpdateExpenseArgs = {
   input: UpdateExpenseInput;
+};
+
+
+export type MutationUpdateExpenseGroupArgs = {
+  endDate: Scalars['String']['input'];
+  expenseGroupId: Scalars['ID']['input'];
+  startDate: Scalars['String']['input'];
+  totalBudget: Scalars['Float']['input'];
 };
 
 
@@ -172,6 +189,16 @@ export type AddExpenseMutationVariables = Exact<{
 
 export type AddExpenseMutation = { __typename?: 'Mutation', expense: { __typename?: 'Expense', _id?: string | null, name: string, balance: number, dueDate?: string | null, isPaid: boolean, note?: string | null } };
 
+export type UpdateExpenseGroupMutationVariables = Exact<{
+  expenseGroupId: Scalars['ID']['input'];
+  startDate: Scalars['String']['input'];
+  endDate: Scalars['String']['input'];
+  totalBudget: Scalars['Float']['input'];
+}>;
+
+
+export type UpdateExpenseGroupMutation = { __typename?: 'Mutation', expenseGroup?: { __typename?: 'ExpenseGroupInfo', expenseGroupId: string, startDate: string, endDate: string, totalBudget: number } | null };
+
 export type GetAllExpenseGroupsQueryVariables = Exact<{ [key: string]: never; }>;
 
 
@@ -256,6 +283,21 @@ export const AddExpenseDocument = gql`
   }
 }
     `;
+export const UpdateExpenseGroupDocument = gql`
+    mutation updateExpenseGroup($expenseGroupId: ID!, $startDate: String!, $endDate: String!, $totalBudget: Float!) {
+  expenseGroup: updateExpenseGroup(
+    expenseGroupId: $expenseGroupId
+    startDate: $startDate
+    endDate: $endDate
+    totalBudget: $totalBudget
+  ) {
+    expenseGroupId
+    startDate
+    endDate
+    totalBudget
+  }
+}
+    `;
 export const GetAllExpenseGroupsDocument = gql`
     query getAllExpenseGroups {
   expenseGroups: getAllExpenseGroups {
@@ -327,6 +369,9 @@ export function getSdk(client: GraphQLClient, withWrapper: SdkFunctionWrapper = 
     },
     addExpense(variables: AddExpenseMutationVariables, requestHeaders?: GraphQLClientRequestHeaders): Promise<AddExpenseMutation> {
       return withWrapper((wrappedRequestHeaders) => client.request<AddExpenseMutation>(AddExpenseDocument, variables, {...requestHeaders, ...wrappedRequestHeaders}), 'addExpense', 'mutation');
+    },
+    updateExpenseGroup(variables: UpdateExpenseGroupMutationVariables, requestHeaders?: GraphQLClientRequestHeaders): Promise<UpdateExpenseGroupMutation> {
+      return withWrapper((wrappedRequestHeaders) => client.request<UpdateExpenseGroupMutation>(UpdateExpenseGroupDocument, variables, {...requestHeaders, ...wrappedRequestHeaders}), 'updateExpenseGroup', 'mutation');
     },
     getAllExpenseGroups(variables?: GetAllExpenseGroupsQueryVariables, requestHeaders?: GraphQLClientRequestHeaders): Promise<GetAllExpenseGroupsQuery> {
       return withWrapper((wrappedRequestHeaders) => client.request<GetAllExpenseGroupsQuery>(GetAllExpenseGroupsDocument, variables, {...requestHeaders, ...wrappedRequestHeaders}), 'getAllExpenseGroups', 'query');

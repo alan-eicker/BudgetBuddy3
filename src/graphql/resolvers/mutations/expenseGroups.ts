@@ -3,6 +3,7 @@ import {
   ExpenseGroup,
   AddExpenseGroupMutationVariables,
   MutationDeleteExpenseGroupArgs,
+  MutationUpdateExpenseGroupArgs,
   UpdateExpenseMutationVariables,
   UpdateExpensePaidStatusMutationVariables,
   AddExpenseMutationVariables,
@@ -69,6 +70,19 @@ export async function updateExpense(
   );
 
   return updatedExpense;
+}
+
+export async function updateExpenseGroup(
+  parent: unknown,
+  args: MutationUpdateExpenseGroupArgs,
+) {
+  console.log(args);
+  return {
+    expenseGroupId: '',
+    startDate: '',
+    endDate: '',
+    totalBudget: 0,
+  };
 }
 
 export async function updateExpensePaidStatus(

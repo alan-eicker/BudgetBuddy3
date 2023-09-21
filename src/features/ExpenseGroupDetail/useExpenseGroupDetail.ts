@@ -8,6 +8,7 @@ import {
   getExpenseGroupById,
   addExpense,
   updateExpense,
+  updateExpenseGroup,
   updateExpensePaidStatus,
   addExpenseGroup,
   deleteExpenseGroup,
@@ -38,7 +39,18 @@ export default function useExpenseGroupDetail() {
     },
   });
 
-  const handleUpdateExpensePaidStatusMutation = useMutation({
+  const updateExpenseGroupMutation = useMutation({
+    mutationFn: updateExpenseGroup,
+    onSuccess: () => {
+      queryClient.invalidateQueries('expenseGroup' + expenseGroupId);
+      queryClient.removeQueries('expenseGroups');
+    },
+    onError: () => {
+      setError('Could not update expense group');
+    },
+  });
+
+  const updateExpensePaidStatusMutation = useMutation({
     mutationFn: updateExpensePaidStatus,
     onSuccess: () => {
       queryClient.invalidateQueries('expenseGroup' + expenseGroupId);
@@ -78,11 +90,18 @@ export default function useExpenseGroupDetail() {
     },
   });
 
-  async function handleExpenseGroupDuplicate(formData: ExpenseGroup) {
+  function handleExpenseGroupDuplicate(formData: ExpenseGroup) {
     createExpenseGroup.mutate({ input: formData });
   }
 
-  async function handleExpenseGroupDelete() {
+  function handleExpenseGroupUpdate(formData: Omit<ExpenseGroup, 'expenses'>) {
+    updateExpenseGroupMutation.mutate({
+      ...formData,
+      expenseGroupId: expenseGroupId as string,
+    });
+  }
+
+  function handleExpenseGroupDelete() {
     setShowOverlay(true);
     deleteExpenseGroupMutation.mutate({ _id: expenseGroupId as string });
   }
@@ -104,7 +123,7 @@ export default function useExpenseGroupDetail() {
     expenseGroupId: string,
     expenseId: string,
   ) {
-    handleUpdateExpensePaidStatusMutation.mutate({
+    updateExpensePaidStatusMutation.mutate({
       isPaid,
       expenseGroupId,
       expenseId,
@@ -126,6 +145,7 @@ export default function useExpenseGroupDetail() {
     data,
     error,
     handleExpenseGroupDuplicate,
+    handleExpenseGroupUpdate,
     handleExpenseGroupDelete,
     handleAddExpense,
     handleUpdateExpense,

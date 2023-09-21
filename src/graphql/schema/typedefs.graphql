@@ -16,6 +16,12 @@ type Mutation {
   ): PaidStatus!
   addExpense(input: NewExpenseInput): Expense!
   deleteExpenseGroup(_id: String!): StatusResponse!
+  updateExpenseGroup(
+    expenseGroupId: ID!
+    startDate: String!
+    endDate: String!
+    totalBudget: Float!
+  ): ExpenseGroupInfo
 }
 
 type PaidStatus {
@@ -33,6 +39,13 @@ type ExpenseGroup {
   endDate: String!
   totalBudget: Float!
   expenses: [Expense!]!
+}
+
+type ExpenseGroupInfo {
+  expenseGroupId: ID!
+  startDate: String!
+  endDate: String!
+  totalBudget: Float!
 }
 
 type Expense {
