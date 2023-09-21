@@ -125,51 +125,53 @@ export default function Dashboard() {
               </Button>
             </Box>
             <Grid container spacing={2}>
-              {data.expenseGroups.map(
-                ({ _id, startDate, endDate, expenses }) => {
-                  const numOverdueBalances = !expenses
-                    ? 0
-                    : getTotalOverdueBalances(expenses);
-                  return (
-                    <Grid key={_id} item xs={12} sm={12} md={4}>
-                      <Link href={`/account/expense-group/${_id}`}>
-                        <Card head={`${startDate} - ${endDate}`} height="100%">
-                          <Box
-                            display="flex"
-                            alignItems="center"
-                            justifyContent="space-between"
-                          >
-                            <Box>
-                              Total Balance:
-                              <br />
-                              {expenses ? (
-                                '$' + getTotalBalance(expenses)
-                              ) : (
-                                <Button size="small">Add Expenses</Button>
-                              )}
-                            </Box>
-                            {numOverdueBalances > 0 && (
-                              <Box textAlign="center">
-                                <ErrorOutlineIcon
-                                  color="error"
-                                  fontSize="large"
-                                />
-                                <Typography
-                                  fontSize={11}
-                                  color={COLORS.error}
-                                  marginTop={-0.5}
-                                >
-                                  {numOverdueBalances} overdue expenses
-                                </Typography>
-                              </Box>
+              {data.expenseGroups.map((expenseGroup) => {
+                const expenses = expenseGroup?.expenses;
+                const numOverdueBalances = !expenses
+                  ? 0
+                  : getTotalOverdueBalances(expenses);
+                return (
+                  <Grid key={expenseGroup?._id} item xs={12} sm={12} md={4}>
+                    <Link href={`/account/expense-group/${expenseGroup?._id}`}>
+                      <Card
+                        head={`${expenseGroup?.startDate} - ${expenseGroup?.endDate}`}
+                        height="100%"
+                      >
+                        <Box
+                          display="flex"
+                          alignItems="center"
+                          justifyContent="space-between"
+                        >
+                          <Box>
+                            Total Balance:
+                            <br />
+                            {expenses ? (
+                              '$' + getTotalBalance(expenses)
+                            ) : (
+                              <Button size="small">Add Expenses</Button>
                             )}
                           </Box>
-                        </Card>
-                      </Link>
-                    </Grid>
-                  );
-                },
-              )}
+                          {numOverdueBalances > 0 && (
+                            <Box textAlign="center">
+                              <ErrorOutlineIcon
+                                color="error"
+                                fontSize="large"
+                              />
+                              <Typography
+                                fontSize={11}
+                                color={COLORS.error}
+                                marginTop={-0.5}
+                              >
+                                {numOverdueBalances} overdue expenses
+                              </Typography>
+                            </Box>
+                          )}
+                        </Box>
+                      </Card>
+                    </Link>
+                  </Grid>
+                );
+              })}
             </Grid>
           </>
         )}

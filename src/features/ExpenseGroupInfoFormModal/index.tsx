@@ -27,11 +27,13 @@ export default function ExpenseGroupInfoFormModal({
   onSave,
   expenseGroup,
 }: ExpenseGroupInfoFormModalProps) {
-  let expenses: Expense[];
+  let expenses: Expense[] = [];
 
   if (expenseGroup) {
     expenses = expenseGroup.expenses;
   }
+
+  const formType = expenseGroup ? 'Duplicate' : 'Edit';
 
   const initialValues = { startDate: '', endDate: '', totalBudget: 0 };
 
@@ -55,14 +57,16 @@ export default function ExpenseGroupInfoFormModal({
     onSubmit: (formData) => {
       onSave({
         ...formData,
-        expenses: expenses.map((expense) => {
-          delete expense._id;
-          delete expense.dueDate;
-          return {
-            ...expense,
-            isPaid: false,
-            note: null,
-          };
+        ...(expenses && {
+          expenses: expenses.map((expense) => {
+            delete expense._id;
+            delete expense.dueDate;
+            return {
+              ...expense,
+              isPaid: false,
+              note: null,
+            };
+          }),
         }),
       });
     },
@@ -72,7 +76,7 @@ export default function ExpenseGroupInfoFormModal({
     <Modal open={true}>
       <Box className={styles.modal}>
         <Typography padding={2.5} variant="h5" component="h2">
-          Duplicate Expense Group
+          {formType} Expense Group
         </Typography>
         <Box padding={2.5} paddingTop={0}>
           <Typography>{message}</Typography>
@@ -140,7 +144,7 @@ export default function ExpenseGroupInfoFormModal({
                 type="submit"
                 size="large"
               >
-                Duplicate
+                {formType}
               </LoadingButton>
               <Button
                 variant="outlined"

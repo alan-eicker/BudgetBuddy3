@@ -36,11 +36,11 @@ interface DeleteAction {
   message: string | ReactNode;
 }
 
-interface DuplicateAction {
+interface EditAction {
   onCancel: Dispatch<SetStateAction<undefined>>;
   onSave: (formData: ExpenseGroup) => void;
   message?: string | ReactNode;
-  expenseGroup: ExpenseGroup;
+  expenseGroup?: ExpenseGroup;
 }
 
 export default function ExpenseGroupDetail() {
@@ -63,7 +63,7 @@ export default function ExpenseGroupDetail() {
   } = router;
 
   const [deleteAction, setDeleteAction] = useState<DeleteAction>();
-  const [duplicateAction, setDuplicateAction] = useState<DuplicateAction>();
+  const [editAction, setEditAction] = useState<EditAction>();
 
   useEffect(() => {
     if (!data) {
@@ -116,7 +116,12 @@ export default function ExpenseGroupDetail() {
                 className="text-center"
                 variant="contained"
                 size="small"
-                onClick={() => {}}
+                onClick={() =>
+                  setEditAction({
+                    onCancel: () => setEditAction(undefined),
+                    onSave: (formData) => console.log(formData),
+                  })
+                }
               >
                 Edit Group
               </Button>
@@ -125,8 +130,8 @@ export default function ExpenseGroupDetail() {
                 variant="contained"
                 size="small"
                 onClick={() =>
-                  setDuplicateAction({
-                    onCancel: () => setDuplicateAction(undefined),
+                  setEditAction({
+                    onCancel: () => setEditAction(undefined),
                     onSave: (formData) => handleExpenseGroupDuplicate(formData),
                     expenseGroup: data.expenseGroup,
                   })
@@ -253,7 +258,7 @@ export default function ExpenseGroupDetail() {
         </ContentSection>
       </Box>
       {deleteAction && <ConfirmationModal {...deleteAction} />}
-      {duplicateAction && <ExpenseGroupInfoFormModal {...duplicateAction} />}
+      {editAction && <ExpenseGroupInfoFormModal {...editAction} />}
     </Box>
   );
 }
