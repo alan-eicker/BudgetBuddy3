@@ -14,8 +14,15 @@ type Mutation {
     expenseGroupId: String!
     expenseId: String!
   ): PaidStatus!
-  addExpense(input: NewExpenseInput): Expense!
-  deleteExpenseGroup(_id: String!): StatusResponse!
+  addExpense(
+    expenseGroupId: ID!
+    name: String!
+    balance: Float!
+    dueDate: String!
+    isPaid: Boolean!
+    note: String
+  ): Expense!
+  deleteExpenseGroup(expenseGroupId: String!): StatusResponse!
   updateExpenseGroup(
     expenseGroupId: ID!
     startDate: String!

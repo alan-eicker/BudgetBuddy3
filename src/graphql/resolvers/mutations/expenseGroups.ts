@@ -25,12 +25,12 @@ export async function deleteExpenseGroup(
   args: MutationDeleteExpenseGroupArgs,
 ): Promise<StatusResponse> {
   try {
-    await ExpenseGroupModel.deleteOne({ _id: args._id });
+    await ExpenseGroupModel.deleteOne({ _id: args.expenseGroupId });
     return { code: 200 };
   } catch {
     return {
       code: 500,
-      message: `Could not delete expense group [${args._id}].`,
+      message: `Could not delete expense group [${args.expenseGroupId}].`,
     };
   }
 }
@@ -39,13 +39,13 @@ export async function addExpense(
   parent: unknown,
   args: AddExpenseMutationVariables,
 ) {
-  const { expenseGroupId, ...newExpense } = args.input;
+  const { expenseGroupId, ...newExpense } = args;
 
   const expenseGroup = await ExpenseGroupModel.findById(expenseGroupId);
   expenseGroup.expenses.push(newExpense);
   expenseGroup.save();
 
-  return args.input;
+  return args;
 }
 
 export async function updateExpense(

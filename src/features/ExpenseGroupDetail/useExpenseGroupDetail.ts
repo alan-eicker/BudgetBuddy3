@@ -103,12 +103,15 @@ export default function useExpenseGroupDetail() {
 
   function handleExpenseGroupDelete() {
     setShowOverlay(true);
-    deleteExpenseGroupMutation.mutate({ _id: expenseGroupId as string });
+    deleteExpenseGroupMutation.mutate({
+      expenseGroupId: expenseGroupId as string,
+    });
   }
 
   function handleAddExpense(newExpense: Expense) {
     addExpenseMutation.mutate({
-      input: { expenseGroupId: expenseGroupId as string, ...newExpense },
+      expenseGroupId: expenseGroupId as string,
+      ...newExpense,
     });
   }
 
