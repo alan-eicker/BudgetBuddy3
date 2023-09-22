@@ -56,6 +56,7 @@ export default function ExpenseFormModal({ open = false }: ExpenseFormProps) {
                     type="text"
                     name="name"
                     label="Expense Name"
+                    onChange={handleChange}
                     InputProps={{
                       ...params.InputProps,
                       type: 'search',
