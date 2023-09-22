@@ -7,7 +7,6 @@ import {
   MutationUpdateExpensePaidStatusArgs,
   MutationUpdateExpenseArgs,
   MutationAddExpenseArgs,
-  StatusResponse,
 } from '../../generated/graphql';
 import ExpenseGroupModel from '@/database/models/expenseGroup';
 
