@@ -1,6 +1,6 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
 import { createSchema, createYoga } from 'graphql-yoga';
-import mongoose, { ConnectOptions } from 'mongoose';
+import mongoose from 'mongoose';
 import fs from 'fs';
 import path from 'path';
 import Query from '../../graphql/resolvers/queries';
@@ -12,12 +12,7 @@ export const config = {
   },
 };
 
-const connOptions: ConnectOptions = {
-  useNewUrlParser: true,
-  useUnifiedTopology: true,
-};
-
-mongoose.connect(process.env.MONGODB_URI as string, connOptions);
+mongoose.connect(process.env.MONGODB_URI as string);
 
 const typeDefs = fs
   .readFileSync(
