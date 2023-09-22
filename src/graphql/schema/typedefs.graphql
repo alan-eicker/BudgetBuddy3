@@ -47,11 +47,6 @@ type Mutation {
   ): Void
 }
 
-type Status {
-  status: Int!
-  message: String
-}
-
 type StatusResponse {
   code: Int!
   message: String
