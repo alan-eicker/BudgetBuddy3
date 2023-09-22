@@ -14,25 +14,16 @@ import ExpenseGroupModel from '@/database/models/expenseGroup';
 export async function addExpenseGroup(
   parent: unknown,
   args: MutationAddExpenseGroupArgs,
-): Promise<ExpenseGroup> {
+) {
   const expenseGroup = new ExpenseGroupModel(args);
   await expenseGroup.save();
-  return expenseGroup;
 }
 
 export async function deleteExpenseGroup(
   parent: any,
   args: MutationDeleteExpenseGroupArgs,
-): Promise<StatusResponse> {
-  try {
-    await ExpenseGroupModel.deleteOne({ _id: args.expenseGroupId });
-    return { code: 200 };
-  } catch {
-    return {
-      code: 500,
-      message: `Could not delete expense group [${args.expenseGroupId}].`,
-    };
-  }
+) {
+  await ExpenseGroupModel.deleteOne({ _id: args.expenseGroupId });
 }
 
 export async function addExpense(
@@ -44,14 +35,12 @@ export async function addExpense(
   const expenseGroup = await ExpenseGroupModel.findById(expenseGroupId);
   expenseGroup.expenses.push(newExpense);
   expenseGroup.save();
-
-  return args;
 }
 
 export async function updateExpense(
   parent: unknown,
   args: MutationUpdateExpenseArgs,
-): Promise<Expense> {
+) {
   const { expenseGroupId, ...updatedExpense } = args;
 
   const { _id, name, balance, dueDate, isPaid, note } = updatedExpense;
@@ -68,8 +57,6 @@ export async function updateExpense(
       },
     },
   );
-
-  return updatedExpense;
 }
 
 export async function updateExpenseGroup(
@@ -77,12 +64,6 @@ export async function updateExpenseGroup(
   args: MutationUpdateExpenseGroupArgs,
 ) {
   console.log(args);
-  return {
-    expenseGroupId: '',
-    startDate: '',
-    endDate: '',
-    totalBudget: 0,
-  };
 }
 
 export async function updateExpensePaidStatus(
@@ -99,6 +80,4 @@ export async function updateExpensePaidStatus(
       },
     },
   );
-
-  return { isPaid };
 }

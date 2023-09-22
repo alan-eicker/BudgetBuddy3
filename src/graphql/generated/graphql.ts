@@ -15,6 +15,7 @@ export type Scalars = {
   Boolean: { input: boolean; output: boolean; }
   Int: { input: number; output: number; }
   Float: { input: number; output: number; }
+  Void: { input: void; output: void; }
 };
 
 export type Expense = {
@@ -36,22 +37,14 @@ export type ExpenseGroup = {
   totalBudget: Scalars['Float']['output'];
 };
 
-export type ExpenseGroupInfo = {
-  __typename?: 'ExpenseGroupInfo';
-  endDate: Scalars['String']['output'];
-  expenseGroupId: Scalars['ID']['output'];
-  startDate: Scalars['String']['output'];
-  totalBudget: Scalars['Float']['output'];
-};
-
 export type Mutation = {
   __typename?: 'Mutation';
-  addExpense: Expense;
-  addExpenseGroup: ExpenseGroup;
-  deleteExpenseGroup: StatusResponse;
-  updateExpense: Expense;
-  updateExpenseGroup?: Maybe<ExpenseGroupInfo>;
-  updateExpensePaidStatus: PaidStatus;
+  addExpense?: Maybe<Scalars['Void']['output']>;
+  addExpenseGroup?: Maybe<Scalars['Void']['output']>;
+  deleteExpenseGroup?: Maybe<Scalars['Void']['output']>;
+  updateExpense?: Maybe<Scalars['Void']['output']>;
+  updateExpenseGroup?: Maybe<Scalars['Void']['output']>;
+  updateExpensePaidStatus?: Maybe<Scalars['Void']['output']>;
 };
 
 
@@ -157,14 +150,14 @@ export type AddExpenseGroupMutationVariables = Exact<{
 }>;
 
 
-export type AddExpenseGroupMutation = { __typename?: 'Mutation', expenseGroup: { __typename?: 'ExpenseGroup', _id?: string | null, startDate: string, endDate: string, totalBudget: number, expenses: Array<{ __typename?: 'Expense', _id?: string | null, name: string, balance: number, dueDate?: string | null, isPaid: boolean, note?: string | null }> } };
+export type AddExpenseGroupMutation = { __typename?: 'Mutation', expenseGroup?: void | null };
 
 export type DeleteExpenseGroupMutationVariables = Exact<{
   expenseGroupId: Scalars['String']['input'];
 }>;
 
 
-export type DeleteExpenseGroupMutation = { __typename?: 'Mutation', status: { __typename?: 'StatusResponse', code: number, message?: string | null } };
+export type DeleteExpenseGroupMutation = { __typename?: 'Mutation', deleteExpenseGroup?: void | null };
 
 export type UpdateExpenseMutationVariables = Exact<{
   _id?: InputMaybe<Scalars['ID']['input']>;
@@ -178,7 +171,7 @@ export type UpdateExpenseMutationVariables = Exact<{
 }>;
 
 
-export type UpdateExpenseMutation = { __typename?: 'Mutation', expense: { __typename?: 'Expense', name: string, balance: number, dueDate?: string | null, isPaid: boolean, note?: string | null } };
+export type UpdateExpenseMutation = { __typename?: 'Mutation', updateExpense?: void | null };
 
 export type UpdateExpensePaidStatusMutationVariables = Exact<{
   isPaid: Scalars['Boolean']['input'];
@@ -187,7 +180,7 @@ export type UpdateExpensePaidStatusMutationVariables = Exact<{
 }>;
 
 
-export type UpdateExpensePaidStatusMutation = { __typename?: 'Mutation', expense: { __typename?: 'PaidStatus', isPaid: boolean } };
+export type UpdateExpensePaidStatusMutation = { __typename?: 'Mutation', updateExpensePaidStatus?: void | null };
 
 export type AddExpenseMutationVariables = Exact<{
   expenseGroupId: Scalars['ID']['input'];
@@ -199,7 +192,7 @@ export type AddExpenseMutationVariables = Exact<{
 }>;
 
 
-export type AddExpenseMutation = { __typename?: 'Mutation', expense: { __typename?: 'Expense', _id?: string | null, name: string, balance: number, dueDate?: string | null, isPaid: boolean, note?: string | null } };
+export type AddExpenseMutation = { __typename?: 'Mutation', expense?: void | null };
 
 export type UpdateExpenseGroupMutationVariables = Exact<{
   expenseGroupId: Scalars['ID']['input'];
@@ -209,7 +202,7 @@ export type UpdateExpenseGroupMutationVariables = Exact<{
 }>;
 
 
-export type UpdateExpenseGroupMutation = { __typename?: 'Mutation', expenseGroup?: { __typename?: 'ExpenseGroupInfo', expenseGroupId: string, startDate: string, endDate: string, totalBudget: number } | null };
+export type UpdateExpenseGroupMutation = { __typename?: 'Mutation', updateExpenseGroup?: void | null };
 
 export type GetAllExpenseGroupsQueryVariables = Exact<{ [key: string]: never; }>;
 
@@ -244,33 +237,17 @@ export const AddExpenseGroupDocument = gql`
     endDate: $endDate
     totalBudget: $totalBudget
     expenses: $expenses
-  ) {
-    _id
-    startDate
-    endDate
-    totalBudget
-    expenses {
-      _id
-      name
-      balance
-      dueDate
-      isPaid
-      note
-    }
-  }
+  )
 }
     `;
 export const DeleteExpenseGroupDocument = gql`
     mutation deleteExpenseGroup($expenseGroupId: String!) {
-  status: deleteExpenseGroup(expenseGroupId: $expenseGroupId) {
-    code
-    message
-  }
+  deleteExpenseGroup(expenseGroupId: $expenseGroupId)
 }
     `;
 export const UpdateExpenseDocument = gql`
     mutation updateExpense($_id: ID, $expenseGroupId: ID!, $name: String!, $balance: Float!, $dueDate: String, $isPaid: Boolean!, $isOverdue: Boolean, $note: String) {
-  expense: updateExpense(
+  updateExpense(
     _id: $_id
     expenseGroupId: $expenseGroupId
     name: $name
@@ -279,24 +256,16 @@ export const UpdateExpenseDocument = gql`
     isPaid: $isPaid
     isOverdue: $isOverdue
     note: $note
-  ) {
-    name
-    balance
-    dueDate
-    isPaid
-    note
-  }
+  )
 }
     `;
 export const UpdateExpensePaidStatusDocument = gql`
     mutation updateExpensePaidStatus($isPaid: Boolean!, $expenseGroupId: String!, $expenseId: String!) {
-  expense: updateExpensePaidStatus(
+  updateExpensePaidStatus(
     isPaid: $isPaid
     expenseGroupId: $expenseGroupId
     expenseId: $expenseId
-  ) {
-    isPaid
-  }
+  )
 }
     `;
 export const AddExpenseDocument = gql`
@@ -308,29 +277,17 @@ export const AddExpenseDocument = gql`
     dueDate: $dueDate
     isPaid: $isPaid
     note: $note
-  ) {
-    _id
-    name
-    balance
-    dueDate
-    isPaid
-    note
-  }
+  )
 }
     `;
 export const UpdateExpenseGroupDocument = gql`
     mutation updateExpenseGroup($expenseGroupId: ID!, $startDate: String!, $endDate: String!, $totalBudget: Float!) {
-  expenseGroup: updateExpenseGroup(
+  updateExpenseGroup(
     expenseGroupId: $expenseGroupId
     startDate: $startDate
     endDate: $endDate
     totalBudget: $totalBudget
-  ) {
-    expenseGroupId
-    startDate
-    endDate
-    totalBudget
-  }
+  )
 }
     `;
 export const GetAllExpenseGroupsDocument = gql`

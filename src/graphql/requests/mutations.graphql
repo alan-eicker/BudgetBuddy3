@@ -9,27 +9,11 @@ mutation addExpenseGroup(
     endDate: $endDate
     totalBudget: $totalBudget
     expenses: $expenses
-  ) {
-    _id
-    startDate
-    endDate
-    totalBudget
-    expenses {
-      _id
-      name
-      balance
-      dueDate
-      isPaid
-      note
-    }
-  }
+  )
 }
 
 mutation deleteExpenseGroup($expenseGroupId: String!) {
-  status: deleteExpenseGroup(expenseGroupId: $expenseGroupId) {
-    code
-    message
-  }
+  deleteExpenseGroup(expenseGroupId: $expenseGroupId)
 }
 
 mutation updateExpense(
@@ -42,7 +26,7 @@ mutation updateExpense(
   $isOverdue: Boolean
   $note: String
 ) {
-  expense: updateExpense(
+  updateExpense(
     _id: $_id
     expenseGroupId: $expenseGroupId
     name: $name
@@ -51,13 +35,7 @@ mutation updateExpense(
     isPaid: $isPaid
     isOverdue: $isOverdue
     note: $note
-  ) {
-    name
-    balance
-    dueDate
-    isPaid
-    note
-  }
+  )
 }
 
 mutation updateExpensePaidStatus(
@@ -65,13 +43,11 @@ mutation updateExpensePaidStatus(
   $expenseGroupId: String!
   $expenseId: String!
 ) {
-  expense: updateExpensePaidStatus(
+  updateExpensePaidStatus(
     isPaid: $isPaid
     expenseGroupId: $expenseGroupId
     expenseId: $expenseId
-  ) {
-    isPaid
-  }
+  )
 }
 
 mutation addExpense(
@@ -89,14 +65,7 @@ mutation addExpense(
     dueDate: $dueDate
     isPaid: $isPaid
     note: $note
-  ) {
-    _id
-    name
-    balance
-    dueDate
-    isPaid
-    note
-  }
+  )
 }
 
 mutation updateExpenseGroup(
@@ -105,15 +74,10 @@ mutation updateExpenseGroup(
   $endDate: String!
   $totalBudget: Float!
 ) {
-  expenseGroup: updateExpenseGroup(
+  updateExpenseGroup(
     expenseGroupId: $expenseGroupId
     startDate: $startDate
     endDate: $endDate
     totalBudget: $totalBudget
-  ) {
-    expenseGroupId
-    startDate
-    endDate
-    totalBudget
-  }
+  )
 }
