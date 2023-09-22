@@ -198,6 +198,7 @@ export default function ExpenseGroupDetail() {
                     </Alert>
                   </Box>
                 )}
+                {expenses.length === 0 && 'No expenses to display'}
                 <List
                   className={styles.expenseGroupList}
                   style={{ marginTop: 1 }}
