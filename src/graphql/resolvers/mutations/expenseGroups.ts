@@ -1,6 +1,4 @@
 import {
-  Expense,
-  ExpenseGroup,
   MutationAddExpenseGroupArgs,
   MutationDeleteExpenseGroupArgs,
   MutationUpdateExpenseGroupArgs,
