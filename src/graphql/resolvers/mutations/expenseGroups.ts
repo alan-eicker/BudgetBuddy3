@@ -60,7 +60,11 @@ export async function updateExpenseGroup(
   parent: unknown,
   args: MutationUpdateExpenseGroupArgs,
 ) {
-  console.log(args);
+  const { expenseGroupId, ...updatedExpenseGroup } = args;
+  await ExpenseGroupModel.findByIdAndUpdate(
+    expenseGroupId,
+    updatedExpenseGroup,
+  );
 }
 
 export async function updateExpensePaidStatus(
