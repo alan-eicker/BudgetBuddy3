@@ -1,19 +1,19 @@
 import {
   Expense,
   ExpenseGroup,
-  AddExpenseGroupMutationVariables,
+  MutationAddExpenseGroupArgs,
   MutationDeleteExpenseGroupArgs,
   MutationUpdateExpenseGroupArgs,
-  UpdateExpenseMutationVariables,
-  UpdateExpensePaidStatusMutationVariables,
-  AddExpenseMutationVariables,
+  MutationUpdateExpensePaidStatusArgs,
+  MutationUpdateExpenseArgs,
+  MutationAddExpenseArgs,
   StatusResponse,
 } from '../../generated/graphql';
 import ExpenseGroupModel from '@/database/models/expenseGroup';
 
 export async function addExpenseGroup(
   parent: unknown,
-  args: AddExpenseGroupMutationVariables,
+  args: MutationAddExpenseGroupArgs,
 ): Promise<ExpenseGroup> {
   const expenseGroup = new ExpenseGroupModel(args);
   await expenseGroup.save();
@@ -21,7 +21,7 @@ export async function addExpenseGroup(
 }
 
 export async function deleteExpenseGroup(
-  _: any,
+  parent: any,
   args: MutationDeleteExpenseGroupArgs,
 ): Promise<StatusResponse> {
   try {
@@ -37,7 +37,7 @@ export async function deleteExpenseGroup(
 
 export async function addExpense(
   parent: unknown,
-  args: AddExpenseMutationVariables,
+  args: MutationAddExpenseArgs,
 ) {
   const { expenseGroupId, ...newExpense } = args;
 
@@ -50,7 +50,7 @@ export async function addExpense(
 
 export async function updateExpense(
   parent: unknown,
-  args: UpdateExpenseMutationVariables,
+  args: MutationUpdateExpenseArgs,
 ): Promise<Expense> {
   const { expenseGroupId, ...updatedExpense } = args;
 
@@ -87,7 +87,7 @@ export async function updateExpenseGroup(
 
 export async function updateExpensePaidStatus(
   parent: unknown,
-  args: UpdateExpensePaidStatusMutationVariables,
+  args: MutationUpdateExpensePaidStatusArgs,
 ) {
   const { expenseGroupId, expenseId, isPaid } = args;
 
