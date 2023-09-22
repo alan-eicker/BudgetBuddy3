@@ -232,8 +232,10 @@ export default function ExpenseGroupDetail() {
                               setDeleteAction({
                                 _id: expenseGroupId as string,
                                 onCancel: () => setDeleteAction(undefined),
-                                onConfirm: () =>
-                                  handleDeleteExpense(expense._id as string),
+                                onConfirm: () => {
+                                  handleDeleteExpense(expense._id as string);
+                                  setDeleteAction(undefined);
+                                },
                                 message: `Are you sure you want to delete ${expense.name}?`,
                               })
                             }

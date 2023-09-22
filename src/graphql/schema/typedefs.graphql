@@ -10,6 +10,7 @@ type Query {
 
 type Mutation {
   deleteExpenseGroup(expenseGroupId: String!): Void
+  deleteExpense(expenseGroupId: String!, expenseId: String!): Void
   addExpenseGroup(
     startDate: String!
     endDate: String!

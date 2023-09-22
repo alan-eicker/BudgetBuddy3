@@ -10,6 +10,7 @@ export const {
   getAllExpenseGroups,
   getExpenseGroupById,
   deleteExpenseGroup,
+  deleteExpense,
   addExpenseGroup,
   updateExpense,
   updateExpensePaidStatus,

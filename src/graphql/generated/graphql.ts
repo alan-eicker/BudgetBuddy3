@@ -41,6 +41,7 @@ export type Mutation = {
   __typename?: 'Mutation';
   addExpense?: Maybe<Scalars['Void']['output']>;
   addExpenseGroup?: Maybe<Scalars['Void']['output']>;
+  deleteExpense?: Maybe<Scalars['Void']['output']>;
   deleteExpenseGroup?: Maybe<Scalars['Void']['output']>;
   updateExpense?: Maybe<Scalars['Void']['output']>;
   updateExpenseGroup?: Maybe<Scalars['Void']['output']>;
@@ -63,6 +64,12 @@ export type MutationAddExpenseGroupArgs = {
   expenses: Array<NewExpenseInput>;
   startDate: Scalars['String']['input'];
   totalBudget: Scalars['Float']['input'];
+};
+
+
+export type MutationDeleteExpenseArgs = {
+  expenseGroupId: Scalars['String']['input'];
+  expenseId: Scalars['String']['input'];
 };
 
 
@@ -131,12 +138,6 @@ export type QueryGetExpenseGroupByIdArgs = {
   _id: Scalars['String']['input'];
 };
 
-export type Status = {
-  __typename?: 'Status';
-  message?: Maybe<Scalars['String']['output']>;
-  status: Scalars['Int']['output'];
-};
-
 export type StatusResponse = {
   __typename?: 'StatusResponse';
   code: Scalars['Int']['output'];
@@ -159,6 +160,14 @@ export type DeleteExpenseGroupMutationVariables = Exact<{
 
 
 export type DeleteExpenseGroupMutation = { __typename?: 'Mutation', deleteExpenseGroup?: void | null };
+
+export type DeleteExpenseMutationVariables = Exact<{
+  expenseGroupId: Scalars['String']['input'];
+  expenseId: Scalars['String']['input'];
+}>;
+
+
+export type DeleteExpenseMutation = { __typename?: 'Mutation', deleteExpense?: void | null };
 
 export type UpdateExpenseMutationVariables = Exact<{
   _id?: InputMaybe<Scalars['ID']['input']>;
@@ -244,6 +253,11 @@ export const AddExpenseGroupDocument = gql`
 export const DeleteExpenseGroupDocument = gql`
     mutation deleteExpenseGroup($expenseGroupId: String!) {
   deleteExpenseGroup(expenseGroupId: $expenseGroupId)
+}
+    `;
+export const DeleteExpenseDocument = gql`
+    mutation deleteExpense($expenseGroupId: String!, $expenseId: String!) {
+  deleteExpense(expenseGroupId: $expenseGroupId, expenseId: $expenseId)
 }
     `;
 export const UpdateExpenseDocument = gql`
@@ -353,6 +367,9 @@ export function getSdk(client: GraphQLClient, withWrapper: SdkFunctionWrapper = 
     },
     deleteExpenseGroup(variables: DeleteExpenseGroupMutationVariables, requestHeaders?: GraphQLClientRequestHeaders): Promise<DeleteExpenseGroupMutation> {
       return withWrapper((wrappedRequestHeaders) => client.request<DeleteExpenseGroupMutation>(DeleteExpenseGroupDocument, variables, {...requestHeaders, ...wrappedRequestHeaders}), 'deleteExpenseGroup', 'mutation');
+    },
+    deleteExpense(variables: DeleteExpenseMutationVariables, requestHeaders?: GraphQLClientRequestHeaders): Promise<DeleteExpenseMutation> {
+      return withWrapper((wrappedRequestHeaders) => client.request<DeleteExpenseMutation>(DeleteExpenseDocument, variables, {...requestHeaders, ...wrappedRequestHeaders}), 'deleteExpense', 'mutation');
     },
     updateExpense(variables: UpdateExpenseMutationVariables, requestHeaders?: GraphQLClientRequestHeaders): Promise<UpdateExpenseMutation> {
       return withWrapper((wrappedRequestHeaders) => client.request<UpdateExpenseMutation>(UpdateExpenseDocument, variables, {...requestHeaders, ...wrappedRequestHeaders}), 'updateExpense', 'mutation');

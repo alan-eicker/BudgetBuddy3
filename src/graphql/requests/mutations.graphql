@@ -16,6 +16,10 @@ mutation deleteExpenseGroup($expenseGroupId: String!) {
   deleteExpenseGroup(expenseGroupId: $expenseGroupId)
 }
 
+mutation deleteExpense($expenseGroupId: String!, $expenseId: String!) {
+  deleteExpense(expenseGroupId: $expenseGroupId, expenseId: $expenseId)
+}
+
 mutation updateExpense(
   $_id: ID
   $expenseGroupId: ID!

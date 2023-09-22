@@ -12,6 +12,7 @@ import {
   updateExpensePaidStatus,
   addExpenseGroup,
   deleteExpenseGroup,
+  deleteExpense,
   queryClient,
 } from '@/api';
 
@@ -82,6 +83,16 @@ export default function useExpenseGroupDetail() {
     },
   });
 
+  const deleteExpenseMutation = useMutation({
+    mutationFn: deleteExpense,
+    onSuccess: () => {
+      queryClient.invalidateQueries('expenseGroup' + expenseGroupId);
+    },
+    onError: () => {
+      setError('Could not delete expense');
+    },
+  });
+
   const createExpenseGroup = useMutation({
     mutationFn: addExpenseGroup,
     onSuccess: () => {
@@ -138,7 +149,10 @@ export default function useExpenseGroupDetail() {
   }
 
   function handleDeleteExpense(expenseId: string) {
-    console.log(expenseId);
+    deleteExpenseMutation.mutate({
+      expenseGroupId: expenseGroupId as string,
+      expenseId,
+    });
   }
 
   function mapOverdueStatustoExpenses(expenses: Expense[]) {

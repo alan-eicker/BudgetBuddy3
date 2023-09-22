@@ -1,6 +1,7 @@
 import {
   MutationAddExpenseGroupArgs,
   MutationDeleteExpenseGroupArgs,
+  MutationDeleteExpenseArgs,
   MutationUpdateExpenseGroupArgs,
   MutationUpdateExpensePaidStatusArgs,
   MutationUpdateExpenseArgs,
@@ -21,6 +22,17 @@ export async function deleteExpenseGroup(
   args: MutationDeleteExpenseGroupArgs,
 ) {
   await ExpenseGroupModel.deleteOne({ _id: args.expenseGroupId });
+}
+
+export async function deleteExpense(
+  parent: any,
+  args: MutationDeleteExpenseArgs,
+) {
+  const { expenseGroupId, expenseId } = args;
+  await ExpenseGroupModel.findOneAndUpdate(
+    { _id: expenseGroupId },
+    { $pull: { expenses: { _id: expenseId } } },
+  );
 }
 
 export async function addExpense(
