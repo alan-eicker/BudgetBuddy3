@@ -56,6 +56,9 @@ export default function useExpenseGroupDetail() {
       queryClient.invalidateQueries('expenseGroup' + expenseGroupId);
       queryClient.removeQueries('expenseGroups');
     },
+    onError: () => {
+      setError('Could not update expense paid status');
+    },
   });
 
   const addExpenseMutation = useMutation({

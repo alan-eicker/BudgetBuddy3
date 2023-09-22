@@ -106,11 +106,6 @@ export type NewExpenseInput = {
   note?: InputMaybe<Scalars['String']['input']>;
 };
 
-export type PaidStatus = {
-  __typename?: 'PaidStatus';
-  isPaid: Scalars['Boolean']['output'];
-};
-
 export type Query = {
   __typename?: 'Query';
   authenticateUser: StatusResponse;
@@ -134,6 +129,12 @@ export type QueryGetExpenseArgs = {
 
 export type QueryGetExpenseGroupByIdArgs = {
   _id: Scalars['String']['input'];
+};
+
+export type Status = {
+  __typename?: 'Status';
+  message?: Maybe<Scalars['String']['output']>;
+  status: Scalars['Int']['output'];
 };
 
 export type StatusResponse = {

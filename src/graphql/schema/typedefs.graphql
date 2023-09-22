@@ -52,6 +52,11 @@ type Status {
   message: String
 }
 
+type StatusResponse {
+  code: Int!
+  message: String
+}
+
 type ExpenseGroup {
   _id: ID
   startDate: String!
