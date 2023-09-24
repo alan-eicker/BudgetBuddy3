@@ -1,17 +1,22 @@
 scalar Void
 
 type Query {
+  # Expense Group
   getAllExpenseGroups: [ExpenseGroup]!
   getExpenseGroupById(_id: String!): ExpenseGroup!
+  # Expense
   getExpense(_id: String!): Expense!
+  # Auth
   authenticateUser(username: String!, password: String!): StatusResponse!
   logoutUser: Boolean!
 }
 
 type Mutation {
+  # Expense Group
   addExpenseGroup(input: ExpenseGroupInput!): Void
   updateExpenseGroup(expenseGroupId: ID!, input: ExpenseGroupInput!): Void
   deleteExpenseGroup(expenseGroupId: String!): Void
+  # Expense
   addExpense(expenseGroupId: ID!, input: ExpenseInput!): Void
   updateExpense(expenseId: ID!, expenseGroupId: ID!, input: ExpenseInput!): Void
   deleteExpense(expenseGroupId: String!, expenseId: String!): Void
@@ -44,7 +49,6 @@ type Expense {
   note: String
 }
 
-# _id: ID
 input ExpenseGroupInput {
   startDate: String
   endDate: String
@@ -52,8 +56,6 @@ input ExpenseGroupInput {
   expenses: [ExpenseInput!]
 }
 
-# _id: ID
-#  expenseGroupId: ID
 input ExpenseInput {
   name: String
   balance: Float
