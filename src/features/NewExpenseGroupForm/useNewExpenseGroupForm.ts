@@ -40,7 +40,7 @@ export default function useNewExpenseGroupForm() {
     initialValues,
     validationSchema,
     onSubmit: (formData: ExpenseGroup) => {
-      createExpenseGroup.mutate(formData);
+      createExpenseGroup.mutate({ input: formData });
     },
   });
 

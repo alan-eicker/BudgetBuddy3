@@ -11,12 +11,7 @@ type Query {
 type Mutation {
   deleteExpenseGroup(expenseGroupId: String!): Void
   deleteExpense(expenseGroupId: String!, expenseId: String!): Void
-  addExpenseGroup(
-    startDate: String!
-    endDate: String!
-    totalBudget: Float!
-    expenses: [ExpenseInput!]!
-  ): Void
+  addExpenseGroup(input: ExpenseGroupInput!): Void
   updateExpenseGroup(
     expenseGroupId: ID
     startDate: String!
@@ -69,9 +64,17 @@ type Expense {
   note: String
 }
 
+# _id: ID
+input ExpenseGroupInput {
+  startDate: String
+  endDate: String
+  totalBudget: Float
+  expenses: [ExpenseInput!]
+}
+
+# _id: ID
+#  expenseGroupId: ID
 input ExpenseInput {
-  _id: ID
-  expenseGroupId: ID
   name: String
   balance: Float
   dueDate: String

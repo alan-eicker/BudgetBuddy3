@@ -1,15 +1,5 @@
-mutation addExpenseGroup(
-  $startDate: String!
-  $endDate: String!
-  $totalBudget: Float!
-  $expenses: [ExpenseInput!]!
-) {
-  expenseGroup: addExpenseGroup(
-    startDate: $startDate
-    endDate: $endDate
-    totalBudget: $totalBudget
-    expenses: $expenses
-  )
+mutation addExpenseGroup($input: ExpenseGroupInput!) {
+  addExpenseGroup(input: $input)
 }
 
 mutation deleteExpenseGroup($expenseGroupId: String!) {

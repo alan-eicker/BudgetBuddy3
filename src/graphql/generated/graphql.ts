@@ -38,11 +38,16 @@ export type ExpenseGroup = {
   totalBudget: Scalars['Float']['output'];
 };
 
+export type ExpenseGroupInput = {
+  endDate?: InputMaybe<Scalars['String']['input']>;
+  expenses?: InputMaybe<Array<ExpenseInput>>;
+  startDate?: InputMaybe<Scalars['String']['input']>;
+  totalBudget?: InputMaybe<Scalars['Float']['input']>;
+};
+
 export type ExpenseInput = {
-  _id?: InputMaybe<Scalars['ID']['input']>;
   balance?: InputMaybe<Scalars['Float']['input']>;
   dueDate?: InputMaybe<Scalars['String']['input']>;
-  expenseGroupId?: InputMaybe<Scalars['ID']['input']>;
   isPaid?: InputMaybe<Scalars['Boolean']['input']>;
   name?: InputMaybe<Scalars['String']['input']>;
   note?: InputMaybe<Scalars['String']['input']>;
@@ -71,10 +76,7 @@ export type MutationAddExpenseArgs = {
 
 
 export type MutationAddExpenseGroupArgs = {
-  endDate: Scalars['String']['input'];
-  expenses: Array<ExpenseInput>;
-  startDate: Scalars['String']['input'];
-  totalBudget: Scalars['Float']['input'];
+  input: ExpenseGroupInput;
 };
 
 
@@ -146,14 +148,11 @@ export type StatusResponse = {
 };
 
 export type AddExpenseGroupMutationVariables = Exact<{
-  startDate: Scalars['String']['input'];
-  endDate: Scalars['String']['input'];
-  totalBudget: Scalars['Float']['input'];
-  expenses: Array<ExpenseInput> | ExpenseInput;
+  input: ExpenseGroupInput;
 }>;
 
 
-export type AddExpenseGroupMutation = { __typename?: 'Mutation', expenseGroup?: void | null };
+export type AddExpenseGroupMutation = { __typename?: 'Mutation', addExpenseGroup?: void | null };
 
 export type DeleteExpenseGroupMutationVariables = Exact<{
   expenseGroupId: Scalars['String']['input'];
@@ -241,13 +240,8 @@ export type LogoutUserQuery = { __typename?: 'Query', isLoggedOut: boolean };
 
 
 export const AddExpenseGroupDocument = gql`
-    mutation addExpenseGroup($startDate: String!, $endDate: String!, $totalBudget: Float!, $expenses: [ExpenseInput!]!) {
-  expenseGroup: addExpenseGroup(
-    startDate: $startDate
-    endDate: $endDate
-    totalBudget: $totalBudget
-    expenses: $expenses
-  )
+    mutation addExpenseGroup($input: ExpenseGroupInput!) {
+  addExpenseGroup(input: $input)
 }
     `;
 export const DeleteExpenseGroupDocument = gql`

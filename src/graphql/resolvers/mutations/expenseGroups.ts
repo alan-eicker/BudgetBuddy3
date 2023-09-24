@@ -13,7 +13,7 @@ export async function addExpenseGroup(
   parent: unknown,
   args: MutationAddExpenseGroupArgs,
 ) {
-  const expenseGroup = new ExpenseGroupModel(args);
+  const expenseGroup = new ExpenseGroupModel(args.input);
   await expenseGroup.save();
 }
 

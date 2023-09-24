@@ -105,7 +105,7 @@ export default function useExpenseGroupDetail() {
   });
 
   function handleExpenseGroupDuplicate(formData: ExpenseGroup) {
-    createExpenseGroup.mutate(formData);
+    createExpenseGroup.mutate({ input: formData });
   }
 
   function handleExpenseGroupUpdate(formData: Omit<ExpenseGroup, 'expenses'>) {
