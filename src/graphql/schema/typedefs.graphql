@@ -9,10 +9,10 @@ type Query {
 }
 
 type Mutation {
-  deleteExpenseGroup(expenseGroupId: String!): Void
-  deleteExpense(expenseGroupId: String!, expenseId: String!): Void
   addExpenseGroup(input: ExpenseGroupInput!): Void
   updateExpenseGroup(expenseGroupId: ID!, input: ExpenseGroupInput!): Void
+  deleteExpenseGroup(expenseGroupId: String!): Void
+  addExpense(expenseGroupId: ID!, input: ExpenseInput!): Void
   updateExpense(
     _id: ID
     expenseGroupId: ID!
@@ -22,14 +22,7 @@ type Mutation {
     isPaid: Boolean!
     note: String
   ): Void
-  addExpense(
-    expenseGroupId: ID!
-    name: String!
-    balance: Float!
-    dueDate: String
-    isPaid: Boolean!
-    note: String
-  ): Void
+  deleteExpense(expenseGroupId: String!, expenseId: String!): Void
   updateExpensePaidStatus(
     isPaid: Boolean!
     expenseGroupId: String!

@@ -47,10 +47,10 @@ export async function addExpense(
   parent: unknown,
   args: MutationAddExpenseArgs,
 ) {
-  const { expenseGroupId, ...newExpense } = args;
+  const { expenseGroupId, input } = args;
 
   const expenseGroup = await ExpenseGroupModel.findById(expenseGroupId);
-  expenseGroup.expenses.push(newExpense);
+  expenseGroup.expenses.push(input);
   expenseGroup.save();
 }
 
