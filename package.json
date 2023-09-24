@@ -8,7 +8,8 @@
     "start": "next start",
     "lint": "next lint",
     "generate": "graphql-codegen",
-    "seed": "node seed-db.mjs"
+    "seed": "node seed-db.mjs",
+    "docker": "NODE_ENV=production docker build -t budget-buddy-2 ."
   },
   "dependencies": {
     "@emotion/react": "^11.11.1",
@@ -33,6 +34,7 @@
     "fs": "^0.0.1-security",
     "graphql": "^16.0.0",
     "graphql-request": "^6.0.0",
+    "graphql-yoga": "^4.0.4",
     "jose": "^4.14.6",
     "mongoose": "^7.5.0",
     "next": "13.4.16",
