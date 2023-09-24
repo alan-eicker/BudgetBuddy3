@@ -5,4 +5,4 @@ COPY package.json . /src/
 RUN npm install
 RUN npm build
 EXPOSE 3000
-CMD ["node", "src/server"]
+CMD ["node", "server.js"]

@@ -1,4 +1,3 @@
-import '@/styles/globals.scss';
 import { useRouter } from 'next/router';
 import type { AppProps } from 'next/app';
 import { ThemeProvider, createTheme } from '@mui/material/styles';
@@ -8,7 +7,8 @@ import Layout from '@/components/Layout';
 import AppHeader from '@/features/AppHeader';
 import AppProvider from '@/providers/AppProvider';
 import ExpenseFormModalProvider from '@/providers/ExpenseFormModalProvider';
-import { queryClient } from '../api';
+import { queryClient } from '@/api';
+import '@/styles/globals.scss';
 
 const darkTheme = createTheme({
   palette: {
