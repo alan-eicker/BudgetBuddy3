@@ -13,15 +13,7 @@ type Mutation {
   updateExpenseGroup(expenseGroupId: ID!, input: ExpenseGroupInput!): Void
   deleteExpenseGroup(expenseGroupId: String!): Void
   addExpense(expenseGroupId: ID!, input: ExpenseInput!): Void
-  updateExpense(
-    _id: ID
-    expenseGroupId: ID!
-    name: String!
-    balance: Float!
-    dueDate: String
-    isPaid: Boolean!
-    note: String
-  ): Void
+  updateExpense(expenseId: ID!, expenseGroupId: ID!, input: ExpenseInput!): Void
   deleteExpense(expenseGroupId: String!, expenseId: String!): Void
   updateExpensePaidStatus(
     isPaid: Boolean!

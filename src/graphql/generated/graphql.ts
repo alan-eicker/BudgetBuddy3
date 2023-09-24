@@ -88,13 +88,9 @@ export type MutationDeleteExpenseGroupArgs = {
 
 
 export type MutationUpdateExpenseArgs = {
-  _id?: InputMaybe<Scalars['ID']['input']>;
-  balance: Scalars['Float']['input'];
-  dueDate?: InputMaybe<Scalars['String']['input']>;
   expenseGroupId: Scalars['ID']['input'];
-  isPaid: Scalars['Boolean']['input'];
-  name: Scalars['String']['input'];
-  note?: InputMaybe<Scalars['String']['input']>;
+  expenseId: Scalars['ID']['input'];
+  input: ExpenseInput;
 };
 
 
@@ -172,13 +168,9 @@ export type AddExpenseMutationVariables = Exact<{
 export type AddExpenseMutation = { __typename?: 'Mutation', addExpense?: void | null };
 
 export type UpdateExpenseMutationVariables = Exact<{
-  _id?: InputMaybe<Scalars['ID']['input']>;
+  expenseId: Scalars['ID']['input'];
   expenseGroupId: Scalars['ID']['input'];
-  name: Scalars['String']['input'];
-  balance: Scalars['Float']['input'];
-  dueDate?: InputMaybe<Scalars['String']['input']>;
-  isPaid: Scalars['Boolean']['input'];
-  note?: InputMaybe<Scalars['String']['input']>;
+  input: ExpenseInput;
 }>;
 
 
@@ -248,15 +240,11 @@ export const AddExpenseDocument = gql`
 }
     `;
 export const UpdateExpenseDocument = gql`
-    mutation updateExpense($_id: ID, $expenseGroupId: ID!, $name: String!, $balance: Float!, $dueDate: String, $isPaid: Boolean!, $note: String) {
+    mutation updateExpense($expenseId: ID!, $expenseGroupId: ID!, $input: ExpenseInput!) {
   updateExpense(
-    _id: $_id
+    expenseId: $expenseId
     expenseGroupId: $expenseGroupId
-    name: $name
-    balance: $balance
-    dueDate: $dueDate
-    isPaid: $isPaid
-    note: $note
+    input: $input
   )
 }
     `;

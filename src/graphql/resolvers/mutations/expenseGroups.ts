@@ -58,19 +58,17 @@ export async function updateExpense(
   parent: unknown,
   args: MutationUpdateExpenseArgs,
 ) {
-  const { expenseGroupId, ...updatedExpense } = args;
-
-  const { _id, name, balance, dueDate, isPaid, note } = updatedExpense;
+  const { expenseId, expenseGroupId, input } = args;
 
   await ExpenseGroupModel.findOneAndUpdate(
-    { _id: expenseGroupId, 'expenses._id': _id },
+    { _id: expenseGroupId, 'expenses._id': expenseId },
     {
       $set: {
-        'expenses.$.name': name,
-        'expenses.$.balance': balance,
-        'expenses.$.dueDate': dueDate,
-        'expenses.$.isPaid': isPaid,
-        'expenses.$.note': note,
+        'expenses.$.name': input.name,
+        'expenses.$.balance': input.balance,
+        'expenses.$.dueDate': input.dueDate,
+        'expenses.$.isPaid': input.isPaid,
+        'expenses.$.note': input.note,
       },
     },
   );

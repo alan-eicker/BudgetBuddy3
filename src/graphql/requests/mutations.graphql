@@ -15,22 +15,14 @@ mutation addExpense($expenseGroupId: ID!, $input: ExpenseInput!) {
 }
 
 mutation updateExpense(
-  $_id: ID
+  $expenseId: ID!
   $expenseGroupId: ID!
-  $name: String!
-  $balance: Float!
-  $dueDate: String
-  $isPaid: Boolean!
-  $note: String
+  $input: ExpenseInput!
 ) {
   updateExpense(
-    _id: $_id
+    expenseId: $expenseId
     expenseGroupId: $expenseGroupId
-    name: $name
-    balance: $balance
-    dueDate: $dueDate
-    isPaid: $isPaid
-    note: $note
+    input: $input
   )
 }
 

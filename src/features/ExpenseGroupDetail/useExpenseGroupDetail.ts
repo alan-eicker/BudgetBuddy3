@@ -130,9 +130,11 @@ export default function useExpenseGroupDetail() {
   }
 
   function handleUpdateExpense(updatedExpense: Expense) {
+    const { _id, ...input } = updatedExpense;
     updateExpenseMutation.mutate({
+      expenseId: _id as string,
       expenseGroupId: expenseGroupId as string,
-      ...updatedExpense,
+      input,
     });
   }
 
