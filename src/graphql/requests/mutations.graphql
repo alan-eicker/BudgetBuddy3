@@ -60,16 +60,6 @@ mutation addExpense(
   )
 }
 
-mutation updateExpenseGroup(
-  $expenseGroupId: ID!
-  $startDate: String!
-  $endDate: String!
-  $totalBudget: Float!
-) {
-  updateExpenseGroup(
-    expenseGroupId: $expenseGroupId
-    startDate: $startDate
-    endDate: $endDate
-    totalBudget: $totalBudget
-  )
+mutation updateExpenseGroup($expenseGroupId: ID!, $input: ExpenseGroupInput!) {
+  updateExpenseGroup(expenseGroupId: $expenseGroupId, input: $input)
 }

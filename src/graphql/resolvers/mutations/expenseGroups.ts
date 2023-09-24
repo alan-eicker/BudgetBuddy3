@@ -17,6 +17,14 @@ export async function addExpenseGroup(
   await expenseGroup.save();
 }
 
+export async function updateExpenseGroup(
+  parent: unknown,
+  args: MutationUpdateExpenseGroupArgs,
+) {
+  const { expenseGroupId, input } = args;
+  await ExpenseGroupModel.findByIdAndUpdate(expenseGroupId, input);
+}
+
 export async function deleteExpenseGroup(
   parent: any,
   args: MutationDeleteExpenseGroupArgs,
@@ -65,17 +73,6 @@ export async function updateExpense(
         'expenses.$.note': note,
       },
     },
-  );
-}
-
-export async function updateExpenseGroup(
-  parent: unknown,
-  args: MutationUpdateExpenseGroupArgs,
-) {
-  const { expenseGroupId, ...updatedExpenseGroup } = args;
-  await ExpenseGroupModel.findByIdAndUpdate(
-    expenseGroupId,
-    updatedExpenseGroup,
   );
 }
 

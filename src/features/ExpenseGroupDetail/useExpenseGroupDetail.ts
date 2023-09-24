@@ -93,7 +93,7 @@ export default function useExpenseGroupDetail() {
     },
   });
 
-  const createExpenseGroup = useMutation({
+  const duplicateExpenseGroupMutation = useMutation({
     mutationFn: addExpenseGroup,
     onSuccess: () => {
       router.push('/account/dashboard');
@@ -105,13 +105,13 @@ export default function useExpenseGroupDetail() {
   });
 
   function handleExpenseGroupDuplicate(formData: ExpenseGroup) {
-    createExpenseGroup.mutate({ input: formData });
+    duplicateExpenseGroupMutation.mutate({ input: formData });
   }
 
   function handleExpenseGroupUpdate(formData: Omit<ExpenseGroup, 'expenses'>) {
     updateExpenseGroupMutation.mutate({
-      ...formData,
       expenseGroupId: expenseGroupId as string,
+      input: formData,
     });
   }
 

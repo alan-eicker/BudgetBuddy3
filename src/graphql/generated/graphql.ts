@@ -103,10 +103,8 @@ export type MutationUpdateExpenseArgs = {
 
 
 export type MutationUpdateExpenseGroupArgs = {
-  endDate: Scalars['String']['input'];
-  expenseGroupId?: InputMaybe<Scalars['ID']['input']>;
-  startDate: Scalars['String']['input'];
-  totalBudget: Scalars['Float']['input'];
+  expenseGroupId: Scalars['ID']['input'];
+  input: ExpenseGroupInput;
 };
 
 
@@ -205,9 +203,7 @@ export type AddExpenseMutation = { __typename?: 'Mutation', expense?: void | nul
 
 export type UpdateExpenseGroupMutationVariables = Exact<{
   expenseGroupId: Scalars['ID']['input'];
-  startDate: Scalars['String']['input'];
-  endDate: Scalars['String']['input'];
-  totalBudget: Scalars['Float']['input'];
+  input: ExpenseGroupInput;
 }>;
 
 
@@ -289,13 +285,8 @@ export const AddExpenseDocument = gql`
 }
     `;
 export const UpdateExpenseGroupDocument = gql`
-    mutation updateExpenseGroup($expenseGroupId: ID!, $startDate: String!, $endDate: String!, $totalBudget: Float!) {
-  updateExpenseGroup(
-    expenseGroupId: $expenseGroupId
-    startDate: $startDate
-    endDate: $endDate
-    totalBudget: $totalBudget
-  )
+    mutation updateExpenseGroup($expenseGroupId: ID!, $input: ExpenseGroupInput!) {
+  updateExpenseGroup(expenseGroupId: $expenseGroupId, input: $input)
 }
     `;
 export const GetAllExpenseGroupsDocument = gql`
