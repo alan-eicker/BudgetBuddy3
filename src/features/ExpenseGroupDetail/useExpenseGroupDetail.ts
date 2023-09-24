@@ -29,14 +29,14 @@ export default function useExpenseGroupDetail() {
     getExpenseGroupById({ _id: expenseGroupId as string }),
   );
 
-  const updateExpenseMutation = useMutation({
-    mutationFn: updateExpense,
+  const duplicateExpenseGroupMutation = useMutation({
+    mutationFn: addExpenseGroup,
     onSuccess: () => {
-      queryClient.invalidateQueries('expenseGroup' + expenseGroupId);
+      router.push('/account/dashboard');
       queryClient.removeQueries('expenseGroups');
     },
     onError: () => {
-      setError('Could not update expense paid status');
+      setError('Could not duplicate expense group');
     },
   });
 
@@ -51,14 +51,14 @@ export default function useExpenseGroupDetail() {
     },
   });
 
-  const updateExpensePaidStatusMutation = useMutation({
-    mutationFn: updateExpensePaidStatus,
+  const deleteExpenseGroupMutation = useMutation({
+    mutationFn: deleteExpenseGroup,
     onSuccess: () => {
-      queryClient.invalidateQueries('expenseGroup' + expenseGroupId);
       queryClient.removeQueries('expenseGroups');
+      router.push('/account/dashboard');
     },
     onError: () => {
-      setError('Could not update expense paid status');
+      setError('Could not delete expense group');
     },
   });
 
@@ -72,14 +72,25 @@ export default function useExpenseGroupDetail() {
     },
   });
 
-  const deleteExpenseGroupMutation = useMutation({
-    mutationFn: deleteExpenseGroup,
+  const updateExpenseMutation = useMutation({
+    mutationFn: updateExpense,
     onSuccess: () => {
+      queryClient.invalidateQueries('expenseGroup' + expenseGroupId);
       queryClient.removeQueries('expenseGroups');
-      router.push('/account/dashboard');
     },
     onError: () => {
-      setError('Could not delete expense group');
+      setError('Could not update expense paid status');
+    },
+  });
+
+  const updateExpensePaidStatusMutation = useMutation({
+    mutationFn: updateExpensePaidStatus,
+    onSuccess: () => {
+      queryClient.invalidateQueries('expenseGroup' + expenseGroupId);
+      queryClient.removeQueries('expenseGroups');
+    },
+    onError: () => {
+      setError('Could not update expense paid status');
     },
   });
 
@@ -90,17 +101,6 @@ export default function useExpenseGroupDetail() {
     },
     onError: () => {
       setError('Could not delete expense');
-    },
-  });
-
-  const duplicateExpenseGroupMutation = useMutation({
-    mutationFn: addExpenseGroup,
-    onSuccess: () => {
-      router.push('/account/dashboard');
-      queryClient.removeQueries('expenseGroups');
-    },
-    onError: () => {
-      setError('Could not duplicate expense group');
     },
   });
 
