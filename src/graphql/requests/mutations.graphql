@@ -2,7 +2,7 @@ mutation addExpenseGroup(
   $startDate: String!
   $endDate: String!
   $totalBudget: Float!
-  $expenses: [NewExpenseInput!]!
+  $expenses: [ExpenseInput!]!
 ) {
   expenseGroup: addExpenseGroup(
     startDate: $startDate
@@ -27,7 +27,6 @@ mutation updateExpense(
   $balance: Float!
   $dueDate: String
   $isPaid: Boolean!
-  $isOverdue: Boolean
   $note: String
 ) {
   updateExpense(
@@ -37,7 +36,6 @@ mutation updateExpense(
     balance: $balance
     dueDate: $dueDate
     isPaid: $isPaid
-    isOverdue: $isOverdue
     note: $note
   )
 }

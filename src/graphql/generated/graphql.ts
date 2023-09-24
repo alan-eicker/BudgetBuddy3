@@ -38,6 +38,16 @@ export type ExpenseGroup = {
   totalBudget: Scalars['Float']['output'];
 };
 
+export type ExpenseInput = {
+  _id?: InputMaybe<Scalars['ID']['input']>;
+  balance?: InputMaybe<Scalars['Float']['input']>;
+  dueDate?: InputMaybe<Scalars['String']['input']>;
+  expenseGroupId?: InputMaybe<Scalars['ID']['input']>;
+  isPaid?: InputMaybe<Scalars['Boolean']['input']>;
+  name?: InputMaybe<Scalars['String']['input']>;
+  note?: InputMaybe<Scalars['String']['input']>;
+};
+
 export type Mutation = {
   __typename?: 'Mutation';
   addExpense?: Maybe<Scalars['Void']['output']>;
@@ -62,7 +72,7 @@ export type MutationAddExpenseArgs = {
 
 export type MutationAddExpenseGroupArgs = {
   endDate: Scalars['String']['input'];
-  expenses: Array<NewExpenseInput>;
+  expenses: Array<ExpenseInput>;
   startDate: Scalars['String']['input'];
   totalBudget: Scalars['Float']['input'];
 };
@@ -84,7 +94,6 @@ export type MutationUpdateExpenseArgs = {
   balance: Scalars['Float']['input'];
   dueDate?: InputMaybe<Scalars['String']['input']>;
   expenseGroupId: Scalars['ID']['input'];
-  isOverdue?: InputMaybe<Scalars['Boolean']['input']>;
   isPaid: Scalars['Boolean']['input'];
   name: Scalars['String']['input'];
   note?: InputMaybe<Scalars['String']['input']>;
@@ -103,15 +112,6 @@ export type MutationUpdateExpensePaidStatusArgs = {
   expenseGroupId: Scalars['String']['input'];
   expenseId: Scalars['String']['input'];
   isPaid: Scalars['Boolean']['input'];
-};
-
-export type NewExpenseInput = {
-  balance?: InputMaybe<Scalars['Float']['input']>;
-  dueDate?: InputMaybe<Scalars['String']['input']>;
-  expenseGroupId?: InputMaybe<Scalars['ID']['input']>;
-  isPaid?: InputMaybe<Scalars['Boolean']['input']>;
-  name?: InputMaybe<Scalars['String']['input']>;
-  note?: InputMaybe<Scalars['String']['input']>;
 };
 
 export type Query = {
@@ -149,7 +149,7 @@ export type AddExpenseGroupMutationVariables = Exact<{
   startDate: Scalars['String']['input'];
   endDate: Scalars['String']['input'];
   totalBudget: Scalars['Float']['input'];
-  expenses: Array<NewExpenseInput> | NewExpenseInput;
+  expenses: Array<ExpenseInput> | ExpenseInput;
 }>;
 
 
@@ -177,7 +177,6 @@ export type UpdateExpenseMutationVariables = Exact<{
   balance: Scalars['Float']['input'];
   dueDate?: InputMaybe<Scalars['String']['input']>;
   isPaid: Scalars['Boolean']['input'];
-  isOverdue?: InputMaybe<Scalars['Boolean']['input']>;
   note?: InputMaybe<Scalars['String']['input']>;
 }>;
 
@@ -242,7 +241,7 @@ export type LogoutUserQuery = { __typename?: 'Query', isLoggedOut: boolean };
 
 
 export const AddExpenseGroupDocument = gql`
-    mutation addExpenseGroup($startDate: String!, $endDate: String!, $totalBudget: Float!, $expenses: [NewExpenseInput!]!) {
+    mutation addExpenseGroup($startDate: String!, $endDate: String!, $totalBudget: Float!, $expenses: [ExpenseInput!]!) {
   expenseGroup: addExpenseGroup(
     startDate: $startDate
     endDate: $endDate
@@ -262,7 +261,7 @@ export const DeleteExpenseDocument = gql`
 }
     `;
 export const UpdateExpenseDocument = gql`
-    mutation updateExpense($_id: ID, $expenseGroupId: ID!, $name: String!, $balance: Float!, $dueDate: String, $isPaid: Boolean!, $isOverdue: Boolean, $note: String) {
+    mutation updateExpense($_id: ID, $expenseGroupId: ID!, $name: String!, $balance: Float!, $dueDate: String, $isPaid: Boolean!, $note: String) {
   updateExpense(
     _id: $_id
     expenseGroupId: $expenseGroupId
@@ -270,7 +269,6 @@ export const UpdateExpenseDocument = gql`
     balance: $balance
     dueDate: $dueDate
     isPaid: $isPaid
-    isOverdue: $isOverdue
     note: $note
   )
 }

@@ -24,6 +24,7 @@ import {
   formatNumber,
   getTotalBalanceOfAllExpenses,
   getTotalUnpaidExpenses,
+  isOverDue,
 } from '@/utils/expenses';
 import { useExpenseFormModalContext } from '@/providers/ExpenseFormModalProvider';
 import { COLORS } from '@/constants';
@@ -204,10 +205,11 @@ export default function ExpenseGroupDetail() {
                   style={{ marginTop: 1 }}
                   disablePadding
                 >
-                  {mapOverdueStatustoExpenses(expenses).map((expense) => (
+                  {expenses.map((expense) => (
                     <ListItem disablePadding key={expense._id || expense.name}>
                       <ExpenseCard
                         {...expense}
+                        isOverdue={isOverDue(expense)}
                         onPaidChange={(isPaid) =>
                           handleUpdateExpensePaidStatus(
                             isPaid,
