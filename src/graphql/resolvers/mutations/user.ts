@@ -12,7 +12,9 @@ export async function createUser(
   });
 
   if (existingUser) {
-    throw createGraphQLError('Error creating user');
+    throw createGraphQLError(
+      `Error: Email address "${args.input.email}" already exists.`,
+    );
   }
 
   const password = await bcrypt.hash(args.input.password as string, 10);
