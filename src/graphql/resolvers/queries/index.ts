@@ -1,4 +1,4 @@
-import * as auth from './auth';
+import * as auth from './user';
 import * as expenseGroups from './expenseGroups';
 
 const Query = {

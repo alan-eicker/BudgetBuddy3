@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import { useQuery } from 'react-query';
@@ -10,10 +11,11 @@ import Button from '@mui/material/Button';
 import Alert from '@mui/material/Alert';
 import LoadingButton from '@mui/lab/LoadingButton';
 import BrandLogo from '@/components/BrandLogo';
-import { authenticateUser } from '@/api';
+import { loginUser } from '@/api';
 
 export default function LoginForm() {
   const router = useRouter();
+  const [loginError, setLoginError] = useState<string>();
 
   const initialValues = {
     username: '',
@@ -33,18 +35,15 @@ export default function LoginForm() {
       onSubmit: () => {},
     });
 
-  const { data } = useQuery(
-    ['authenticateUser'],
-    () => authenticateUser(values),
-    {
-      enabled: isSubmitting && !!values.username && !!values.password,
-      onSuccess: (data) => {
-        if (data.status.code === 200) {
-          router.push('/account/dashboard');
-        }
-      },
+  useQuery(['loginUser'], () => loginUser(values), {
+    enabled: isSubmitting && !!values.username && !!values.password,
+    onSuccess: () => {
+      router.push('/account/dashboard');
     },
-  );
+    onError: () => {
+      setLoginError('Invalid login credentials');
+    },
+  });
 
   return (
     <form onSubmit={handleSubmit} noValidate>
@@ -55,9 +54,9 @@ export default function LoginForm() {
             BudgetBuddy
           </Typography>
         </Box>
-        {data && data?.status.code !== 200 && (
+        {loginError && (
           <Alert variant="outlined" severity="error">
-            {data?.status.message}
+            {loginError}
           </Alert>
         )}
         <Box marginBottom={2}>

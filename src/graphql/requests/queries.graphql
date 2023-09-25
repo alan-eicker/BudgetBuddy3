@@ -32,11 +32,8 @@ query getExpenseGroupById($_id: String!) {
   }
 }
 
-query authenticateUser($username: String!, $password: String!) {
-  status: authenticateUser(username: $username, password: $password) {
-    code
-    message
-  }
+query loginUser($username: String, $password: String) {
+  loginUser(username: $username, password: $password)
 }
 
 query logoutUser {

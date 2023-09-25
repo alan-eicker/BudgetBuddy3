@@ -114,17 +114,11 @@ export type MutationUpdateExpensePaidStatusArgs = {
 
 export type Query = {
   __typename?: 'Query';
-  authenticateUser: StatusResponse;
   getAllExpenseGroups: Array<Maybe<ExpenseGroup>>;
   getExpense: Expense;
   getExpenseGroupById: ExpenseGroup;
+  loginUser?: Maybe<Scalars['Void']['output']>;
   logoutUser: Scalars['Boolean']['output'];
-};
-
-
-export type QueryAuthenticateUserArgs = {
-  password: Scalars['String']['input'];
-  username: Scalars['String']['input'];
 };
 
 
@@ -135,6 +129,12 @@ export type QueryGetExpenseArgs = {
 
 export type QueryGetExpenseGroupByIdArgs = {
   _id: Scalars['String']['input'];
+};
+
+
+export type QueryLoginUserArgs = {
+  password?: InputMaybe<Scalars['String']['input']>;
+  username?: InputMaybe<Scalars['String']['input']>;
 };
 
 export type StatusResponse = {
@@ -224,13 +224,13 @@ export type GetExpenseGroupByIdQueryVariables = Exact<{
 
 export type GetExpenseGroupByIdQuery = { __typename?: 'Query', expenseGroup: { __typename?: 'ExpenseGroup', _id?: string | null, startDate: string, endDate: string, totalBudget: number, expenses: Array<{ __typename?: 'Expense', _id?: string | null, name: string, balance: number, dueDate?: string | null, isPaid: boolean, note?: string | null }> } };
 
-export type AuthenticateUserQueryVariables = Exact<{
-  username: Scalars['String']['input'];
-  password: Scalars['String']['input'];
+export type LoginUserQueryVariables = Exact<{
+  username?: InputMaybe<Scalars['String']['input']>;
+  password?: InputMaybe<Scalars['String']['input']>;
 }>;
 
 
-export type AuthenticateUserQuery = { __typename?: 'Query', status: { __typename?: 'StatusResponse', code: number, message?: string | null } };
+export type LoginUserQuery = { __typename?: 'Query', loginUser?: void | null };
 
 export type LogoutUserQueryVariables = Exact<{ [key: string]: never; }>;
 
@@ -322,12 +322,9 @@ export const GetExpenseGroupByIdDocument = gql`
   }
 }
     `;
-export const AuthenticateUserDocument = gql`
-    query authenticateUser($username: String!, $password: String!) {
-  status: authenticateUser(username: $username, password: $password) {
-    code
-    message
-  }
+export const LoginUserDocument = gql`
+    query loginUser($username: String, $password: String) {
+  loginUser(username: $username, password: $password)
 }
     `;
 export const LogoutUserDocument = gql`
@@ -373,8 +370,8 @@ export function getSdk(client: GraphQLClient, withWrapper: SdkFunctionWrapper = 
     getExpenseGroupById(variables: GetExpenseGroupByIdQueryVariables, requestHeaders?: GraphQLClientRequestHeaders): Promise<GetExpenseGroupByIdQuery> {
       return withWrapper((wrappedRequestHeaders) => client.request<GetExpenseGroupByIdQuery>(GetExpenseGroupByIdDocument, variables, {...requestHeaders, ...wrappedRequestHeaders}), 'getExpenseGroupById', 'query');
     },
-    authenticateUser(variables: AuthenticateUserQueryVariables, requestHeaders?: GraphQLClientRequestHeaders): Promise<AuthenticateUserQuery> {
-      return withWrapper((wrappedRequestHeaders) => client.request<AuthenticateUserQuery>(AuthenticateUserDocument, variables, {...requestHeaders, ...wrappedRequestHeaders}), 'authenticateUser', 'query');
+    loginUser(variables?: LoginUserQueryVariables, requestHeaders?: GraphQLClientRequestHeaders): Promise<LoginUserQuery> {
+      return withWrapper((wrappedRequestHeaders) => client.request<LoginUserQuery>(LoginUserDocument, variables, {...requestHeaders, ...wrappedRequestHeaders}), 'loginUser', 'query');
     },
     logoutUser(variables?: LogoutUserQueryVariables, requestHeaders?: GraphQLClientRequestHeaders): Promise<LogoutUserQuery> {
       return withWrapper((wrappedRequestHeaders) => client.request<LogoutUserQuery>(LogoutUserDocument, variables, {...requestHeaders, ...wrappedRequestHeaders}), 'logoutUser', 'query');

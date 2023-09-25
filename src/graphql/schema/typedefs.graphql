@@ -6,8 +6,8 @@ type Query {
   getExpenseGroupById(_id: String!): ExpenseGroup!
   # Expense
   getExpense(_id: String!): Expense!
-  # Auth
-  authenticateUser(username: String!, password: String!): StatusResponse!
+  # User
+  loginUser(username: String, password: String): Void
   logoutUser: Boolean!
 }
 
