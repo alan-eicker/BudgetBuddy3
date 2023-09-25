@@ -3,16 +3,15 @@ import TextField from '@mui/material/TextField';
 import Box from '@mui/material/Box';
 import BrandLogo from '@/components/BrandLogo';
 import LoadingButton from '@mui/lab/LoadingButton';
+import Button from '@mui/material/Button';
 import { useFormik } from 'formik';
 import * as yup from 'yup';
 import { useMutation } from 'react-query';
-import { useState } from 'react';
 import { useRouter } from 'next/router';
 import { useAppContext } from '@/providers/AppProvider';
 import { createUser } from '@/api';
 
 export default function RegisterUserForm() {
-  const [error, setError] = useState<string>();
   const router = useRouter();
   const { setAppAlert } = useAppContext();
 
@@ -25,8 +24,14 @@ export default function RegisterUserForm() {
         message: 'New account successfully created!',
       });
     },
-    onError: () => {
-      setError('Error creating new user');
+    onError: (error: any) => {
+      setSubmitting(false);
+      setAppAlert({
+        type: 'error',
+        message: error.response.errors
+          .map(({ message }: { message: string }) => message)
+          .join(', '),
+      });
     },
   });
 
@@ -48,14 +53,21 @@ export default function RegisterUserForm() {
     password: yup.string().required('Password is required'),
   });
 
-  const { errors, touched, values, handleChange, handleSubmit, isSubmitting } =
-    useFormik({
-      initialValues,
-      validationSchema,
-      onSubmit: (formData) => {
-        createUserMutation.mutate({ input: formData });
-      },
-    });
+  const {
+    errors,
+    touched,
+    values,
+    handleChange,
+    handleSubmit,
+    isSubmitting,
+    setSubmitting,
+  } = useFormik({
+    initialValues,
+    validationSchema,
+    onSubmit: (formData) => {
+      createUserMutation.mutate({ input: formData });
+    },
+  });
 
   return (
     <form onSubmit={handleSubmit} noValidate>
@@ -115,15 +127,26 @@ export default function RegisterUserForm() {
             })}
           />
         </Box>
-        <LoadingButton
-          type="submit"
-          variant="contained"
-          size="large"
-          loading={isSubmitting}
-          fullWidth
-        >
-          Create User
-        </LoadingButton>
+        <Box marginTop={4}>
+          <LoadingButton
+            type="submit"
+            variant="contained"
+            size="large"
+            loading={isSubmitting}
+            fullWidth
+          >
+            Create User
+          </LoadingButton>
+          <Box marginBottom={1.5} />
+          <Button
+            onClick={() => router.push('/')}
+            size="large"
+            variant="outlined"
+            fullWidth
+          >
+            Cancel
+          </Button>
+        </Box>
       </Box>
     </form>
   );

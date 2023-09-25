@@ -34,7 +34,7 @@ const AppProvider = ({ children }: { children: ReactNode }) => {
     if (appAlert) {
       alertTimer = setTimeout(() => {
         setAppAlert(undefined);
-      }, 4000);
+      }, 5000);
     }
 
     return () => {

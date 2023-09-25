@@ -38,7 +38,7 @@ export default function Layout({
           })}
         >
           {appAlert && (
-            <Box>
+            <Box margin={2}>
               <Alert
                 variant="filled"
                 color={appAlert.type}
