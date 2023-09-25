@@ -11,9 +11,19 @@ export async function createUser(
     email: { $regex: new RegExp(args.input.email as string, 'i') },
   });
 
+  const existingUsername = await UserModel.findOne({
+    username: { $regex: new RegExp(args.input.username as string, 'i') },
+  });
+
   if (existingUser) {
     throw createGraphQLError(
-      `Error: Email address "${args.input.email}" already exists.`,
+      `Error: An account with the email address "${args.input.email}" already exists.`,
+    );
+  }
+
+  if (existingUsername) {
+    throw createGraphQLError(
+      `Error: Username "${args.input.username}" is already taken.`,
     );
   }
 
