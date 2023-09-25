@@ -9,7 +9,7 @@ import * as yup from 'yup';
 import { useMutation } from 'react-query';
 import { useRouter } from 'next/router';
 import { useAppContext } from '@/providers/AppProvider';
-import { createUser } from '@/api';
+import { createUser, loginUser, queryClient } from '@/api';
 
 export default function RegisterUserForm() {
   const router = useRouter();
@@ -17,12 +17,21 @@ export default function RegisterUserForm() {
 
   const createUserMutation = useMutation({
     mutationFn: createUser,
-    onSuccess: () => {
-      router.push('/');
-      setAppAlert({
-        type: 'success',
-        message: 'New user successfully created!',
-      });
+    onSuccess: async () => {
+      try {
+        await queryClient.fetchQuery({
+          queryKey: 'loginUser',
+          queryFn: () =>
+            loginUser({
+              username: values.username,
+              password: values.password,
+            }),
+        });
+
+        router.push('/account/dashboard');
+      } catch (err: any) {
+        // handle error...
+      }
     },
     onError: (error: any) => {
       setSubmitting(false);
