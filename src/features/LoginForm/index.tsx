@@ -8,8 +8,6 @@ import TextField from '@mui/material/TextField';
 import Typography from '@mui/material/Typography';
 import Button from '@mui/material/Button';
 import Alert from '@mui/material/Alert';
-import List from '@mui/material/List';
-import ListItem from '@mui/material/ListItem';
 import LoadingButton from '@mui/lab/LoadingButton';
 import BrandLogo from '@/components/BrandLogo';
 import { authenticateUser } from '@/api';
@@ -104,30 +102,24 @@ export default function LoginForm() {
             Log In
           </LoadingButton>
         </Box>
-        <List dense>
-          <ListItem>
-            <Button
-              size="small"
-              color="info"
-              href="/recover-password"
-              component={Link}
-              fullWidth
-            >
-              Forgot your Password?
-            </Button>
-          </ListItem>
-          <ListItem>
-            <Button
-              size="small"
-              color="info"
-              href="/register"
-              component={Link}
-              fullWidth
-            >
-              Create an Account
-            </Button>
-          </ListItem>
-        </List>
+        <Button
+          size="large"
+          color="info"
+          href="/recover-password"
+          component={Link}
+          fullWidth
+        >
+          Forgot your Password?
+        </Button>
+        <Button
+          size="large"
+          color="info"
+          href="/register"
+          component={Link}
+          fullWidth
+        >
+          Create an Account
+        </Button>
       </Box>
     </form>
   );
