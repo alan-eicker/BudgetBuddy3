@@ -5,8 +5,21 @@ import BrandLogo from '@/components/BrandLogo';
 import LoadingButton from '@mui/lab/LoadingButton';
 import { useFormik } from 'formik';
 import * as yup from 'yup';
+import { useMutation } from 'react-query';
+import { useState } from 'react';
+import { createUser } from '@/api';
 
 export default function RegisterUserForm() {
+  const [error, setError] = useState<string>();
+
+  const createUserMutation = useMutation({
+    mutationFn: createUser,
+    onSuccess: () => {},
+    onError: () => {
+      setError('Error creating new user');
+    },
+  });
+
   const initialValues = {
     email: '',
     username: '',
@@ -29,7 +42,9 @@ export default function RegisterUserForm() {
     useFormik({
       initialValues,
       validationSchema,
-      onSubmit: (formData) => {},
+      onSubmit: (formData) => {
+        createUserMutation.mutate({ input: formData });
+      },
     });
 
   return (

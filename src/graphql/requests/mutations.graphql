@@ -1,3 +1,7 @@
+mutation createUser($input: UserInput!) {
+  createUser(input: $input)
+}
+
 mutation addExpenseGroup($input: ExpenseGroupInput!) {
   addExpenseGroup(input: $input)
 }

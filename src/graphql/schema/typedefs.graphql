@@ -12,6 +12,8 @@ type Query {
 }
 
 type Mutation {
+  # User
+  createUser(input: UserInput!): Void
   # Expense Group
   addExpenseGroup(input: ExpenseGroupInput!): Void
   updateExpenseGroup(expenseGroupId: ID!, input: ExpenseGroupInput!): Void
@@ -47,6 +49,12 @@ type Expense {
   dueDate: String
   isPaid: Boolean!
   note: String
+}
+
+input UserInput {
+  email: String
+  username: String
+  password: String
 }
 
 input ExpenseGroupInput {

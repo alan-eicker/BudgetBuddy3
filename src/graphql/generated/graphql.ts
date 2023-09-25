@@ -57,6 +57,7 @@ export type Mutation = {
   __typename?: 'Mutation';
   addExpense?: Maybe<Scalars['Void']['output']>;
   addExpenseGroup?: Maybe<Scalars['Void']['output']>;
+  createUser?: Maybe<Scalars['Void']['output']>;
   deleteExpense?: Maybe<Scalars['Void']['output']>;
   deleteExpenseGroup?: Maybe<Scalars['Void']['output']>;
   updateExpense?: Maybe<Scalars['Void']['output']>;
@@ -73,6 +74,11 @@ export type MutationAddExpenseArgs = {
 
 export type MutationAddExpenseGroupArgs = {
   input: ExpenseGroupInput;
+};
+
+
+export type MutationCreateUserArgs = {
+  input: UserInput;
 };
 
 
@@ -136,6 +142,19 @@ export type StatusResponse = {
   code: Scalars['Int']['output'];
   message?: Maybe<Scalars['String']['output']>;
 };
+
+export type UserInput = {
+  email?: InputMaybe<Scalars['String']['input']>;
+  password?: InputMaybe<Scalars['String']['input']>;
+  username?: InputMaybe<Scalars['String']['input']>;
+};
+
+export type CreateUserMutationVariables = Exact<{
+  input: UserInput;
+}>;
+
+
+export type CreateUserMutation = { __typename?: 'Mutation', createUser?: void | null };
 
 export type AddExpenseGroupMutationVariables = Exact<{
   input: ExpenseGroupInput;
@@ -219,6 +238,11 @@ export type LogoutUserQueryVariables = Exact<{ [key: string]: never; }>;
 export type LogoutUserQuery = { __typename?: 'Query', isLoggedOut: boolean };
 
 
+export const CreateUserDocument = gql`
+    mutation createUser($input: UserInput!) {
+  createUser(input: $input)
+}
+    `;
 export const AddExpenseGroupDocument = gql`
     mutation addExpenseGroup($input: ExpenseGroupInput!) {
   addExpenseGroup(input: $input)
@@ -319,6 +343,9 @@ const defaultWrapper: SdkFunctionWrapper = (action, _operationName, _operationTy
 
 export function getSdk(client: GraphQLClient, withWrapper: SdkFunctionWrapper = defaultWrapper) {
   return {
+    createUser(variables: CreateUserMutationVariables, requestHeaders?: GraphQLClientRequestHeaders): Promise<CreateUserMutation> {
+      return withWrapper((wrappedRequestHeaders) => client.request<CreateUserMutation>(CreateUserDocument, variables, {...requestHeaders, ...wrappedRequestHeaders}), 'createUser', 'mutation');
+    },
     addExpenseGroup(variables: AddExpenseGroupMutationVariables, requestHeaders?: GraphQLClientRequestHeaders): Promise<AddExpenseGroupMutation> {
       return withWrapper((wrappedRequestHeaders) => client.request<AddExpenseGroupMutation>(AddExpenseGroupDocument, variables, {...requestHeaders, ...wrappedRequestHeaders}), 'addExpenseGroup', 'mutation');
     },
