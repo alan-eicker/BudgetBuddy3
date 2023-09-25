@@ -7,14 +7,18 @@ import { useFormik } from 'formik';
 import * as yup from 'yup';
 import { useMutation } from 'react-query';
 import { useState } from 'react';
+import { useRouter } from 'next/router';
 import { createUser } from '@/api';
 
 export default function RegisterUserForm() {
   const [error, setError] = useState<string>();
+  const router = useRouter();
 
   const createUserMutation = useMutation({
     mutationFn: createUser,
-    onSuccess: () => {},
+    onSuccess: () => {
+      router.push('/');
+    },
     onError: () => {
       setError('Error creating new user');
     },
@@ -66,6 +70,7 @@ export default function RegisterUserForm() {
             required
             label="Email"
             name="email"
+            autoComplete="off"
             onChange={handleChange}
             value={values.email}
             {...(!!(errors.email && touched.email) && {
@@ -80,6 +85,7 @@ export default function RegisterUserForm() {
             required
             label="Username"
             name="username"
+            autoComplete="off"
             onChange={handleChange}
             value={values.username}
             {...(!!(errors.username && touched.username) && {
