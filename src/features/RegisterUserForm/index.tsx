@@ -8,16 +8,22 @@ import * as yup from 'yup';
 import { useMutation } from 'react-query';
 import { useState } from 'react';
 import { useRouter } from 'next/router';
+import { useAppContext } from '@/providers/AppProvider';
 import { createUser } from '@/api';
 
 export default function RegisterUserForm() {
   const [error, setError] = useState<string>();
   const router = useRouter();
+  const { setAppAlert } = useAppContext();
 
   const createUserMutation = useMutation({
     mutationFn: createUser,
     onSuccess: () => {
       router.push('/');
+      setAppAlert({
+        type: 'success',
+        message: 'New account successfully created!',
+      });
     },
     onError: () => {
       setError('Error creating new user');

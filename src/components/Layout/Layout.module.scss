@@ -13,3 +13,11 @@
     margin-top: rem(60);
   }
 }
+
+.appAlert {
+  position: fixed;
+  top: rem(10);
+  right: rem(10);
+  left: rem(10);
+  z-index: 2;
+}

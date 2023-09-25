@@ -1,6 +1,7 @@
 import classnames from 'classnames';
 import Backdrop from '@mui/material/Backdrop';
 import Box from '@mui/material/Box';
+import Alert from '@/components/Alert';
 import CircularProgress from '@mui/material/CircularProgress';
 import { useAppContext } from '@/providers/AppProvider';
 import { COLORS } from '@/constants';
@@ -17,7 +18,7 @@ export default function Layout({
   children,
   showHeader = false,
 }: LayoutProps) {
-  const { showOverlay } = useAppContext();
+  const { showOverlay, appAlert, setAppAlert } = useAppContext();
   const hasHeader = showHeader && header;
 
   return (
@@ -36,6 +37,17 @@ export default function Layout({
             [styles.hasHeader]: hasHeader,
           })}
         >
+          {appAlert && (
+            <Box>
+              <Alert
+                variant="filled"
+                color={appAlert.type}
+                onDismiss={() => setAppAlert(undefined)}
+              >
+                {appAlert.message}
+              </Alert>
+            </Box>
+          )}
           {children}
         </Box>
       </Box>
