@@ -50,7 +50,7 @@ export default function LoginForm() {
 
   return (
     <form onSubmit={handleSubmit} noValidate>
-      <Box padding={2.5}>
+      <Box padding={4}>
         <Box textAlign="center" marginBottom={2}>
           <BrandLogo size={70} />
           <Typography component="h1" variant="h5">

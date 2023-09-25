@@ -7,7 +7,7 @@ import BrandLogo from '@/components/BrandLogo';
 export default function RegisterUserForm() {
   return (
     <form>
-      <Box padding={2.5}>
+      <Box padding={4}>
         <Typography
           sx={{ marginBottom: 2, textAlign: 'center' }}
           variant="h5"
