@@ -21,7 +21,7 @@ export default function RegisterUserForm() {
       router.push('/');
       setAppAlert({
         type: 'success',
-        message: 'New account successfully created!',
+        message: 'New user successfully created!',
       });
     },
     onError: (error: any) => {
