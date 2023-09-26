@@ -29,7 +29,7 @@ export default function RegisterUserForm() {
         });
 
         router.push('/account/dashboard');
-      } catch (err: any) {
+      } catch {
         router.push('/');
       }
     },
