@@ -1,22 +1,10 @@
 import bcrypt from 'bcrypt';
-import { SignJWT, decodeJwt } from 'jose';
+import { decodeJwt } from 'jose';
 import { YogaInitialContext } from 'graphql-yoga';
 import { QueryLoginUserArgs } from '../../generated/graphql';
 import UserModel from '@/database/models/user';
 import { GraphQLError } from 'graphql';
-
-const createToken = async (payload?: any) => {
-  const secret = new TextEncoder().encode(process.env.JWT_SECRET);
-
-  const jwt = await new SignJWT(payload || {})
-    .setProtectedHeader({ alg: 'HS256' })
-    .setIssuer('urn:example:issuer')
-    .setAudience('urn:example:audience')
-    .setExpirationTime('1h')
-    .sign(secret);
-
-  return jwt;
-};
+import { createToken } from '@/utils/auth';
 
 export async function loginUser(
   parent: unknown,
