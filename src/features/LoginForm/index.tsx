@@ -1,9 +1,4 @@
-import { useState } from 'react';
 import Link from 'next/link';
-import { useRouter } from 'next/router';
-import { useQuery } from 'react-query';
-import { useFormik } from 'formik';
-import * as yup from 'yup';
 import Box from '@mui/material/Box';
 import TextField from '@mui/material/TextField';
 import Typography from '@mui/material/Typography';
@@ -11,39 +6,12 @@ import Button from '@mui/material/Button';
 import Alert from '@mui/material/Alert';
 import LoadingButton from '@mui/lab/LoadingButton';
 import BrandLogo from '@/components/BrandLogo';
-import { loginUser } from '@/api';
+import useLoginForm from './useLoginForm';
 
 export default function LoginForm() {
-  const router = useRouter();
-  const [loginError, setLoginError] = useState<string>();
-
-  const initialValues = {
-    username: '',
-    password: '',
-  };
-
-  const validationSchema = yup.object({
-    username: yup.string().required('username is required'),
-    password: yup.string().required('password is required'),
-  });
-
-  const { values, errors, touched, handleChange, handleSubmit, isSubmitting } =
-    useFormik({
-      initialValues,
-      validationSchema,
-      validateOnBlur: false,
-      onSubmit: () => {},
-    });
-
-  useQuery(['loginUser'], () => loginUser(values), {
-    enabled: isSubmitting && !!values.username && !!values.password,
-    onSuccess: () => {
-      router.push('/account/dashboard');
-    },
-    onError: () => {
-      setLoginError('Invalid login credentials');
-    },
-  });
+  const { form, loginError } = useLoginForm();
+  const { values, errors, touched, handleSubmit, handleChange, isSubmitting } =
+    form;
 
   return (
     <form onSubmit={handleSubmit} noValidate>
