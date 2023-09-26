@@ -64,7 +64,7 @@ export default function NewExpenseGroupForm() {
             <Box marginBottom={2}>
               <Alert
                 color="error"
-                variant="outlined"
+                variant="filled"
                 onDismiss={() => dismissErrors()}
               >
                 {createError}
@@ -151,7 +151,7 @@ export default function NewExpenseGroupForm() {
               <Box marginTop={1} marginBottom={1}>
                 <Alert
                   color="error"
-                  variant="outlined"
+                  variant="filled"
                   onDismiss={() => dismissErrors()}
                 >
                   {duplicateError}

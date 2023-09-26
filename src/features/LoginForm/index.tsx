@@ -23,7 +23,7 @@ export default function LoginForm() {
           </Typography>
         </Box>
         {loginError && (
-          <Alert variant="outlined" severity="error">
+          <Alert variant="filled" severity="error">
             {loginError}
           </Alert>
         )}

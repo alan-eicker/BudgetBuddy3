@@ -4,79 +4,15 @@ import Box from '@mui/material/Box';
 import BrandLogo from '@/components/BrandLogo';
 import LoadingButton from '@mui/lab/LoadingButton';
 import Button from '@mui/material/Button';
-import { useFormik } from 'formik';
-import * as yup from 'yup';
-import { useMutation } from 'react-query';
+import Alert from '@/components/Alert';
 import { useRouter } from 'next/router';
-import { useAppContext } from '@/providers/AppProvider';
-import { createUser, loginUser, queryClient } from '@/api';
+import useRegisterUserForm from './useRegisterUserForm';
 
 export default function RegisterUserForm() {
   const router = useRouter();
-  const { setAppAlert } = useAppContext();
-
-  const createUserMutation = useMutation({
-    mutationFn: createUser,
-    onSuccess: async () => {
-      try {
-        await queryClient.fetchQuery({
-          queryKey: 'loginUser',
-          queryFn: () =>
-            loginUser({
-              username: values.username,
-              password: values.password,
-            }),
-        });
-
-        router.push('/account/dashboard');
-      } catch {
-        router.push('/');
-      }
-    },
-    onError: (error: any) => {
-      setSubmitting(false);
-      setAppAlert({
-        type: 'error',
-        message: error.response.errors
-          .map(({ message }: { message: string }) => message)
-          .join(', '),
-      });
-    },
-  });
-
-  const initialValues = {
-    email: '',
-    username: '',
-    password: '',
-  };
-
-  const validationSchema = yup.object({
-    email: yup
-      .string()
-      .matches(
-        /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
-        'Invalid email format',
-      )
-      .required('Email is required'),
-    username: yup.string().required('Username is required'),
-    password: yup.string().required('Password is required'),
-  });
-
-  const {
-    errors,
-    touched,
-    values,
-    handleChange,
-    handleSubmit,
-    isSubmitting,
-    setSubmitting,
-  } = useFormik({
-    initialValues,
-    validationSchema,
-    onSubmit: (formData) => {
-      createUserMutation.mutate({ input: formData });
-    },
-  });
+  const { form, createUserError } = useRegisterUserForm();
+  const { values, errors, touched, handleSubmit, handleChange, isSubmitting } =
+    form;
 
   return (
     <form onSubmit={handleSubmit} noValidate>
@@ -92,6 +28,13 @@ export default function RegisterUserForm() {
           </Typography>
         </Typography>
         <Box marginBottom={2}>
+          {createUserError && (
+            <Box marginBottom={3}>
+              <Alert variant="filled" color="error">
+                {createUserError}
+              </Alert>
+            </Box>
+          )}
           <TextField
             fullWidth
             required

@@ -194,7 +194,7 @@ export default function ExpenseGroupDetail() {
               <Grid item xs={12} sm={12} md={8}>
                 {error && (
                   <Box marginBottom={2}>
-                    <Alert variant="outlined" color="error">
+                    <Alert variant="filled" color="error">
                       {error}
                     </Alert>
                   </Box>
