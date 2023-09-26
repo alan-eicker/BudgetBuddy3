@@ -1,8 +1,9 @@
 import bcrypt from 'bcrypt';
-import { SignJWT } from 'jose';
+import { SignJWT, decodeJwt } from 'jose';
 import { YogaInitialContext } from 'graphql-yoga';
 import { QueryLoginUserArgs } from '../../generated/graphql';
 import UserModel from '@/database/models/user';
+import { GraphQLError } from 'graphql';
 
 const createToken = async (payload?: any) => {
   const secret = new TextEncoder().encode(process.env.JWT_SECRET);
@@ -35,7 +36,10 @@ export async function loginUser(
     throw new Error();
   }
 
-  const token = await createToken();
+  const token = await createToken({
+    username: user.username,
+    userId: user._id,
+  });
 
   ctx.request.cookieStore?.set({
     name: 'token',
@@ -53,4 +57,21 @@ export function logoutUser(
 ): boolean {
   ctx.request.cookieStore?.delete('token');
   return true;
+}
+
+export async function getUser(
+  parent: unknown,
+  args: unknown,
+  ctx: YogaInitialContext,
+) {
+  const token = await ctx.request.cookieStore?.get('token');
+
+  if (!token) {
+    throw new GraphQLError('No token exists');
+  }
+
+  const { userId } = decodeJwt(token.value);
+  const user = await UserModel.findOne({ _id: userId });
+
+  return user;
 }

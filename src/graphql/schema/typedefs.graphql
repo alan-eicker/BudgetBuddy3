@@ -9,6 +9,7 @@ type Query {
   # User
   loginUser(username: String!, password: String!): Void
   logoutUser: Boolean!
+  getUser: User!
 }
 
 type Mutation {
@@ -44,6 +45,12 @@ type Expense {
   dueDate: String
   isPaid: Boolean!
   note: String
+}
+
+type User {
+  _id: String!
+  email: String!
+  username: String!
 }
 
 input UserInput {

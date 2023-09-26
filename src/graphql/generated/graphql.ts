@@ -118,6 +118,7 @@ export type Query = {
   getAllExpenseGroups: Array<Maybe<ExpenseGroup>>;
   getExpense: Expense;
   getExpenseGroupById: ExpenseGroup;
+  getUser: User;
   loginUser?: Maybe<Scalars['Void']['output']>;
   logoutUser: Scalars['Boolean']['output'];
 };
@@ -136,6 +137,13 @@ export type QueryGetExpenseGroupByIdArgs = {
 export type QueryLoginUserArgs = {
   password: Scalars['String']['input'];
   username: Scalars['String']['input'];
+};
+
+export type User = {
+  __typename?: 'User';
+  _id: Scalars['String']['output'];
+  email: Scalars['String']['output'];
+  username: Scalars['String']['output'];
 };
 
 export type UserInput = {
@@ -232,6 +240,11 @@ export type LogoutUserQueryVariables = Exact<{ [key: string]: never; }>;
 
 export type LogoutUserQuery = { __typename?: 'Query', isLoggedOut: boolean };
 
+export type GetUserQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type GetUserQuery = { __typename?: 'Query', user: { __typename?: 'User', _id: string, email: string, username: string } };
+
 
 export const CreateUserDocument = gql`
     mutation createUser($input: UserInput!) {
@@ -327,6 +340,15 @@ export const LogoutUserDocument = gql`
   isLoggedOut: logoutUser
 }
     `;
+export const GetUserDocument = gql`
+    query getUser {
+  user: getUser {
+    _id
+    email
+    username
+  }
+}
+    `;
 
 export type SdkFunctionWrapper = <T>(action: (requestHeaders?:Record<string, string>) => Promise<T>, operationName: string, operationType?: string) => Promise<T>;
 
@@ -370,6 +392,9 @@ export function getSdk(client: GraphQLClient, withWrapper: SdkFunctionWrapper = 
     },
     logoutUser(variables?: LogoutUserQueryVariables, requestHeaders?: GraphQLClientRequestHeaders): Promise<LogoutUserQuery> {
       return withWrapper((wrappedRequestHeaders) => client.request<LogoutUserQuery>(LogoutUserDocument, variables, {...requestHeaders, ...wrappedRequestHeaders}), 'logoutUser', 'query');
+    },
+    getUser(variables?: GetUserQueryVariables, requestHeaders?: GraphQLClientRequestHeaders): Promise<GetUserQuery> {
+      return withWrapper((wrappedRequestHeaders) => client.request<GetUserQuery>(GetUserDocument, variables, {...requestHeaders, ...wrappedRequestHeaders}), 'getUser', 'query');
     }
   };
 }
