@@ -1,5 +1,6 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
 import { createSchema, createYoga } from 'graphql-yoga';
+import { useCookies } from '@whatwg-node/server-plugin-cookies';
 import mongoose from 'mongoose';
 import fs from 'fs';
 import path from 'path';
@@ -39,4 +40,6 @@ export default createYoga<{
 }>({
   schema,
   graphqlEndpoint: '/api/graphql',
+  // eslint-disable-next-line react-hooks/rules-of-hooks
+  plugins: [useCookies()],
 });

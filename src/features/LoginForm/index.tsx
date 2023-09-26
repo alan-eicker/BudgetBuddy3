@@ -23,9 +23,11 @@ export default function LoginForm() {
           </Typography>
         </Box>
         {loginError && (
-          <Alert variant="filled" severity="error">
-            {loginError}
-          </Alert>
+          <Box marginBottom={3}>
+            <Alert variant="filled" severity="error">
+              {loginError}
+            </Alert>
+          </Box>
         )}
         <Box marginBottom={2}>
           <TextField

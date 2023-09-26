@@ -34,6 +34,7 @@ export default function useLoginForm() {
       router.push('/account/dashboard');
     },
     onError: () => {
+      form.setSubmitting(false);
       setLoginError('Invalid login credentials');
     },
   });
