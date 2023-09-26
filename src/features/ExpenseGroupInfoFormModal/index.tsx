@@ -1,6 +1,4 @@
 import { ReactNode } from 'react';
-import { useFormik } from 'formik';
-import * as yup from 'yup';
 import Modal from '@mui/material/Modal';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
@@ -11,7 +9,8 @@ import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 import dayjs from 'dayjs';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
-import { Expense, ExpenseGroup } from '@/graphql/generated/graphql';
+import { ExpenseGroup } from '@/graphql/generated/graphql';
+import useExpenseGroupInfoFormModal from './useExpenseGroupInfoFormModal';
 import styles from './ExpenseGroupInfoFormModal.module.scss';
 
 interface ExpenseGroupInfoFormModalProps {
@@ -29,32 +28,10 @@ export default function ExpenseGroupInfoFormModal({
   expenseGroup,
   formType = 'Update',
 }: ExpenseGroupInfoFormModalProps) {
-  let expenses: Expense[] = [];
-
-  if (expenseGroup) {
-    expenses = expenseGroup.expenses;
-  }
-
-  let initialValues: Omit<ExpenseGroup, 'expenses'>;
-
-  if (formType === 'Update') {
-    initialValues = {
-      startDate: expenseGroup.startDate,
-      endDate: expenseGroup.endDate,
-      totalBudget: expenseGroup.totalBudget,
-    };
-  } else {
-    initialValues = {
-      startDate: '',
-      endDate: '',
-      totalBudget: 0,
-    };
-  }
-
-  const validationSchema = yup.object({
-    startDate: yup.string().required('Start date is required'),
-    endDate: yup.string().required('Start date is required'),
-    totalBudget: yup.number().min(1, 'Total budget is required'),
+  const { form } = useExpenseGroupInfoFormModal({
+    expenseGroup,
+    formType,
+    onSave,
   });
 
   const {
@@ -65,26 +42,7 @@ export default function ExpenseGroupInfoFormModal({
     handleSubmit,
     setFieldValue,
     isSubmitting,
-  } = useFormik({
-    initialValues,
-    validationSchema,
-    onSubmit: (formData) => {
-      onSave({
-        ...formData,
-        ...(expenses && {
-          expenses: expenses.map((expense) => {
-            delete expense._id;
-            delete expense.dueDate;
-            return {
-              ...expense,
-              isPaid: false,
-              note: null,
-            };
-          }),
-        }),
-      });
-    },
-  });
+  } = form;
 
   return (
     <Modal open={true}>
