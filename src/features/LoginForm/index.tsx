@@ -1,3 +1,4 @@
+import { useEffect, useRef } from 'react';
 import Link from 'next/link';
 import Box from '@mui/material/Box';
 import TextField from '@mui/material/TextField';
@@ -12,6 +13,12 @@ export default function LoginForm() {
   const { form, loginError } = useLoginForm();
   const { values, errors, touched, handleSubmit, handleChange, isSubmitting } =
     form;
+
+  const usernameInput = useRef<HTMLInputElement>();
+
+  useEffect(() => {
+    usernameInput.current?.focus();
+  }, [usernameInput]);
 
   return (
     <form onSubmit={handleSubmit} noValidate>
@@ -37,6 +44,7 @@ export default function LoginForm() {
             name="username"
             onChange={handleChange}
             value={values.username}
+            inputRef={usernameInput}
             {...(!!(errors.username && touched.username) && {
               error: true,
               helperText: errors.username,
