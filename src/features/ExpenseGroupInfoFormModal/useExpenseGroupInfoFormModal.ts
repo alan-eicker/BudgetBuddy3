@@ -48,13 +48,18 @@ export default function useExpenseGroupInfoFormModal({
         ...formData,
         ...(expenses && {
           expenses: expenses.map((expense) => {
-            delete expense._id;
-            delete expense.dueDate;
-            return {
-              ...expense,
-              isPaid: false,
-              note: null,
-            };
+            if (formType === 'Duplicate') {
+              delete expense._id;
+
+              return {
+                ...expense,
+                isPaid: false,
+                dueDate: null,
+                note: null,
+              };
+            }
+
+            return expense;
           }),
         }),
       });

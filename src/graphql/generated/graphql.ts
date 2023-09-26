@@ -46,6 +46,7 @@ export type ExpenseGroupInput = {
 };
 
 export type ExpenseInput = {
+  _id?: InputMaybe<Scalars['String']['input']>;
   balance?: InputMaybe<Scalars['Float']['input']>;
   dueDate?: InputMaybe<Scalars['String']['input']>;
   isPaid?: InputMaybe<Scalars['Boolean']['input']>;
@@ -135,12 +136,6 @@ export type QueryGetExpenseGroupByIdArgs = {
 export type QueryLoginUserArgs = {
   password?: InputMaybe<Scalars['String']['input']>;
   username?: InputMaybe<Scalars['String']['input']>;
-};
-
-export type StatusResponse = {
-  __typename?: 'StatusResponse';
-  code: Scalars['Int']['output'];
-  message?: Maybe<Scalars['String']['output']>;
 };
 
 export type UserInput = {

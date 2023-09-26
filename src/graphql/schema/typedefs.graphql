@@ -60,6 +60,7 @@ input ExpenseGroupInput {
 }
 
 input ExpenseInput {
+  _id: String
   name: String
   balance: Float
   dueDate: String

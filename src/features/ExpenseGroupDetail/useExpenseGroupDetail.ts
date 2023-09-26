@@ -46,7 +46,7 @@ export default function useExpenseGroupDetail() {
       queryClient.invalidateQueries('expenseGroup' + expenseGroupId);
       queryClient.removeQueries('expenseGroups');
     },
-    onError: () => {
+    onError: (error) => {
       setError('Could not update expense group');
     },
   });
