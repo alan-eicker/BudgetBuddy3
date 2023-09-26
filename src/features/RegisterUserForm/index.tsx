@@ -30,7 +30,7 @@ export default function RegisterUserForm() {
 
         router.push('/account/dashboard');
       } catch (err: any) {
-        // handle error...
+        router.push('/');
       }
     },
     onError: (error: any) => {
