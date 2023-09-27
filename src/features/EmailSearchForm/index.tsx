@@ -1,16 +1,20 @@
+import { useEffect } from 'react';
 import { useFormik } from 'formik';
 import * as yup from 'yup';
 import TextField from '@mui/material/TextField';
 import LoadingButton from '@mui/lab/LoadingButton';
 import Grid from '@mui/material/Grid';
 import Box from '@mui/material/Box';
-import Typography from '@mui/material/Typography';
 
 interface EmailSearchFormProps {
   onSearch: (email: string) => any;
+  isDone: boolean;
 }
 
-export default function EmailSearchForm({ onSearch }: EmailSearchFormProps) {
+export default function EmailSearchForm({
+  isDone,
+  onSearch,
+}: EmailSearchFormProps) {
   const initialValues = {
     email: '',
   };
@@ -25,52 +29,55 @@ export default function EmailSearchForm({ onSearch }: EmailSearchFormProps) {
       .required('Email is required'),
   });
 
-  const { values, errors, touched, handleChange, handleSubmit, isSubmitting } =
-    useFormik({
-      initialValues,
-      validationSchema,
-      onSubmit: (formData) => {
-        onSearch(formData.email);
-      },
-    });
+  const {
+    values,
+    errors,
+    touched,
+    handleChange,
+    handleSubmit,
+    isSubmitting,
+    setSubmitting,
+  } = useFormik({
+    initialValues,
+    validationSchema,
+    onSubmit: (formData) => {
+      onSearch(formData.email);
+    },
+  });
+
+  useEffect(() => {
+    if (isDone) {
+      setSubmitting(false);
+    }
+  }, [isDone, setSubmitting]);
 
   return (
     <form onSubmit={handleSubmit}>
-      <Box padding={4}>
-        <Typography component="h1" variant="h4" marginBottom={3}>
-          Let&apos;s start by finding your email address
-        </Typography>
-        <Typography marginBottom={4}>
-          In order to reset your password, we&apos;ll first need to find the
-          email address associated with your account.
-        </Typography>
-        <Grid container spacing={2}>
-          <Grid item xs={12} sm={12} md={6}>
-            <Box display="flex" alignItems="flex-start">
-              <TextField
-                autoComplete="off"
-                name="email"
-                label="Email Address"
-                onChange={handleChange}
-                value={values.email}
-                fullWidth
-                {...(!!(errors.email && touched.email) && {
-                  error: true,
-                  helperText: errors.email,
-                })}
-              />
-              <LoadingButton
-                type="submit"
-                sx={{ height: 56, marginLeft: 1.5 }}
-                variant="contained"
-                loading={isSubmitting}
-              >
-                Submit
-              </LoadingButton>
-            </Box>
-          </Grid>
+      <Grid container spacing={2}>
+        <Grid item xs={12} sm={12} md={6}>
+          <TextField
+            autoComplete="off"
+            name="email"
+            label="Email Address"
+            onChange={handleChange}
+            value={values.email}
+            fullWidth
+            {...(!!(errors.email && touched.email) && {
+              error: true,
+              helperText: errors.email,
+            })}
+          />
+          <Box marginBottom={2} />
+          <LoadingButton
+            size="large"
+            type="submit"
+            variant="contained"
+            loading={isSubmitting}
+          >
+            Submit
+          </LoadingButton>
         </Grid>
-      </Box>
+      </Grid>
     </form>
   );
 }

@@ -10,7 +10,7 @@ export default function ResetPassword() {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <meta name="description" content="BudgetBuddy reset password page" />
       </Head>
-      <ContentSection>
+      <ContentSection maxWidth={768}>
         <ResetPasswordForm />
       </ContentSection>
     </>

@@ -1,17 +1,20 @@
 import bcrypt from 'bcrypt';
 import { YogaInitialContext } from 'graphql-yoga';
-import { QueryLoginUserArgs } from '@/graphql/generated/graphql';
+import {
+  QueryLoginUserArgs,
+  QueryGetSecurityQuestionsArgs,
+} from '@/graphql/generated/graphql';
 import UserModel from '@/database/models/user';
 import SecurityQuestions from '@/database/models/securityQuerstions';
 import { createToken, getUserIdFromToken } from '@/utils/auth';
 
 export async function getSecurityQuestions(
   parent: unknown,
-  args: unknown,
+  args: QueryGetSecurityQuestionsArgs,
   ctx: YogaInitialContext,
 ) {
-  const userId = await getUserIdFromToken(ctx);
-  const { questions } = await SecurityQuestions.findOne({ userId });
+  const { _id } = await UserModel.findOne({ email: args.email });
+  const { questions } = await SecurityQuestions.findOne({ userId: _id });
   return questions;
 }
 

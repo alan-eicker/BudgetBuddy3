@@ -136,6 +136,11 @@ export type QueryGetExpenseGroupByIdArgs = {
 };
 
 
+export type QueryGetSecurityQuestionsArgs = {
+  email: Scalars['String']['input'];
+};
+
+
 export type QueryLoginUserArgs = {
   password: Scalars['String']['input'];
   username: Scalars['String']['input'];
@@ -254,7 +259,9 @@ export type GetUserQueryVariables = Exact<{ [key: string]: never; }>;
 
 export type GetUserQuery = { __typename?: 'Query', user: { __typename?: 'User', _id: string, email: string, username: string } };
 
-export type GetSecurityQuestionsQueryVariables = Exact<{ [key: string]: never; }>;
+export type GetSecurityQuestionsQueryVariables = Exact<{
+  email: Scalars['String']['input'];
+}>;
 
 
 export type GetSecurityQuestionsQuery = { __typename?: 'Query', questions: Array<{ __typename?: 'SecurityQuestion', _id?: string | null, question?: string | null } | null> };
@@ -364,8 +371,8 @@ export const GetUserDocument = gql`
 }
     `;
 export const GetSecurityQuestionsDocument = gql`
-    query getSecurityQuestions {
-  questions: getSecurityQuestions {
+    query getSecurityQuestions($email: String!) {
+  questions: getSecurityQuestions(email: $email) {
     _id
     question
   }
@@ -418,7 +425,7 @@ export function getSdk(client: GraphQLClient, withWrapper: SdkFunctionWrapper = 
     getUser(variables?: GetUserQueryVariables, requestHeaders?: GraphQLClientRequestHeaders): Promise<GetUserQuery> {
       return withWrapper((wrappedRequestHeaders) => client.request<GetUserQuery>(GetUserDocument, variables, {...requestHeaders, ...wrappedRequestHeaders}), 'getUser', 'query');
     },
-    getSecurityQuestions(variables?: GetSecurityQuestionsQueryVariables, requestHeaders?: GraphQLClientRequestHeaders): Promise<GetSecurityQuestionsQuery> {
+    getSecurityQuestions(variables: GetSecurityQuestionsQueryVariables, requestHeaders?: GraphQLClientRequestHeaders): Promise<GetSecurityQuestionsQuery> {
       return withWrapper((wrappedRequestHeaders) => client.request<GetSecurityQuestionsQuery>(GetSecurityQuestionsDocument, variables, {...requestHeaders, ...wrappedRequestHeaders}), 'getSecurityQuestions', 'query');
     }
   };

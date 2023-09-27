@@ -23,4 +23,5 @@ export const COLORS = {
   success: '#96de49',
   info: '#03B2AF',
   brand: '#212a3b',
+  formBackground: '#1d2534',
 };

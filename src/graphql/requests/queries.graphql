@@ -48,8 +48,8 @@ query getUser {
   }
 }
 
-query getSecurityQuestions {
-  questions: getSecurityQuestions {
+query getSecurityQuestions($email: String!) {
+  questions: getSecurityQuestions(email: $email) {
     _id
     question
   }
