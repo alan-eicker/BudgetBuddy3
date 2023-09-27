@@ -24,6 +24,8 @@ export default function AppHeader() {
       () => logoutUser(),
     );
 
+    queryClient.removeQueries('expenseGroups');
+
     if (isLoggedOut) {
       router.push('/');
     }
