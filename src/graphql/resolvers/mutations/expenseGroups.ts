@@ -11,20 +11,14 @@ import {
   MutationAddExpenseArgs,
 } from '../../generated/graphql';
 import ExpenseGroupModel from '@/database/models/expenseGroup';
+import { getUserIdFromToken } from '@/utils/auth';
 
 export async function addExpenseGroup(
   parent: unknown,
   args: MutationAddExpenseGroupArgs,
   ctx: YogaInitialContext,
 ) {
-  const token = await ctx.request.cookieStore?.get('token');
-
-  if (!token) {
-    throw new GraphQLError('No token exists');
-  }
-
-  const { userId } = decodeJwt(token.value);
-
+  const userId = await getUserIdFromToken(ctx);
   const expenseGroup = new ExpenseGroupModel({
     userId,
     ...args.input,

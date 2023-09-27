@@ -4,7 +4,7 @@ import { YogaInitialContext } from 'graphql-yoga';
 import { GraphQLError } from 'graphql';
 import { QueryLoginUserArgs } from '@/graphql/generated/graphql';
 import UserModel from '@/database/models/user';
-import { createToken } from '@/utils/auth';
+import { createToken, getUserIdFromToken } from '@/utils/auth';
 
 export async function loginUser(
   parent: unknown,
@@ -52,13 +52,7 @@ export async function getUser(
   args: unknown,
   ctx: YogaInitialContext,
 ) {
-  const token = await ctx.request.cookieStore?.get('token');
-
-  if (!token) {
-    throw new GraphQLError('No token exists');
-  }
-
-  const { userId } = decodeJwt(token.value);
+  const userId = await getUserIdFromToken(ctx);
   const user = await UserModel.findOne({ _id: userId });
 
   return user;

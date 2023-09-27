@@ -90,7 +90,7 @@ export default function Dashboard() {
         text="You have no expense groups to display"
         btn={{
           children: '+ Add Expense Group',
-          href: '/account/add-expense-group',
+          onClick: () => router.push('/account/add-expense-group'),
         }}
       />
     );
