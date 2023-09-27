@@ -39,8 +39,6 @@ h6 {
 
 form {
   background-color: darken($brand, 2%);
-  // margin: rem(25 0);
-  // padding: rem(36);
 
   & > * + * {
     margin-top: rem(16) !important;

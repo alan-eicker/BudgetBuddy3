@@ -18,7 +18,10 @@ const darkTheme = createTheme({
 
 export default function App({ Component, pageProps }: AppProps) {
   const { pathname } = useRouter();
-  const showHeader = pathname !== '/' && pathname !== '/register';
+  const showHeader =
+    pathname !== '/' &&
+    pathname !== '/register' &&
+    pathname !== '/reset-password';
   const includeExpenseModalProvider =
     pathname.match(/\/account\/expense-group/) ||
     pathname.match(/\/account\/add-expense-group/);
