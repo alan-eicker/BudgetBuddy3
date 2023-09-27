@@ -19,16 +19,12 @@ export default function AppHeader() {
     e.preventDefault();
     setShowOverlay(true);
 
-    const { isLoggedOut } = await queryClient.fetchQuery<LogoutUserQuery>(
-      ['logoutUser'],
-      () => logoutUser(),
+    await queryClient.fetchQuery<LogoutUserQuery>(['logoutUser'], () =>
+      logoutUser(),
     );
 
     queryClient.removeQueries('expenseGroups');
-
-    if (isLoggedOut) {
-      router.push('/');
-    }
+    router.push('/');
   }
 
   return (

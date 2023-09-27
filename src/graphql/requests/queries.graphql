@@ -37,7 +37,7 @@ query loginUser($username: String!, $password: String!) {
 }
 
 query logoutUser {
-  isLoggedOut: logoutUser
+  logoutUser
 }
 
 query getUser {

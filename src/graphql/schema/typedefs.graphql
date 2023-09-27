@@ -8,7 +8,7 @@ type Query {
   getExpense(_id: String!): Expense!
   # User
   loginUser(username: String!, password: String!): Void
-  logoutUser: Boolean!
+  logoutUser: Void
   getUser: User!
 }
 

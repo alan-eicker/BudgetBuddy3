@@ -40,9 +40,8 @@ export function logoutUser(
   parent: unknown,
   args: unknown,
   ctx: YogaInitialContext,
-): boolean {
+) {
   ctx.request.cookieStore?.delete('token');
-  return true;
 }
 
 export async function getUser(

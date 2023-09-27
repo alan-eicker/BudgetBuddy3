@@ -121,7 +121,7 @@ export type Query = {
   getExpenseGroupById: ExpenseGroup;
   getUser: User;
   loginUser?: Maybe<Scalars['Void']['output']>;
-  logoutUser: Scalars['Boolean']['output'];
+  logoutUser?: Maybe<Scalars['Void']['output']>;
 };
 
 
@@ -239,7 +239,7 @@ export type LoginUserQuery = { __typename?: 'Query', loginUser?: void | null };
 export type LogoutUserQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type LogoutUserQuery = { __typename?: 'Query', isLoggedOut: boolean };
+export type LogoutUserQuery = { __typename?: 'Query', logoutUser?: void | null };
 
 export type GetUserQueryVariables = Exact<{ [key: string]: never; }>;
 
@@ -338,7 +338,7 @@ export const LoginUserDocument = gql`
     `;
 export const LogoutUserDocument = gql`
     query logoutUser {
-  isLoggedOut: logoutUser
+  logoutUser
 }
     `;
 export const GetUserDocument = gql`
