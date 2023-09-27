@@ -1,3 +1,6 @@
+import { YogaInitialContext } from 'graphql-yoga';
+import { GraphQLError } from 'graphql';
+import { decodeJwt } from 'jose';
 import {
   MutationAddExpenseGroupArgs,
   MutationDeleteExpenseGroupArgs,
@@ -12,8 +15,21 @@ import ExpenseGroupModel from '@/database/models/expenseGroup';
 export async function addExpenseGroup(
   parent: unknown,
   args: MutationAddExpenseGroupArgs,
+  ctx: YogaInitialContext,
 ) {
-  const expenseGroup = new ExpenseGroupModel(args.input);
+  const token = await ctx.request.cookieStore?.get('token');
+
+  if (!token) {
+    throw new GraphQLError('No token exists');
+  }
+
+  const { userId } = decodeJwt(token.value);
+
+  const expenseGroup = new ExpenseGroupModel({
+    userId,
+    ...args.input,
+  });
+
   await expenseGroup.save();
 }
 

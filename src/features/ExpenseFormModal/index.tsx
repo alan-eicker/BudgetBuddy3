@@ -114,6 +114,7 @@ export default function ExpenseFormModal({ open = false }: ExpenseFormProps) {
             </Grid>
             <Grid item xs={12} sm={12} md={12}>
               <TextField
+                autoComplete="off"
                 label="Note"
                 name="note"
                 onChange={handleChange}

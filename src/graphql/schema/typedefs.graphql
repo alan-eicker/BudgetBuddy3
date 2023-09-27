@@ -32,6 +32,7 @@ type Mutation {
 
 type ExpenseGroup {
   _id: ID
+  userId: String!
   startDate: String!
   endDate: String!
   totalBudget: Float!

@@ -9,6 +9,7 @@ const ExpenseSchema = new mongoose.Schema({
 });
 
 const ExpenseGroupSchema = new mongoose.Schema({
+  userId: String,
   startDate: String,
   endDate: String,
   totalBudget: Number,

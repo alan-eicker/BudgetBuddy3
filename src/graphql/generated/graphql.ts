@@ -36,6 +36,7 @@ export type ExpenseGroup = {
   expenses: Array<Expense>;
   startDate: Scalars['String']['output'];
   totalBudget: Scalars['Float']['output'];
+  userId: Scalars['String']['output'];
 };
 
 export type ExpenseGroupInput = {
