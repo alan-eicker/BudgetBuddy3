@@ -29,11 +29,13 @@ export default function EmailSearchForm({ onSearch }: EmailSearchFormProps) {
     useFormik({
       initialValues,
       validationSchema,
-      onSubmit: (formData) => {},
+      onSubmit: (formData) => {
+        onSearch(formData.email);
+      },
     });
 
   return (
-    <form>
+    <form onSubmit={handleSubmit}>
       <Box padding={4}>
         <Typography component="h1" variant="h4" marginBottom={3}>
           Let&apos;s start by finding your email address
@@ -44,12 +46,24 @@ export default function EmailSearchForm({ onSearch }: EmailSearchFormProps) {
         </Typography>
         <Grid container spacing={2}>
           <Grid item xs={12} sm={12} md={6}>
-            <Box display="flex" alignItems="center">
-              <TextField name="email" label="Email Address" fullWidth />
+            <Box display="flex" alignItems="flex-start">
+              <TextField
+                autoComplete="off"
+                name="email"
+                label="Email Address"
+                onChange={handleChange}
+                value={values.email}
+                fullWidth
+                {...(!!(errors.email && touched.email) && {
+                  error: true,
+                  helperText: errors.email,
+                })}
+              />
               <LoadingButton
+                type="submit"
                 sx={{ height: 56, marginLeft: 1.5 }}
                 variant="contained"
-                onClick={onSearch}
+                loading={isSubmitting}
               >
                 Submit
               </LoadingButton>
