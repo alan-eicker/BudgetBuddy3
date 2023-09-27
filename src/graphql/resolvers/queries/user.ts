@@ -1,7 +1,5 @@
 import bcrypt from 'bcrypt';
-import { decodeJwt } from 'jose';
 import { YogaInitialContext } from 'graphql-yoga';
-import { GraphQLError } from 'graphql';
 import { QueryLoginUserArgs } from '@/graphql/generated/graphql';
 import UserModel from '@/database/models/user';
 import { createToken, getUserIdFromToken } from '@/utils/auth';
