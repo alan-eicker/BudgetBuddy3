@@ -82,7 +82,7 @@ export default function LoginForm() {
         <Button
           size="large"
           color="info"
-          href="/recover-password"
+          href="/reset-password"
           component={Link}
           fullWidth
         >

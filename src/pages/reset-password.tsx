@@ -1,5 +1,6 @@
 import Head from 'next/head';
 import ContentSection from '@/components/ContentSection';
+import ResetPasswordForm from '@/features/ResetPasswordForm';
 
 export default function ResetPassword() {
   return (
@@ -9,7 +10,9 @@ export default function ResetPassword() {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <meta name="description" content="BudgetBuddy recover password page" />
       </Head>
-      <ContentSection>Reset password</ContentSection>
+      <ContentSection>
+        <ResetPasswordForm />
+      </ContentSection>
     </>
   );
 }
