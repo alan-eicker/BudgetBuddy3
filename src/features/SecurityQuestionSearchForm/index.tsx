@@ -1,19 +1,20 @@
-import { useEffect } from 'react';
 import { useFormik } from 'formik';
 import * as yup from 'yup';
 import TextField from '@mui/material/TextField';
 import LoadingButton from '@mui/lab/LoadingButton';
 import Grid from '@mui/material/Grid';
 import Box from '@mui/material/Box';
+import { SecurityQuestion } from '@/graphql/generated/graphql';
+import { queryClient, getSecurityQuestions } from '@/api';
 
 interface EmailSearchFormProps {
-  onSearch: (email: string) => any;
-  isDone: boolean;
+  onSuccess: (questions: SecurityQuestion[]) => any;
+  onError: (error: string) => any;
 }
 
 export default function EmailSearchForm({
-  isDone,
-  onSearch,
+  onSuccess,
+  onError,
 }: EmailSearchFormProps) {
   const initialValues = {
     email: '',
@@ -29,27 +30,25 @@ export default function EmailSearchForm({
       .required('Email is required'),
   });
 
-  const {
-    values,
-    errors,
-    touched,
-    handleChange,
-    handleSubmit,
-    isSubmitting,
-    setSubmitting,
-  } = useFormik({
-    initialValues,
-    validationSchema,
-    onSubmit: (formData) => {
-      onSearch(formData.email);
-    },
-  });
+  const { values, errors, touched, handleChange, handleSubmit, isSubmitting } =
+    useFormik({
+      initialValues,
+      validationSchema,
+      onSubmit: async (formData) => {
+        try {
+          const response = await queryClient.fetchQuery(
+            ['getSecurityQuestions'],
+            () => getSecurityQuestions({ email: formData.email }),
+          );
 
-  useEffect(() => {
-    if (isDone) {
-      setSubmitting(false);
-    }
-  }, [isDone, setSubmitting]);
+          onSuccess(response.questions as SecurityQuestion[]);
+        } catch {
+          onError(
+            `Could not get security questions for email [${formData.email}]`,
+          );
+        }
+      },
+    });
 
   return (
     <form onSubmit={handleSubmit}>

@@ -1,8 +1,8 @@
 import Head from 'next/head';
 import ContentSection from '@/components/ContentSection';
-import ResetPasswordForm from '@/features/ResetPasswordForm';
+import ResetPassword from '@/features/ResetPassword';
 
-export default function ResetPassword() {
+export default function ResetPasswordPage() {
   return (
     <>
       <Head>
@@ -11,7 +11,7 @@ export default function ResetPassword() {
         <meta name="description" content="BudgetBuddy reset password page" />
       </Head>
       <ContentSection maxWidth={768}>
-        <ResetPasswordForm />
+        <ResetPassword />
       </ContentSection>
     </>
   );
