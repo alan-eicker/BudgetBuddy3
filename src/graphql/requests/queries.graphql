@@ -47,3 +47,10 @@ query getUser {
     username
   }
 }
+
+query getSecurityQuestions {
+  questions: getSecurityQuestions {
+    _id
+    question
+  }
+}

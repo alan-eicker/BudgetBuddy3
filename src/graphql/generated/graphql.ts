@@ -119,6 +119,7 @@ export type Query = {
   getAllExpenseGroups: Array<Maybe<ExpenseGroup>>;
   getExpense: Expense;
   getExpenseGroupById: ExpenseGroup;
+  getSecurityQuestions: Array<Maybe<SecurityQuestion>>;
   getUser: User;
   loginUser?: Maybe<Scalars['Void']['output']>;
   logoutUser?: Maybe<Scalars['Void']['output']>;
@@ -138,6 +139,13 @@ export type QueryGetExpenseGroupByIdArgs = {
 export type QueryLoginUserArgs = {
   password: Scalars['String']['input'];
   username: Scalars['String']['input'];
+};
+
+export type SecurityQuestion = {
+  __typename?: 'SecurityQuestion';
+  _id?: Maybe<Scalars['ID']['output']>;
+  answer?: Maybe<Scalars['String']['output']>;
+  question?: Maybe<Scalars['String']['output']>;
 };
 
 export type User = {
@@ -246,6 +254,11 @@ export type GetUserQueryVariables = Exact<{ [key: string]: never; }>;
 
 export type GetUserQuery = { __typename?: 'Query', user: { __typename?: 'User', _id: string, email: string, username: string } };
 
+export type GetSecurityQuestionsQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type GetSecurityQuestionsQuery = { __typename?: 'Query', questions: Array<{ __typename?: 'SecurityQuestion', _id?: string | null, question?: string | null } | null> };
+
 
 export const CreateUserDocument = gql`
     mutation createUser($input: UserInput!) {
@@ -350,6 +363,14 @@ export const GetUserDocument = gql`
   }
 }
     `;
+export const GetSecurityQuestionsDocument = gql`
+    query getSecurityQuestions {
+  questions: getSecurityQuestions {
+    _id
+    question
+  }
+}
+    `;
 
 export type SdkFunctionWrapper = <T>(action: (requestHeaders?:Record<string, string>) => Promise<T>, operationName: string, operationType?: string) => Promise<T>;
 
@@ -396,6 +417,9 @@ export function getSdk(client: GraphQLClient, withWrapper: SdkFunctionWrapper = 
     },
     getUser(variables?: GetUserQueryVariables, requestHeaders?: GraphQLClientRequestHeaders): Promise<GetUserQuery> {
       return withWrapper((wrappedRequestHeaders) => client.request<GetUserQuery>(GetUserDocument, variables, {...requestHeaders, ...wrappedRequestHeaders}), 'getUser', 'query');
+    },
+    getSecurityQuestions(variables?: GetSecurityQuestionsQueryVariables, requestHeaders?: GraphQLClientRequestHeaders): Promise<GetSecurityQuestionsQuery> {
+      return withWrapper((wrappedRequestHeaders) => client.request<GetSecurityQuestionsQuery>(GetSecurityQuestionsDocument, variables, {...requestHeaders, ...wrappedRequestHeaders}), 'getSecurityQuestions', 'query');
     }
   };
 }

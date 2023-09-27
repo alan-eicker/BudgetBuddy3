@@ -1,6 +1,4 @@
 import { YogaInitialContext } from 'graphql-yoga';
-import { GraphQLError } from 'graphql';
-import { decodeJwt } from 'jose';
 import {
   MutationAddExpenseGroupArgs,
   MutationDeleteExpenseGroupArgs,
