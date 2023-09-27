@@ -7,14 +7,19 @@ import { SecurityQuestion } from '@/graphql/generated/graphql';
 
 interface SecurityQuestionsFormProps {
   questions: SecurityQuestion[];
+  onSuccess: () => any;
+  onError: (errorText: string) => any;
 }
 
 export default function SecurityQuestionsForm({
   questions,
+  onSuccess,
+  onError,
 }: SecurityQuestionsFormProps) {
-  const initialValues = Object.fromEntries(
-    questions.map((question) => [question._id, '']),
-  );
+  const initialValues: {
+    [key: string]: any;
+  } = Object.fromEntries(questions.map((question) => [question._id, '']));
+
   const validationSchema = yup.object(
     Object.fromEntries(
       questions.map((question) => [
@@ -29,7 +34,12 @@ export default function SecurityQuestionsForm({
       initialValues,
       validationSchema,
       onSubmit: (formData) => {
-        console.log(formData);
+        try {
+          // validate answers...
+          console.log(formData);
+        } catch {
+          onError('One or more answers were incorrect. Try again.');
+        }
       },
     });
 

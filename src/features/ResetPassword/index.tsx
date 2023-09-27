@@ -9,17 +9,45 @@ import { COLORS } from '@/constants';
 
 export default function ResetPassword() {
   const [error, setError] = useState<string>();
+  const [step, setStep] = useState(1);
   const [securityQuestions, setSecurityQuestions] =
     useState<SecurityQuestion[]>();
 
-  if (securityQuestions) {
+  function Step2() {
     return (
-      <Box padding={4} bgcolor={COLORS.formBackground}>
+      <>
         <Typography component="h1" variant="h4" marginBottom={4}>
           Please answer your security questions
         </Typography>
-        <SecurityQuestionsForm questions={securityQuestions} />
-      </Box>
+        <SecurityQuestionsForm
+          onSuccess={() => {
+            setStep(3);
+          }}
+          onError={(errorText) => setError(errorText)}
+          questions={securityQuestions as SecurityQuestion[]}
+        />
+      </>
+    );
+  }
+
+  function Step1() {
+    return (
+      <>
+        <Typography component="h1" variant="h4" marginBottom={2}>
+          Let&apos;s start by finding your email address
+        </Typography>
+        <Typography marginBottom={4}>
+          In order to reset your password, we&apos;ll first need to find the
+          email address associated with your account.
+        </Typography>
+        <SecurityQuestionSearchForm
+          onSuccess={(questions) => {
+            setSecurityQuestions(questions);
+            setStep(2);
+          }}
+          onError={(errorText) => setError(errorText)}
+        />
+      </>
     );
   }
 
@@ -32,17 +60,8 @@ export default function ResetPassword() {
           </Alert>
         </Box>
       )}
-      <Typography component="h1" variant="h4" marginBottom={2}>
-        Let&apos;s start by finding your email address
-      </Typography>
-      <Typography marginBottom={4}>
-        In order to reset your password, we&apos;ll first need to find the email
-        address associated with your account.
-      </Typography>
-      <SecurityQuestionSearchForm
-        onSuccess={(questions) => setSecurityQuestions(questions)}
-        onError={(errorText) => setError(errorText)}
-      />
+      {step === 1 && <Step1 />}
+      {step === 2 && <Step2 />}
     </Box>
   );
 }
