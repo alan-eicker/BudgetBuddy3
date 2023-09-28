@@ -60,7 +60,7 @@ export default function SecurityQuestionsForm({
 
   return (
     <form onSubmit={handleSubmit} noValidate>
-      <Grid container spacing={2} marginBottom={2}>
+      <Grid container spacing={3} marginBottom={2}>
         {questions.map(({ _id, question }) => {
           const name = _id as string;
           return (

@@ -1,6 +1,6 @@
 import Head from 'next/head';
 import ContentSection from '@/components/ContentSection';
-import ResetPassword from '@/features/ResetPassword';
+import VerifyUser from '@/features/VerifyUser';
 
 export default function ResetPasswordPage() {
   return (
@@ -11,7 +11,7 @@ export default function ResetPasswordPage() {
         <meta name="description" content="BudgetBuddy reset password page" />
       </Head>
       <ContentSection maxWidth={768}>
-        <ResetPassword />
+        <VerifyUser />
       </ContentSection>
     </>
   );

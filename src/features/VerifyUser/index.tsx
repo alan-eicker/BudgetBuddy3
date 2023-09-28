@@ -4,15 +4,16 @@ import Box from '@mui/material/Box';
 import Alert from '@/components/Alert';
 import SecurityQuestionSearchForm from '@/features/SecurityQuestionSearchForm';
 import SecurityQuestionsForm from '@/features/SecurityQuestionsForm';
+import ResetPasswordForm from '../ResetPasswordForm';
 import {
   SecurityQuestion,
   SecurityQuestionsResponse,
 } from '@/graphql/generated/graphql';
 import { COLORS } from '@/constants';
 
-export default function ResetPassword() {
+export default function VerifyUser() {
   const [error, setError] = useState<string | undefined>();
-  const [step, setStep] = useState(1);
+  const [step, setStep] = useState(3);
   const [securityQuestions, setSecurityQuestions] =
     useState<SecurityQuestionsResponse>();
 
@@ -63,6 +64,7 @@ export default function ResetPassword() {
         <Typography component="h1" variant="h4" marginBottom={4}>
           Reset you password
         </Typography>
+        <ResetPasswordForm userId={securityQuestions?.userId as string} />
       </>
     );
   }
