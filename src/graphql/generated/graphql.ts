@@ -118,6 +118,7 @@ export type MutationUpdateExpensePaidStatusArgs = {
 
 export type MutationUpdatePasswordArgs = {
   password: Scalars['String']['input'];
+  userId: Scalars['String']['input'];
 };
 
 export type Query = {
@@ -248,6 +249,7 @@ export type UpdateExpensePaidStatusMutationVariables = Exact<{
 export type UpdateExpensePaidStatusMutation = { __typename?: 'Mutation', updateExpensePaidStatus?: void | null };
 
 export type UpdatePasswordMutationVariables = Exact<{
+  userId: Scalars['String']['input'];
   password: Scalars['String']['input'];
 }>;
 
@@ -349,8 +351,8 @@ export const UpdateExpensePaidStatusDocument = gql`
 }
     `;
 export const UpdatePasswordDocument = gql`
-    mutation updatePassword($password: String!) {
-  updatePassword(password: $password)
+    mutation updatePassword($userId: String!, $password: String!) {
+  updatePassword(userId: $userId, password: $password)
 }
     `;
 export const GetAllExpenseGroupsDocument = gql`

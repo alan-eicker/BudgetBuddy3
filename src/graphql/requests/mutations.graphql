@@ -46,6 +46,6 @@ mutation updateExpensePaidStatus(
   )
 }
 
-mutation updatePassword($password: String!) {
-  updatePassword(password: $password)
+mutation updatePassword($userId: String!, $password: String!) {
+  updatePassword(userId: $userId, password: $password)
 }

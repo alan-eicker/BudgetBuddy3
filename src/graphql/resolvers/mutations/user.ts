@@ -43,5 +43,10 @@ export async function updatePassword(
   parent: unknown,
   args: MutationUpdatePasswordArgs,
 ) {
-  console.log(args.password);
+  const password = await bcrypt.hash(args.password as string, 10);
+
+  await UserModel.findOneAndUpdate(
+    { _id: args.userId },
+    { $set: { password } },
+  );
 }

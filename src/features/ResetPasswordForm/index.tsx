@@ -37,7 +37,8 @@ export default function ResetPasswordForm({
         try {
           await queryClient.executeMutation({
             mutationKey: 'updatePassword',
-            mutationFn: () => updatePassword({ password: values.password }),
+            mutationFn: () =>
+              updatePassword({ userId, password: values.password }),
           });
           onSuccess();
         } catch {
