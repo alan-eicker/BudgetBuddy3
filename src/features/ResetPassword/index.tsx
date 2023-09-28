@@ -1,33 +1,24 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
 import Alert from '@/components/Alert';
 import SecurityQuestionSearchForm from '@/features/SecurityQuestionSearchForm';
 import SecurityQuestionsForm from '@/features/SecurityQuestionsForm';
-import { SecurityQuestion } from '@/graphql/generated/graphql';
+import {
+  SecurityQuestion,
+  SecurityQuestionsResponse,
+} from '@/graphql/generated/graphql';
 import { COLORS } from '@/constants';
 
 export default function ResetPassword() {
-  const [error, setError] = useState<string>();
+  const [error, setError] = useState<string | undefined>();
   const [step, setStep] = useState(1);
   const [securityQuestions, setSecurityQuestions] =
-    useState<SecurityQuestion[]>();
+    useState<SecurityQuestionsResponse>();
 
-  function Step2() {
-    return (
-      <>
-        <Typography component="h1" variant="h4" marginBottom={4}>
-          Please answer your security questions
-        </Typography>
-        <SecurityQuestionsForm
-          onSuccess={() => {
-            setStep(3);
-          }}
-          onError={(errorText) => setError(errorText)}
-          questions={securityQuestions as SecurityQuestion[]}
-        />
-      </>
-    );
+  function handleStepOneComplete(response: SecurityQuestionsResponse) {
+    setSecurityQuestions(response);
+    setStep(2);
   }
 
   function Step1() {
@@ -41,9 +32,24 @@ export default function ResetPassword() {
           email address associated with your account.
         </Typography>
         <SecurityQuestionSearchForm
-          onSuccess={(questions) => {
-            setSecurityQuestions(questions);
-            setStep(2);
+          onSuccess={(response) => handleStepOneComplete(response)}
+          onError={(errorText) => setError(errorText)}
+        />
+      </>
+    );
+  }
+
+  function Step2() {
+    return (
+      <>
+        <Typography component="h1" variant="h4" marginBottom={4}>
+          Please answer your security questions
+        </Typography>
+        <SecurityQuestionsForm
+          userId={securityQuestions?.userId as string}
+          questions={securityQuestions?.questions as SecurityQuestion[]}
+          onSuccess={() => {
+            setStep(3);
           }}
           onError={(errorText) => setError(errorText)}
         />
@@ -51,17 +57,36 @@ export default function ResetPassword() {
     );
   }
 
+  function Step3() {
+    return (
+      <>
+        <Typography component="h1" variant="h4" marginBottom={4}>
+          Reset you password
+        </Typography>
+      </>
+    );
+  }
+
+  useEffect(() => {
+    setError(undefined);
+  }, [step]);
+
   return (
     <Box padding={4} bgcolor={COLORS.formBackground}>
       {error && (
         <Box marginBottom={2}>
-          <Alert variant="filled" color="error">
+          <Alert
+            variant="filled"
+            color="error"
+            onDismiss={() => setError(undefined)}
+          >
             {error}
           </Alert>
         </Box>
       )}
       {step === 1 && <Step1 />}
       {step === 2 && <Step2 />}
+      {step === 3 && <Step3 />}
     </Box>
   );
 }

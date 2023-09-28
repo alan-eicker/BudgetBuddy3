@@ -7,15 +7,33 @@ import {
 import UserModel from '@/database/models/user';
 import SecurityQuestions from '@/database/models/securityQuerstions';
 import { createToken, getUserIdFromToken } from '@/utils/auth';
+import { GraphQLError } from 'graphql';
 
 export async function getSecurityQuestions(
   parent: unknown,
   args: QueryGetSecurityQuestionsArgs,
   ctx: YogaInitialContext,
 ) {
-  const { _id } = await UserModel.findOne({ email: args.email });
-  const { questions } = await SecurityQuestions.findOne({ userId: _id });
-  return questions;
+  const user = await UserModel.findOne({ email: args.email });
+
+  if (!user) {
+    throw new GraphQLError(`No user found for email ${args.email}`);
+  }
+
+  const securityQuestions = await SecurityQuestions.findOne({
+    userId: user._id,
+  });
+
+  if (!securityQuestions) {
+    throw new GraphQLError(
+      `Security questions not found for userId [${user._id}]`,
+    );
+  }
+
+  return {
+    userId: user._id,
+    questions: securityQuestions.questions,
+  };
 }
 
 export async function loginUser(

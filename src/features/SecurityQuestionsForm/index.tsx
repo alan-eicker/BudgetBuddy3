@@ -6,12 +6,14 @@ import Grid from '@mui/material/Grid';
 import { SecurityQuestion } from '@/graphql/generated/graphql';
 
 interface SecurityQuestionsFormProps {
+  userId: string;
   questions: SecurityQuestion[];
   onSuccess: () => any;
   onError: (errorText: string) => any;
 }
 
 export default function SecurityQuestionsForm({
+  userId,
   questions,
   onSuccess,
   onError,
@@ -36,7 +38,9 @@ export default function SecurityQuestionsForm({
       onSubmit: (formData) => {
         try {
           // validate answers...
-          console.log(formData);
+          console.log('userId:', userId);
+          console.log('formData:', formData);
+          onSuccess();
         } catch {
           onError('One or more answers were incorrect. Try again.');
         }

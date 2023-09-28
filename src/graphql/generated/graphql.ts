@@ -119,7 +119,7 @@ export type Query = {
   getAllExpenseGroups: Array<Maybe<ExpenseGroup>>;
   getExpense: Expense;
   getExpenseGroupById: ExpenseGroup;
-  getSecurityQuestions: Array<Maybe<SecurityQuestion>>;
+  getSecurityQuestions: SecurityQuestionsResponse;
   getUser: User;
   loginUser?: Maybe<Scalars['Void']['output']>;
   logoutUser?: Maybe<Scalars['Void']['output']>;
@@ -149,8 +149,13 @@ export type QueryLoginUserArgs = {
 export type SecurityQuestion = {
   __typename?: 'SecurityQuestion';
   _id?: Maybe<Scalars['ID']['output']>;
-  answer?: Maybe<Scalars['String']['output']>;
   question?: Maybe<Scalars['String']['output']>;
+};
+
+export type SecurityQuestionsResponse = {
+  __typename?: 'SecurityQuestionsResponse';
+  questions: Array<Maybe<SecurityQuestion>>;
+  userId: Scalars['ID']['output'];
 };
 
 export type User = {
@@ -264,7 +269,7 @@ export type GetSecurityQuestionsQueryVariables = Exact<{
 }>;
 
 
-export type GetSecurityQuestionsQuery = { __typename?: 'Query', questions: Array<{ __typename?: 'SecurityQuestion', _id?: string | null, question?: string | null } | null> };
+export type GetSecurityQuestionsQuery = { __typename?: 'Query', questions: { __typename?: 'SecurityQuestionsResponse', userId: string, questions: Array<{ __typename?: 'SecurityQuestion', _id?: string | null, question?: string | null } | null> } };
 
 
 export const CreateUserDocument = gql`
@@ -373,8 +378,11 @@ export const GetUserDocument = gql`
 export const GetSecurityQuestionsDocument = gql`
     query getSecurityQuestions($email: String!) {
   questions: getSecurityQuestions(email: $email) {
-    _id
-    question
+    userId
+    questions {
+      _id
+      question
+    }
   }
 }
     `;

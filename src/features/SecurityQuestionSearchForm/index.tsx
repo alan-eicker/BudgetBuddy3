@@ -4,11 +4,11 @@ import TextField from '@mui/material/TextField';
 import LoadingButton from '@mui/lab/LoadingButton';
 import Grid from '@mui/material/Grid';
 import Box from '@mui/material/Box';
-import { SecurityQuestion } from '@/graphql/generated/graphql';
+import { SecurityQuestionsResponse } from '@/graphql/generated/graphql';
 import { queryClient, getSecurityQuestions } from '@/api';
 
 interface EmailSearchFormProps {
-  onSuccess: (questions: SecurityQuestion[]) => any;
+  onSuccess: (response: SecurityQuestionsResponse) => any;
   onError: (error: string) => any;
 }
 
@@ -36,12 +36,12 @@ export default function EmailSearchForm({
       validationSchema,
       onSubmit: async (formData) => {
         try {
-          const response = await queryClient.fetchQuery(
-            ['getSecurityQuestions'],
-            () => getSecurityQuestions({ email: formData.email }),
-          );
+          const response = await queryClient.fetchQuery({
+            queryKey: 'getSecurityQuestions',
+            queryFn: () => getSecurityQuestions({ email: formData.email }),
+          });
 
-          onSuccess(response.questions as SecurityQuestion[]);
+          onSuccess(response.questions);
         } catch {
           onError(
             `Could not get security questions for email [${formData.email}]`,

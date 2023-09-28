@@ -50,7 +50,10 @@ query getUser {
 
 query getSecurityQuestions($email: String!) {
   questions: getSecurityQuestions(email: $email) {
-    _id
-    question
+    userId
+    questions {
+      _id
+      question
+    }
   }
 }

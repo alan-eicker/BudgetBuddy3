@@ -10,7 +10,7 @@ type Query {
   loginUser(username: String!, password: String!): Void
   logoutUser: Void
   getUser: User!
-  getSecurityQuestions(email: String!): [SecurityQuestion]!
+  getSecurityQuestions(email: String!): SecurityQuestionsResponse!
 }
 
 type Mutation {
@@ -31,10 +31,14 @@ type Mutation {
   ): Void
 }
 
+type SecurityQuestionsResponse {
+  userId: ID!
+  questions: [SecurityQuestion]!
+}
+
 type SecurityQuestion {
   _id: ID
   question: String
-  answer: String
 }
 
 type ExpenseGroup {
