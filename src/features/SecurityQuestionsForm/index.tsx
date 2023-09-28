@@ -4,6 +4,7 @@ import TextField from '@mui/material/TextField';
 import LoadingButton from '@mui/lab/LoadingButton';
 import Grid from '@mui/material/Grid';
 import { SecurityQuestion } from '@/graphql/generated/graphql';
+import { queryClient, validateSecurityQuestionAnswers } from '@/api';
 
 interface SecurityQuestionsFormProps {
   userId: string;
@@ -35,14 +36,24 @@ export default function SecurityQuestionsForm({
     useFormik({
       initialValues,
       validationSchema,
-      onSubmit: (formData) => {
+      onSubmit: async (formData) => {
         try {
-          // validate answers...
-          console.log('userId:', userId);
-          console.log('formData:', formData);
+          const { isValid } = await queryClient.fetchQuery({
+            queryKey: '',
+            queryFn: () =>
+              validateSecurityQuestionAnswers({
+                userId,
+                formData: JSON.stringify(formData),
+              }),
+          });
+
+          if (!isValid) {
+            throw new Error('One or more answers were incorrect. Try again.');
+          }
+
           onSuccess();
-        } catch {
-          onError('One or more answers were incorrect. Try again.');
+        } catch (err: any) {
+          onError(err.message);
         }
       },
     });

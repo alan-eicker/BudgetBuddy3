@@ -57,3 +57,7 @@ query getSecurityQuestions($email: String!) {
     }
   }
 }
+
+query validateSecurityQuestionAnswers($userId: String!, $formData: String!) {
+  isValid: validateSecurityQuestionAnswers(userId: $userId, formData: $formData)
+}

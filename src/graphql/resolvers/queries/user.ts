@@ -1,11 +1,13 @@
 import bcrypt from 'bcrypt';
 import { YogaInitialContext } from 'graphql-yoga';
 import {
+  SecurityQuestion,
   QueryLoginUserArgs,
   QueryGetSecurityQuestionsArgs,
+  QueryValidateSecurityQuestionAnswersArgs,
 } from '@/graphql/generated/graphql';
 import UserModel from '@/database/models/user';
-import SecurityQuestions from '@/database/models/securityQuerstions';
+import SecurityQuestionsModel from '@/database/models/securityQuerstions';
 import { createToken, getUserIdFromToken } from '@/utils/auth';
 import { GraphQLError } from 'graphql';
 
@@ -20,7 +22,7 @@ export async function getSecurityQuestions(
     throw new GraphQLError(`No user found for email ${args.email}`);
   }
 
-  const securityQuestions = await SecurityQuestions.findOne({
+  const securityQuestions = await SecurityQuestionsModel.findOne({
     userId: user._id,
   });
 
@@ -34,6 +36,35 @@ export async function getSecurityQuestions(
     userId: user._id,
     questions: securityQuestions.questions,
   };
+}
+
+export async function validateSecurityQuestionAnswers(
+  parent: unknown,
+  args: QueryValidateSecurityQuestionAnswersArgs,
+  ctx: YogaInitialContext,
+) {
+  let isValid = true;
+  const userId = args.userId;
+  const formData = JSON.parse(args.formData);
+
+  const securityQuestionsWithAnswers = await SecurityQuestionsModel.findOne({
+    userId,
+  });
+
+  Object.keys(formData).forEach((key) => {
+    const userAnswer = formData[key].toLowerCase();
+    const foundQuestion = securityQuestionsWithAnswers.questions.find(
+      (question: { answer: string } & SecurityQuestion) => {
+        return question._id?.toString() === key;
+      },
+    );
+
+    if (userAnswer !== foundQuestion.answer.toLowerCase()) {
+      isValid = false;
+    }
+  });
+
+  return isValid;
 }
 
 export async function loginUser(

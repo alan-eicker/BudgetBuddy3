@@ -11,6 +11,7 @@ type Query {
   logoutUser: Void
   getUser: User!
   getSecurityQuestions(email: String!): SecurityQuestionsResponse!
+  validateSecurityQuestionAnswers(userId: String!, formData: String!): Boolean!
 }
 
 type Mutation {
@@ -38,7 +39,7 @@ type SecurityQuestionsResponse {
 
 type SecurityQuestion {
   _id: ID
-  question: String
+  question: String!
 }
 
 type ExpenseGroup {

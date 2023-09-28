@@ -123,6 +123,7 @@ export type Query = {
   getUser: User;
   loginUser?: Maybe<Scalars['Void']['output']>;
   logoutUser?: Maybe<Scalars['Void']['output']>;
+  validateSecurityQuestionAnswers: Scalars['Boolean']['output'];
 };
 
 
@@ -144,6 +145,12 @@ export type QueryGetSecurityQuestionsArgs = {
 export type QueryLoginUserArgs = {
   password: Scalars['String']['input'];
   username: Scalars['String']['input'];
+};
+
+
+export type QueryValidateSecurityQuestionAnswersArgs = {
+  formData: Scalars['String']['input'];
+  userId: Scalars['String']['input'];
 };
 
 export type SecurityQuestion = {
@@ -271,6 +278,14 @@ export type GetSecurityQuestionsQueryVariables = Exact<{
 
 export type GetSecurityQuestionsQuery = { __typename?: 'Query', questions: { __typename?: 'SecurityQuestionsResponse', userId: string, questions: Array<{ __typename?: 'SecurityQuestion', _id?: string | null, question?: string | null } | null> } };
 
+export type ValidateSecurityQuestionAnswersQueryVariables = Exact<{
+  userId: Scalars['String']['input'];
+  formData: Scalars['String']['input'];
+}>;
+
+
+export type ValidateSecurityQuestionAnswersQuery = { __typename?: 'Query', isValid: boolean };
+
 
 export const CreateUserDocument = gql`
     mutation createUser($input: UserInput!) {
@@ -386,6 +401,11 @@ export const GetSecurityQuestionsDocument = gql`
   }
 }
     `;
+export const ValidateSecurityQuestionAnswersDocument = gql`
+    query validateSecurityQuestionAnswers($userId: String!, $formData: String!) {
+  isValid: validateSecurityQuestionAnswers(userId: $userId, formData: $formData)
+}
+    `;
 
 export type SdkFunctionWrapper = <T>(action: (requestHeaders?:Record<string, string>) => Promise<T>, operationName: string, operationType?: string) => Promise<T>;
 
@@ -435,6 +455,9 @@ export function getSdk(client: GraphQLClient, withWrapper: SdkFunctionWrapper = 
     },
     getSecurityQuestions(variables: GetSecurityQuestionsQueryVariables, requestHeaders?: GraphQLClientRequestHeaders): Promise<GetSecurityQuestionsQuery> {
       return withWrapper((wrappedRequestHeaders) => client.request<GetSecurityQuestionsQuery>(GetSecurityQuestionsDocument, variables, {...requestHeaders, ...wrappedRequestHeaders}), 'getSecurityQuestions', 'query');
+    },
+    validateSecurityQuestionAnswers(variables: ValidateSecurityQuestionAnswersQueryVariables, requestHeaders?: GraphQLClientRequestHeaders): Promise<ValidateSecurityQuestionAnswersQuery> {
+      return withWrapper((wrappedRequestHeaders) => client.request<ValidateSecurityQuestionAnswersQuery>(ValidateSecurityQuestionAnswersDocument, variables, {...requestHeaders, ...wrappedRequestHeaders}), 'validateSecurityQuestionAnswers', 'query');
     }
   };
 }
