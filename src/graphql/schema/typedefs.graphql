@@ -45,7 +45,7 @@ type SecurityQuestion {
 
 type ExpenseGroup {
   _id: ID
-  userId: String!
+  userId: String
   startDate: String!
   endDate: String!
   totalBudget: Float!

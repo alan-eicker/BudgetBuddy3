@@ -9,7 +9,7 @@
     "lint": "next lint",
     "generate": "graphql-codegen",
     "seed": "node seed-db.mjs",
-    "docker": "NODE_ENV=production docker build -t budget-buddy-2 ."
+    "docker": "docker build -t budget-buddy-2 ."
   },
   "dependencies": {
     "@emotion/react": "^11.11.1",
