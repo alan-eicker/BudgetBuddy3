@@ -39,7 +39,7 @@ export default function SecurityQuestionsForm({
       onSubmit: async (formData) => {
         try {
           const { isValid } = await queryClient.fetchQuery({
-            queryKey: '',
+            queryKey: 'validateSecurityQuestionAnswers',
             queryFn: () =>
               validateSecurityQuestionAnswers({
                 userId,

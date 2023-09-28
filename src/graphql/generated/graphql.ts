@@ -65,6 +65,7 @@ export type Mutation = {
   updateExpense?: Maybe<Scalars['Void']['output']>;
   updateExpenseGroup?: Maybe<Scalars['Void']['output']>;
   updateExpensePaidStatus?: Maybe<Scalars['Void']['output']>;
+  updatePassword?: Maybe<Scalars['Void']['output']>;
 };
 
 
@@ -114,6 +115,11 @@ export type MutationUpdateExpensePaidStatusArgs = {
   isPaid: Scalars['Boolean']['input'];
 };
 
+
+export type MutationUpdatePasswordArgs = {
+  password: Scalars['String']['input'];
+};
+
 export type Query = {
   __typename?: 'Query';
   getAllExpenseGroups: Array<Maybe<ExpenseGroup>>;
@@ -156,7 +162,7 @@ export type QueryValidateSecurityQuestionAnswersArgs = {
 export type SecurityQuestion = {
   __typename?: 'SecurityQuestion';
   _id?: Maybe<Scalars['ID']['output']>;
-  question?: Maybe<Scalars['String']['output']>;
+  question: Scalars['String']['output'];
 };
 
 export type SecurityQuestionsResponse = {
@@ -241,6 +247,13 @@ export type UpdateExpensePaidStatusMutationVariables = Exact<{
 
 export type UpdateExpensePaidStatusMutation = { __typename?: 'Mutation', updateExpensePaidStatus?: void | null };
 
+export type UpdatePasswordMutationVariables = Exact<{
+  password: Scalars['String']['input'];
+}>;
+
+
+export type UpdatePasswordMutation = { __typename?: 'Mutation', updatePassword?: void | null };
+
 export type GetAllExpenseGroupsQueryVariables = Exact<{ [key: string]: never; }>;
 
 
@@ -276,7 +289,7 @@ export type GetSecurityQuestionsQueryVariables = Exact<{
 }>;
 
 
-export type GetSecurityQuestionsQuery = { __typename?: 'Query', questions: { __typename?: 'SecurityQuestionsResponse', userId: string, questions: Array<{ __typename?: 'SecurityQuestion', _id?: string | null, question?: string | null } | null> } };
+export type GetSecurityQuestionsQuery = { __typename?: 'Query', questions: { __typename?: 'SecurityQuestionsResponse', userId: string, questions: Array<{ __typename?: 'SecurityQuestion', _id?: string | null, question: string } | null> } };
 
 export type ValidateSecurityQuestionAnswersQueryVariables = Exact<{
   userId: Scalars['String']['input'];
@@ -333,6 +346,11 @@ export const UpdateExpensePaidStatusDocument = gql`
     expenseGroupId: $expenseGroupId
     expenseId: $expenseId
   )
+}
+    `;
+export const UpdatePasswordDocument = gql`
+    mutation updatePassword($password: String!) {
+  updatePassword(password: $password)
 }
     `;
 export const GetAllExpenseGroupsDocument = gql`
@@ -437,6 +455,9 @@ export function getSdk(client: GraphQLClient, withWrapper: SdkFunctionWrapper = 
     },
     updateExpensePaidStatus(variables: UpdateExpensePaidStatusMutationVariables, requestHeaders?: GraphQLClientRequestHeaders): Promise<UpdateExpensePaidStatusMutation> {
       return withWrapper((wrappedRequestHeaders) => client.request<UpdateExpensePaidStatusMutation>(UpdateExpensePaidStatusDocument, variables, {...requestHeaders, ...wrappedRequestHeaders}), 'updateExpensePaidStatus', 'mutation');
+    },
+    updatePassword(variables: UpdatePasswordMutationVariables, requestHeaders?: GraphQLClientRequestHeaders): Promise<UpdatePasswordMutation> {
+      return withWrapper((wrappedRequestHeaders) => client.request<UpdatePasswordMutation>(UpdatePasswordDocument, variables, {...requestHeaders, ...wrappedRequestHeaders}), 'updatePassword', 'mutation');
     },
     getAllExpenseGroups(variables?: GetAllExpenseGroupsQueryVariables, requestHeaders?: GraphQLClientRequestHeaders): Promise<GetAllExpenseGroupsQuery> {
       return withWrapper((wrappedRequestHeaders) => client.request<GetAllExpenseGroupsQuery>(GetAllExpenseGroupsDocument, variables, {...requestHeaders, ...wrappedRequestHeaders}), 'getAllExpenseGroups', 'query');

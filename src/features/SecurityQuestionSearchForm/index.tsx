@@ -52,31 +52,27 @@ export default function EmailSearchForm({
 
   return (
     <form onSubmit={handleSubmit}>
-      <Grid container spacing={2}>
-        <Grid item xs={12} sm={12} md={6}>
-          <TextField
-            autoComplete="off"
-            name="email"
-            label="Email Address"
-            onChange={handleChange}
-            value={values.email}
-            fullWidth
-            {...(!!(errors.email && touched.email) && {
-              error: true,
-              helperText: errors.email,
-            })}
-          />
-          <Box marginBottom={2} />
-          <LoadingButton
-            size="large"
-            type="submit"
-            variant="contained"
-            loading={isSubmitting}
-          >
-            Submit
-          </LoadingButton>
-        </Grid>
-      </Grid>
+      <TextField
+        autoComplete="off"
+        name="email"
+        label="Email Address"
+        onChange={handleChange}
+        value={values.email}
+        fullWidth
+        {...(!!(errors.email && touched.email) && {
+          error: true,
+          helperText: errors.email,
+        })}
+      />
+      <Box marginBottom={2} />
+      <LoadingButton
+        size="large"
+        type="submit"
+        variant="contained"
+        loading={isSubmitting}
+      >
+        Submit
+      </LoadingButton>
     </form>
   );
 }

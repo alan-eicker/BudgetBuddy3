@@ -3,12 +3,19 @@ import * as yup from 'yup';
 import Grid from '@mui/material/Grid';
 import TextField from '@mui/material/TextField';
 import LoadingButton from '@mui/lab/LoadingButton';
+import { queryClient, updatePassword } from '@/api';
 
 interface ResetPasswordFormProps {
   userId: string;
+  onSuccess: () => any;
+  onError: (errorText: string) => any;
 }
 
-export default function ResetPasswordForm({ userId }: ResetPasswordFormProps) {
+export default function ResetPasswordForm({
+  userId,
+  onError,
+  onSuccess,
+}: ResetPasswordFormProps) {
   const initialValues = {
     password: '',
     confirmPassword: '',
@@ -26,7 +33,17 @@ export default function ResetPasswordForm({ userId }: ResetPasswordFormProps) {
     useFormik({
       initialValues,
       validationSchema,
-      onSubmit: () => {},
+      onSubmit: async () => {
+        try {
+          await queryClient.executeMutation({
+            mutationKey: 'updatePassword',
+            mutationFn: () => updatePassword({ password: values.password }),
+          });
+          onSuccess();
+        } catch {
+          onError('Error. Could not update password');
+        }
+      },
     });
 
   return (

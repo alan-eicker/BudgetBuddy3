@@ -1,5 +1,8 @@
 import bcrypt from 'bcrypt';
-import { MutationCreateUserArgs } from '@/graphql/generated/graphql';
+import {
+  MutationCreateUserArgs,
+  MutationUpdatePasswordArgs,
+} from '@/graphql/generated/graphql';
 import UserModel from '@/database/models/user';
 import { createGraphQLError } from 'graphql-yoga';
 
@@ -34,4 +37,11 @@ export async function createUser(
   });
 
   await user.save();
+}
+
+export async function updatePassword(
+  parent: unknown,
+  args: MutationUpdatePasswordArgs,
+) {
+  console.log(args.password);
 }

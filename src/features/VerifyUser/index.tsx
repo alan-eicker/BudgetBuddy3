@@ -1,6 +1,9 @@
 import { useEffect, useState } from 'react';
+import { useRouter } from 'next/router';
 import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
+import Button from '@mui/material/Button';
+import DoneIcon from '@mui/icons-material/Done';
 import Alert from '@/components/Alert';
 import SecurityQuestionSearchForm from '@/features/SecurityQuestionSearchForm';
 import SecurityQuestionsForm from '@/features/SecurityQuestionsForm';
@@ -12,8 +15,9 @@ import {
 import { COLORS } from '@/constants';
 
 export default function VerifyUser() {
+  const rotuer = useRouter();
   const [error, setError] = useState<string | undefined>();
-  const [step, setStep] = useState(3);
+  const [step, setStep] = useState(1);
   const [securityQuestions, setSecurityQuestions] =
     useState<SecurityQuestionsResponse>();
 
@@ -49,9 +53,7 @@ export default function VerifyUser() {
         <SecurityQuestionsForm
           userId={securityQuestions?.userId as string}
           questions={securityQuestions?.questions as SecurityQuestion[]}
-          onSuccess={() => {
-            setStep(3);
-          }}
+          onSuccess={() => setStep(3)}
           onError={(errorText) => setError(errorText)}
         />
       </>
@@ -62,9 +64,32 @@ export default function VerifyUser() {
     return (
       <>
         <Typography component="h1" variant="h4" marginBottom={4}>
-          Reset you password
+          Reset your password
         </Typography>
-        <ResetPasswordForm userId={securityQuestions?.userId as string} />
+        <ResetPasswordForm
+          onError={(errorText) => setError(errorText)}
+          onSuccess={() => setStep(4)}
+          userId={securityQuestions?.userId as string}
+        />
+      </>
+    );
+  }
+
+  function Step4() {
+    return (
+      <>
+        <Box display="flex" alignItems="center" marginBottom={4}>
+          <DoneIcon fontSize="large" color="success" />
+          <Typography marginLeft={1} component="h1" variant="h4">
+            You&apos;re all set!
+          </Typography>
+        </Box>
+        <Typography marginBottom={4}>
+          Your password has been successfully updated.
+        </Typography>
+        <Button variant="contained" onClick={() => rotuer.push('/')}>
+          Log In
+        </Button>
       </>
     );
   }
@@ -89,6 +114,7 @@ export default function VerifyUser() {
       {step === 1 && <Step1 />}
       {step === 2 && <Step2 />}
       {step === 3 && <Step3 />}
+      {step === 4 && <Step4 />}
     </Box>
   );
 }

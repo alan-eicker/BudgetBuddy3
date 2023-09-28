@@ -19,6 +19,7 @@ export const {
   createUser,
   getSecurityQuestions,
   validateSecurityQuestionAnswers,
+  updatePassword,
 } = getSdk(gqlClient);
 
 export const queryClient = new QueryClient({
