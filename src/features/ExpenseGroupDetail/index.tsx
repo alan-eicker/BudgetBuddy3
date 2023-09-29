@@ -134,7 +134,7 @@ export default function ExpenseGroupDetail() {
                 Edit Group
               </Button>
               <Button
-                className="text-center"
+                className="text-center hr-left"
                 variant="contained"
                 size="small"
                 onClick={() =>
@@ -149,7 +149,7 @@ export default function ExpenseGroupDetail() {
                 Duplicate Group
               </Button>
               <Button
-                className="text-center"
+                className="text-center hr-left"
                 color="error"
                 variant="contained"
                 size="small"

@@ -32,10 +32,6 @@
 .headRight {
   display: flex;
   justify-content: center;
-
-  & > * + * {
-    margin-left: rem(16);
-  }
 }
 
 .body {
