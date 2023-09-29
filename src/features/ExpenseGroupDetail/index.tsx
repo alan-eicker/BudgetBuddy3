@@ -116,7 +116,6 @@ export default function ExpenseGroupDetail() {
               md={6}
             >
               <Button
-                className="text-center"
                 variant="contained"
                 size="small"
                 onClick={() =>
@@ -134,7 +133,7 @@ export default function ExpenseGroupDetail() {
                 Edit Group
               </Button>
               <Button
-                className="text-center hr-left"
+                sx={{ marginLeft: 1.5 }}
                 variant="contained"
                 size="small"
                 onClick={() =>
@@ -149,7 +148,7 @@ export default function ExpenseGroupDetail() {
                 Duplicate Group
               </Button>
               <Button
-                className="text-center hr-left"
+                sx={{ marginLeft: 1.5 }}
                 color="error"
                 variant="contained"
                 size="small"

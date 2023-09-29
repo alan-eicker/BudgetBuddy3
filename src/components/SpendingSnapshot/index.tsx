@@ -37,10 +37,12 @@ export default function SpendingSnapshot({
       </Box>
       <List disablePadding dense>
         {items.map(([label, value]) => (
-          <ListItem key={label} className="text-center" disablePadding>
+          <ListItem key={label} disablePadding>
             <ListItemText>
-              <Typography component="h4">{label}</Typography>
-              <Typography fontSize={26} fontWeight="bold">
+              <Typography component="h4" align="center">
+                {label}
+              </Typography>
+              <Typography fontSize={26} fontWeight="bold" align="center">
                 {value}
               </Typography>
             </ListItemText>
