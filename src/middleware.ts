@@ -4,6 +4,11 @@ import { NextRequest, NextResponse } from 'next/server';
 export async function middleware(req: NextRequest) {
   try {
     const token = req.cookies.get('token')?.value as string;
+
+    if (!token) {
+      throw new Error();
+    }
+
     const secret = new TextEncoder().encode(process.env.JWT_SECRET);
     const isValid = await jwtVerify(token, secret);
 

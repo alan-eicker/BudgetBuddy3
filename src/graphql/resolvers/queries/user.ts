@@ -90,12 +90,16 @@ export async function loginUser(
     userId: user._id,
   });
 
+  const now = new Date();
+  const minutes = 60;
+  now.setTime(now.getTime() + minutes * 60 * 1000);
+
   ctx.request.cookieStore?.set({
     name: 'token',
     value: token,
     httpOnly: true,
     domain: 'localhost',
-    expires: null,
+    expires: now,
   });
 }
 
