@@ -123,14 +123,13 @@ export default function ExpenseFormModal({ open = false }: ExpenseFormProps) {
               />
             </Grid>
           </Grid>
-          <Box paddingTop={2.5}>
+          <Box className={styles.modalButtons} paddingTop={2.5}>
             <Button variant="contained" size="large" type="submit">
               {expenseFormState?.expense ? 'Update' : 'Add'}
             </Button>
             <Button
               variant="outlined"
               size="large"
-              style={{ marginLeft: 8 }}
               onClick={() => setExpenseFormState(null)}
             >
               Cancel

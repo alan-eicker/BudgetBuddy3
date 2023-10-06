@@ -9,3 +9,7 @@
   background-color: darken($brand, 2%);
   box-shadow: 0 0 rem(20) rgba(0, 0, 0, 0.7);
 }
+
+.modalButtons > :nth-child(2) {
+  margin-left: rem(16);
+}
