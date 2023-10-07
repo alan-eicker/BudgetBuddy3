@@ -157,13 +157,6 @@ export default function useExpenseGroupDetail() {
     });
   }
 
-  function mapOverdueStatustoExpenses(expenses: Expense[]) {
-    return expenses.map((expense) => ({
-      ...expense,
-      isOverdue: isOverDue(expense),
-    }));
-  }
-
   return {
     data,
     error,
@@ -174,6 +167,5 @@ export default function useExpenseGroupDetail() {
     handleUpdateExpense,
     handleUpdateExpensePaidStatus,
     handleDeleteExpense,
-    mapOverdueStatustoExpenses,
   };
 }

@@ -58,7 +58,6 @@ export default function ExpenseGroupDetail() {
     handleUpdateExpense,
     handleUpdateExpensePaidStatus,
     handleDeleteExpense,
-    mapOverdueStatustoExpenses,
   } = useExpenseGroupDetail();
 
   const {
@@ -76,17 +75,12 @@ export default function ExpenseGroupDetail() {
 
   if (!data) return <></>;
 
-  let totalBalance = 0;
-  let unpaidExpenses = 0;
-  let getLeftOverBalance = 0;
-
   const { startDate, endDate, totalBudget, expenses } = data.expenseGroup;
 
-  if (expenses) {
-    totalBalance = getTotalBalanceOfAllExpenses(expenses, 'balance');
-    unpaidExpenses = getTotalUnpaidExpenses(expenses, 'balance');
-    getLeftOverBalance = totalBudget - totalBalance;
-  }
+  const totalBalance = getTotalBalanceOfAllExpenses(expenses, 'balance');
+  const unpaidExpenses = getTotalUnpaidExpenses(expenses, 'balance');
+  const getLeftOverBalance = totalBudget - totalBalance;
+  const sortedExpenses = expenses.sort((a, b) => b.balance - a.balance);
 
   return (
     <Box className={styles.container}>
@@ -204,7 +198,7 @@ export default function ExpenseGroupDetail() {
                   style={{ marginTop: 1 }}
                   disablePadding
                 >
-                  {expenses.map((expense) => (
+                  {sortedExpenses.map((expense) => (
                     <ListItem disablePadding key={expense._id || expense.name}>
                       <ExpenseCard
                         {...expense}
