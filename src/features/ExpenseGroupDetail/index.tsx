@@ -133,7 +133,10 @@ export default function ExpenseGroupDetail() {
                 onClick={() =>
                   setEditAction({
                     onCancel: () => setEditAction(undefined),
-                    onSave: (formData) => handleExpenseGroupDuplicate(formData),
+                    onSave: (formData) => {
+                      handleExpenseGroupDuplicate(formData);
+                      setEditAction(undefined);
+                    },
                     expenseGroup: data.expenseGroup,
                     formType: 'Duplicate',
                   })

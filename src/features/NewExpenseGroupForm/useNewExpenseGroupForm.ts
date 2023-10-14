@@ -13,9 +13,9 @@ export default function useNewExpenseGroupForm() {
 
   const createExpenseGroup = useMutation({
     mutationFn: addExpenseGroup,
-    onSuccess: () => {
+    onSuccess: ({ expenseGroup }) => {
       queryClient.removeQueries('expenseGroups');
-      router.push('/account/dashboard');
+      router.push(`/account/expense-group/${expenseGroup?._id}`);
     },
     onError: () => {
       setCreateError('An error occurred. Could not create expense group.');

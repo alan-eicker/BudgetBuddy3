@@ -3,7 +3,9 @@ mutation createUser($input: UserInput!) {
 }
 
 mutation addExpenseGroup($input: ExpenseGroupInput!) {
-  addExpenseGroup(input: $input)
+  expenseGroup: addExpenseGroup(input: $input) {
+    _id
+  }
 }
 
 mutation updateExpenseGroup($expenseGroupId: ID!, $input: ExpenseGroupInput!) {

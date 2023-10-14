@@ -31,8 +31,8 @@ export default function useExpenseGroupDetail() {
 
   const duplicateExpenseGroupMutation = useMutation({
     mutationFn: addExpenseGroup,
-    onSuccess: () => {
-      router.push('/account/dashboard');
+    onSuccess: ({ expenseGroup }) => {
+      router.push(`/account/expense-group/${expenseGroup?._id}`);
       queryClient.removeQueries('expenseGroups');
     },
     onError: () => {

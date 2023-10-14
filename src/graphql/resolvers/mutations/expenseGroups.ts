@@ -23,6 +23,8 @@ export async function addExpenseGroup(
   });
 
   await expenseGroup.save();
+
+  return { _id: expenseGroup._id };
 }
 
 export async function updateExpenseGroup(

@@ -18,7 +18,7 @@ type Mutation {
   # User
   createUser(input: UserInput!): Void
   # Expense Group
-  addExpenseGroup(input: ExpenseGroupInput!): Void
+  addExpenseGroup(input: ExpenseGroupInput!): NewExpenseGroupResponse
   updateExpenseGroup(expenseGroupId: ID!, input: ExpenseGroupInput!): Void
   deleteExpenseGroup(expenseGroupId: String!): Void
   # Expense
@@ -31,6 +31,10 @@ type Mutation {
     expenseId: String!
   ): Void
   updatePassword(userId: String!, password: String!): Void
+}
+
+type NewExpenseGroupResponse {
+  _id: String!
 }
 
 type SecurityQuestionsResponse {

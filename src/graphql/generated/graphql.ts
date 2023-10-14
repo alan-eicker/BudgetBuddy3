@@ -58,7 +58,7 @@ export type ExpenseInput = {
 export type Mutation = {
   __typename?: 'Mutation';
   addExpense?: Maybe<Scalars['Void']['output']>;
-  addExpenseGroup?: Maybe<Scalars['Void']['output']>;
+  addExpenseGroup?: Maybe<NewExpenseGroupResponse>;
   createUser?: Maybe<Scalars['Void']['output']>;
   deleteExpense?: Maybe<Scalars['Void']['output']>;
   deleteExpenseGroup?: Maybe<Scalars['Void']['output']>;
@@ -119,6 +119,11 @@ export type MutationUpdateExpensePaidStatusArgs = {
 export type MutationUpdatePasswordArgs = {
   password: Scalars['String']['input'];
   userId: Scalars['String']['input'];
+};
+
+export type NewExpenseGroupResponse = {
+  __typename?: 'NewExpenseGroupResponse';
+  _id: Scalars['String']['output'];
 };
 
 export type Query = {
@@ -197,7 +202,7 @@ export type AddExpenseGroupMutationVariables = Exact<{
 }>;
 
 
-export type AddExpenseGroupMutation = { __typename?: 'Mutation', addExpenseGroup?: void | null };
+export type AddExpenseGroupMutation = { __typename?: 'Mutation', expenseGroup?: { __typename?: 'NewExpenseGroupResponse', _id: string } | null };
 
 export type UpdateExpenseGroupMutationVariables = Exact<{
   expenseGroupId: Scalars['ID']['input'];
@@ -309,7 +314,9 @@ export const CreateUserDocument = gql`
     `;
 export const AddExpenseGroupDocument = gql`
     mutation addExpenseGroup($input: ExpenseGroupInput!) {
-  addExpenseGroup(input: $input)
+  expenseGroup: addExpenseGroup(input: $input) {
+    _id
+  }
 }
     `;
 export const UpdateExpenseGroupDocument = gql`
