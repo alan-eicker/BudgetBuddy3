@@ -29,7 +29,6 @@ export default function ExpenseCard({
 }: ExpenseCardProps) {
   return (
     <Card
-      isDarkTheme={isDarkTheme}
       hasError={isOverdue}
       head={
         <Box display="flex" alignItems="center" justifyContent="space-between">
