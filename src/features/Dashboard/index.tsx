@@ -1,4 +1,3 @@
-import Link from 'next/link';
 import { useRouter } from 'next/router';
 import { useQuery } from 'react-query';
 import ErrorOutlineIcon from '@mui/icons-material/ErrorOutline';
@@ -132,43 +131,39 @@ export default function Dashboard() {
                   : getTotalOverdueBalances(expenses);
                 return (
                   <Grid key={expenseGroup?._id} item xs={12} sm={12} md={4}>
-                    <Link href={`/account/expense-group/${expenseGroup?._id}`}>
-                      <Card
-                        head={`${expenseGroup?.startDate} - ${expenseGroup?.endDate}`}
-                        height="100%"
+                    <Card
+                      link={`/account/expense-group/${expenseGroup?._id}`}
+                      head={`${expenseGroup?.startDate} - ${expenseGroup?.endDate}`}
+                      height="100%"
+                    >
+                      <Box
+                        display="flex"
+                        alignItems="center"
+                        justifyContent="space-between"
                       >
-                        <Box
-                          display="flex"
-                          alignItems="center"
-                          justifyContent="space-between"
-                        >
-                          <Box>
-                            Total Balance:
-                            <br />
-                            {expenses ? (
-                              '$' + getTotalBalance(expenses)
-                            ) : (
-                              <Button size="small">Add Expenses</Button>
-                            )}
-                          </Box>
-                          {numOverdueBalances > 0 && (
-                            <Box textAlign="center">
-                              <ErrorOutlineIcon
-                                color="error"
-                                fontSize="large"
-                              />
-                              <Typography
-                                fontSize={11}
-                                color={COLORS.error}
-                                marginTop={-0.5}
-                              >
-                                {numOverdueBalances} overdue expenses
-                              </Typography>
-                            </Box>
+                        <Box>
+                          Total Balance:
+                          <br />
+                          {expenses ? (
+                            '$' + getTotalBalance(expenses)
+                          ) : (
+                            <Button size="small">Add Expenses</Button>
                           )}
                         </Box>
-                      </Card>
-                    </Link>
+                        {numOverdueBalances > 0 && (
+                          <Box textAlign="center">
+                            <ErrorOutlineIcon color="error" fontSize="large" />
+                            <Typography
+                              fontSize={11}
+                              color={COLORS.error}
+                              marginTop={-0.5}
+                            >
+                              {numOverdueBalances} overdue expenses
+                            </Typography>
+                          </Box>
+                        )}
+                      </Box>
+                    </Card>
                   </Grid>
                 );
               })}

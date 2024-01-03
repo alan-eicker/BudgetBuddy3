@@ -2,11 +2,9 @@
 
 .container {
   background-color: darken($brand, 2%);
+  display: block;
   transition: all 0.15s ease;
-
-  &:hover {
-    box-shadow: 0 0 0 rem(2) lighten($brand, 14%);
-  }
+  width: 100%;
 
   &.hasError {
     box-shadow: 0 0 0 rem(1) $error;
@@ -19,6 +17,13 @@
       background-color: transparent;
       border-bottom: rem(1) solid rgba(255, 255, 255, 0.1);
     }
+  }
+}
+
+a.container {
+  &:hover,
+  &:focus {
+    box-shadow: 0 0 0 rem(2) lighten($brand, 14%);
   }
 }
 
