@@ -9,15 +9,6 @@
   &.hasError {
     box-shadow: 0 0 0 rem(1) $error;
   }
-
-  &.darkTheme {
-    background-color: darken($brand, 5%);
-
-    .head {
-      background-color: transparent;
-      border-bottom: rem(1) solid rgba(255, 255, 255, 0.1);
-    }
-  }
 }
 
 a.container {
