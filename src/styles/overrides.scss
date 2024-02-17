@@ -6,3 +6,7 @@
 [class*='MuiAutocomplete-root'] {
   background-color: $brand;
 }
+
+.Mui-checked .MuiSwitch-thumb {
+  color: $success;
+}
