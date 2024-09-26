@@ -14,6 +14,9 @@ export const EXPENSE_DROPDOWN_OPTIONS = [
   'Jeep Payment',
   'Therapist',
   'Medical Payment',
+  'NetFlix',
+  'SimpliSafe',
+  'Capital One Card'
 ];
 
 export const COLORS = {
