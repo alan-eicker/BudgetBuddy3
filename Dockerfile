@@ -1,4 +1,4 @@
-FROM node:18.15.0
+FROM node:18.20.3
 LABEL Alan Eicker
 WORKDIR /src
 COPY package.json . /src/
